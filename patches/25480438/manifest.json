@@ -1,7 +1,5 @@
 {
   "schema_version": 1,
-  "id": "25480438-self-hit-0.2.1",
-  "status": "unverified",
   "target": {
     "steam_build_id": "25480438",
     "executable_version": "1.8.46015.0",
@@ -11,15 +9,94 @@
   "loader": {
     "public_release": "v17",
     "internal_min": 16,
+    "internal_max": 16,
     "api": 1
   },
+  "locators": [
+    {
+      "id": "self_hit_constructor_option_flag",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "8b0842898ca640500e00740c41385d187506440fb7c3eb0641b820000000"
+    },
+    {
+      "id": "self_hit_constructor_flag_composition",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "498b46100f57c041b9000600000fb788f00000000fb7c10fb7d16683e0106683e22066c1e202660bd00fb7c16683e00c6603d2660bd00fb7c1664123c166c1e203660bd00fb7c16683e0026603d2660bd00fb7c166d1e86683ca016683e020664123cf4c6bff70660bc16603d266c1e802660bd066410bd066428994663c200000"
+    },
+    {
+      "id": "self_hit_collision_source_entity_gate",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "433b9c874cb003000f84c1070000488b45a8"
+    },
+    {
+      "id": "self_hit_collision_source_unit_gate",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "41f684473c200000200f84e30000008b559485d20f84d8000000488b05469cf701488b4818488b81200700008bcaffd084c00f84ba000000428b8c25dc060000"
+    },
+    {
+      "id": "self_hit_optional_auxiliary_initial_sentinel",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "42c744a63cffffffff418bfc41399c378c3000000f8445010000498b4610"
+    },
+    {
+      "id": "self_hit_optional_auxiliary_definition_gate",
+      "affected_features": [
+        "self_heal",
+        "pistol_self_hit",
+        "native_weapon_self_hit"
+      ],
+      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "bytes_hex": "3998900000000f8435010000418b4e18e836fbc2"
+    }
+  ],
+  "id": "25480438-three-self-hit-scopes",
+  "status": "unverified",
   "features": [
     {
       "id": "self_heal",
       "source": "mods/p11_self_hit_dataonly/core.lua",
       "status": "disabled",
       "user_confirmed_working": true,
-      "reason": "Basic behavior confirmed; offline identity never auto-enables gameplay."
+      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. Both broader scopes remain candidates."
+    },
+    {
+      "id": "pistol_self_hit",
+      "source": "mods/weapon_self_hit_candidate/core.lua",
+      "status": "disabled",
+      "user_confirmed_working": false,
+      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. Both broader scopes remain candidates."
+    },
+    {
+      "id": "native_weapon_self_hit",
+      "source": "mods/weapon_self_hit_candidate/core.lua",
+      "status": "disabled",
+      "user_confirmed_working": false,
+      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. Both broader scopes remain candidates."
     }
   ]
 }

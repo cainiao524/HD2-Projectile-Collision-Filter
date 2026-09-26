@@ -25,3 +25,19 @@ Basic self-hit healing on the listed build is confirmed by the user's report. Ex
 The Experimental Infusion effect and first-person foot-shot method were supplied by the user on 2026-09-26; no additional independent gameplay test was performed for this documentation update.
 The booster must already be active in the game. The companion-mod recommendation is user-requested, with no additional coexistence test recorded.
 The tested gameplay ZIP and Lua remain unchanged. Passing 429 Lua mock assertions and reproducing the ZIP do not establish all host/client, timing or concurrency cases.
+
+## 三版本預覽 / Three-variant preview
+
+三包讀回檢查：每個安裝 archive 都包含且只包含一份原始 P-11 Lua，SHA256 b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a。兩個擴展包另含各自獨立資源，不改 loader 啟動資源。P-11 原 ZIP 的 SHA256 保持不變。
+
+擴展 core / entry 有 24 個 mock 斷言，另以 test_combined.lua 檢查兩種範圍、兩種載入順序、擴展正常／故障時 P-11 回呼繼續運行、nil 參數／回傳及關閉流程。全部只使用 mock adapter，不啟動 native addon。
+
+封裝、回呼組合與離線檢測通過不等於遊戲內命中。擴展自傷、八個手槍 ID 的目前版本有效性、廣域機制覆蓋、新封裝中 P-11 的實際共存和完整主客機／並行矩陣都未新增玩法驗證。
+
+Every variant includes the exact P-11 Lua; packaging checks and mocked callback composition cover both load orders and expanded failures. Neither expanded gameplay nor the new packages' native coexistence is established by those tests.
+
+## 發布離線驗收 / Release offline checks
+
+2026-09-26：53 項 Python 測試通過；P-11 429 個 Lua mock 斷言、候選核心／入口 24 個，以及新包回呼组合 84 個斷言通過。三包皆從乾淨 Source ZIP 重建成相同位元組，P-11 原 ZIP 和三包內 P-11 Lua 指紋不變。
+
+兩個多資源 archive 與 loader 作者本機封裝器輸出逐位元組相符。Windows portable 在 PATH 不含 Python 時啟動成功，並對 build 25480438 的本機磁碟資料完成離線收集。沒有啟動遊戲或新增玩法驗證。公開資產排除本機診斷、遊戲二進位檔和私人日誌。

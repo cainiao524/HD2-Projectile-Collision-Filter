@@ -1,5 +1,4 @@
-"""Entry for the standalone P-11 self-hit release; never publish remotely."""
-from build_self_hit_release import build
-
+"""Build all three variants and their shared offline maintenance toolkit."""
+from build_variants_release import main
 if __name__ == "__main__":
-    build()
+    main()

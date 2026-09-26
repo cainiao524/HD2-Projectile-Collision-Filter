@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baselines": [
     {
-      "id": "0.2.1-build25480438-basic-self-hit",
+      "id": "build25480438-three-self-hit-scopes",
       "target": {
         "steam_build_id": "25480438",
         "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
@@ -27,7 +27,25 @@
             "evidence": "User-supplied behavior and usage notes; no new independent gameplay validation.",
             "companion_url": "https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/"
           },
-          "verification_scope": "2026-09-26: user confirmed basic self-hit healing on build 25480438. Full host/client, timing and slot-concurrency coverage remains incomplete."
+          "verification_scope": "2026-09-26 使用者確認 0.2.1 基本自命中治療有效；日誌另證明啟用和資料寫入。完整場景、主客機與雙模組共存尚未全數驗證。"
+        },
+        "pistol_self_hit": {
+          "package": "weapon_self_hit_pistols-0.1.0-build25480438-CANDIDATE.zip",
+          "package_sha256": "cad5ef165cb646d6b1f9635379e11ad0633bd5a73c9968a4c6a7f85668817fec",
+          "lua_sha256": "d52ecbbc8b86731cfeafb898dba84c1ac3154bde14b26c2b6878db1285407094",
+          "resource": "mods/weapon_self_hit/pistols",
+          "scope": "pistols",
+          "user_confirmed_basic_behavior": false,
+          "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
+        },
+        "native_weapon_self_hit": {
+          "package": "weapon_self_hit_native-0.1.0-build25480438-CANDIDATE.zip",
+          "package_sha256": "1ac1e23cccd8f636de72782270236e4a5471f0e54bdaa1f569e89f30edf9b1df",
+          "lua_sha256": "57e3f43d832134561b90aa6ea1218e44859728820c9483e4ac49f097066535b9",
+          "resource": "mods/weapon_self_hit/native_weapons",
+          "scope": "native_weapons",
+          "user_confirmed_basic_behavior": false,
+          "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
         }
       }
     }

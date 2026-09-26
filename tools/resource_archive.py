@@ -53,3 +53,23 @@ def make_archive(name, source):
     types=struct.pack('<IIQIIII',0,0,LUA_TYPE,1,0,16,16)
     entry=struct.pack('<7Q6I',resource_hash(name),LUA_TYPE,offset,0,0,0,0,len(payload),0,0,16,16,0)
     return (header+types+entry).ljust(offset,b'\0')+payload+b'\0'*(end-offset-len(payload))
+
+def make_lua_archive(resources):
+    """Pack independent Lua resources in one native archive, without merging code."""
+    if not resources: raise ValueError('empty Lua resource archive')
+    items=sorted(resources.items(),key=lambda item:resource_hash(item[0]))
+    if len(items)==1: return make_archive(*items[0])
+    hashes=[resource_hash(name) for name,_ in items]
+    if len(set(hashes))!=len(hashes): raise ValueError('duplicate Lua resource identity')
+    offset=(72+32+80*len(items)+15)&~15
+    payloads=bytearray();entries=[]
+    for index,((name,source),identity) in enumerate(zip(items,hashes)):
+        body=source.encode('utf-8') if isinstance(source,str) else source
+        payload=struct.pack('<II',len(body),2)+body
+        start=offset+len(payloads)
+        entries.append(struct.pack('<7Q6I',identity,LUA_TYPE,start,0,0,0,0,len(payload),0,0,16,16,index))
+        payloads.extend(payload);payloads.extend(b'\0'*(-len(payloads)%16))
+    end=offset+len(payloads)
+    header=struct.pack('<III20sQQ24s',0xF0000011,1,len(items),b'',end,0,b'')
+    types=struct.pack('<IIQIIII',0,0,LUA_TYPE,len(items),0,16,16)
+    return (header+types+b''.join(entries)).ljust(offset,b'\0')+payloads

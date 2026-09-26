@@ -42,5 +42,24 @@
       "Native collision/healing and host/client/coexistence validation recorded separately"
     ],
     "porting_note": "Several RVAs also occur in core.lua/data_windows.lua/build.py/version.lua. A new profile alone is insufficient. Preserve the tested 0.2.1 package and version any future implementation."
+  },
+  "weapon_candidates": {
+    "source": "mods/weapon_self_hit_candidate",
+    "core": "mods/weapon_self_hit_candidate/core.lua",
+    "profiles": "mods/weapon_self_hit_candidate/build.py:profile(scope)",
+    "scopes": [
+      "pistols",
+      "native_weapons"
+    ],
+    "shared_native_layout": "self_hit.native_slot; type is 1..4096 excluding 318",
+    "required_checks": [
+      "Preserve local avatar, source unit/entity, weapon registration and attachment owner checks",
+      "Do not remove P-11 resource/type exclusions; P-11 belongs to standalone 0.2.1",
+      "Revalidate all eight pistol resource IDs against current build evidence",
+      "Do not claim hitscan, beams, melee, explosion or entity-projectile coverage",
+      "Clear only runtime flag 0x20 in non-executable private memory; no native hooks",
+      "Both scopes are unverified in gameplay; mock success is not native collision proof"
+    ],
+    "packaging": "All three variants include byte-identical P-11 0.2.1 Lua. Expanded packages contain two separate resources controlled by one Arsenal option; install one variant."
   }
 }

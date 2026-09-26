@@ -10,3 +10,7 @@
 mods/p11_self_hit_dataonly/README-zh-TW.md -text
 mods/p11_self_hit_dataonly/VALIDATION.md -text
 mods/p11_self_hit_dataonly/profile.json -text
+
+# Candidate docs are also exact ZIP inputs.
+mods/weapon_self_hit_candidate/README-zh-TW.md -text
+mods/weapon_self_hit_candidate/VALIDATION.md -text

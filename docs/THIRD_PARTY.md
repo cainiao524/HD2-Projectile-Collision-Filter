@@ -20,3 +20,7 @@ Helldivers 2 與其原始資產屬 Arrowhead Game Studios 及相關權利人。
 
 Lupa／LuaJIT 僅用於開發時的模擬測試，沒有隨模組成品分發。
 程式與文件使用 OpenAI 工具協助製作。尚未選定專案整體授權。
+
+## Portable runtime
+
+Windows 工具包含 Python 與 PyInstaller runtime；各自的授權文字隨 toolkit 的 runtime-licenses 提供。它們不屬於遊戲模組 runtime。候選手槍資源 ID 取自較早本機模組索引，只發布識別值與来源限制，不重分發索引、遊戲碼流或其他作者模組。

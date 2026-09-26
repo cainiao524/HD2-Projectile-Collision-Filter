@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.0-preview.1 — Three variants
+
+- Three Arsenal packages, each containing the identical original P-11 0.2.1 Lua. Expanded packages add pistol/native-projectile candidate logic as a separate resource, with a single manager option.
+- Expanded scopes and combined gameplay remain unverified; only original P-11 basic healing has user confirmation.
+- Portable offline toolkit 1.1.0 compares all three scopes, flags mutual exclusion, preserves candidate status and produces a repair handoff.
+- One-command mod rebuilding, explicit public source/asset lists, checksums and a complete collection.
+
+
 ## v0.2.1 — P-11 自命中治療單獨發布
 
 - 保存使用者確認基本自命中治療有效的原始 0.2.1 ZIP 及 Lua。

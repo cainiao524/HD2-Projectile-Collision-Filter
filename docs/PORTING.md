@@ -1,57 +1,42 @@
-# 自療原始碼、建置與版本維護
+# 建置與版本移植 / Build and porting
 
-## 來源結構
-
-| 檔案 | 用途 |
-|---|---|
-| `mods/p11_self_hit_dataonly/core.lua` | 97 行玩法核心，本機玩家／來源武器／單發投射物身份檢查 |
-| `data_windows.lua`（同目錄） | 僅允許非執行 heap 上特定兩個位元組的旗標修改及讀回 |
-| `image_windows.lua` | 唯讀模組身份與檔案指紋；名稱中的 Capture 為歷史沿用 |
-| `version.lua`、`entry.lua` | 指紋、虛擬區段、12 個錨點、API 1 啟動與回呼管理 |
-| `profile.json` | 0.2.1 的確切遊戲身份及布局 |
-| `maintenance/baselines.json` | 自療成功套件指紋及基本玩法回報範圍 |
-| `maintenance/porting-map.json` | 自療資料位置、所有權链及維修檢查點 |
-| `tools/resource_archive.py` | 獨立 Lua 資源封裝／讀取 |
-| `tools/build_release.py` | 自療成品、來源 ZIP 與公開資產清單 |
-
-## 模擬測試
-
-Python 3.10+，使用 `lupa==2.8` 進行 LuaJIT mock 測試。
+Python 3.10+；模組封裝只需標準庫，Lua 模擬需 Lupa 2.8。
 
 ```powershell
 python -m pip install -r requirements-dev.txt
 python mods/p11_self_hit_dataonly/test_lua.py
+python mods/weapon_self_hit_candidate/test_lua.py
+python -m unittest discover -s tests -v
+python tools/build_release.py --mods-only
 ```
 
-共 429 個模擬斷言。PE 布局 fixture 為合成資料，不需要私人遊戲捕捉。
-測試不啟動遊戲、不執行完整 native addon；它驗證保護邏輯，不能代替實際玩法確認。
+也可雙擊 **Rebuild-Mods.cmd**。這只重建三包，不安裝依賴、不部署、不自動修改版本保護。
 
-## 建置
+Windows x64 完整發布建置：
 
 ```powershell
-# 重現成功的模組 ZIP，只有 Python 標準庫依賴：
-python mods/p11_self_hit_dataonly/build.py
-# 產生自療發布資產與乾淨原始碼副本：
+python -m pip install -r requirements-build.txt
 python tools/build_release.py
 ```
 
-成品 ZIP SHA256：`73c8c1e85b9732b85e0324b45b19d2c8b6c104abcd394c0f82ac49b67f9da8c2`。
-Lua SHA256：`b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a`。
+輸出 dist/release；PUBLIC-ASSETS.json 是唯一可發布資產清單。publication-files.json 選取來源並匯出 publication/P11-Enhanced。--reuse-portable 僅接受符合目前來源指紋的 EXE。
 
-輸出位於 `dist/release/`，`PUBLIC-ASSETS.json` 是唯一的公開資產清單。
-來源副本位於 `publication/P11-Enhanced/`；由 `publication-files.json` 明確選取。
+- mods/p11_self_hit_dataonly：P-11 0.2.1、profile、writer、入口與模擬。
+- mods/weapon_self_hit_candidate：兩個候選共用核心，build.py 在各包嵌入未更改的 P-11。
+- maintenance/baselines.json：三範圍身份與證據；porting-map.json：布局與必要檢查。
+- patches/25480438/manifest.json：離線比較與候選模式，不授權執行時寫入。
+- tools/offline_update.py、maintenance.py：收集和維修交接。
+- tools/build_variants_release.py：三包、portable、來源與合集建置。
 
-模組資料夾的 README、VALIDATION 及 profile 是原 ZIP 的直接輸入，保留原位元組及封裝時狀態。
-後續成功的記錄另外寫在發布文件與 baselines。不要改動歷史輸入後仍宣稱是同一份 0.2.1 ZIP。
+## 保留成功實作
 
-## 遊戲更新
+P-11 原始 ZIP SHA256：`73c8c1e85b9732b85e0324b45b19d2c8b6c104abcd394c0f82ac49b67f9da8c2`。
+三包的 P-11 Lua SHA256：`b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a`。
 
-1. 核對新 EXE／DLL 與 loader 的身份。
-2. 依 porting-map 檢查本機玩家、來源武器、槽位、排除位元及碰撞處理。
-3. profile 以外，core／writer／version／builder 也含版本常數，必須一併檢查。
-4. 保存 0.2.1 成功 ZIP，新增版本設定及必要程式修正，再跑模擬與封裝核對。
-5. 未取得新版實際自命中治療證據前，將新版標為候選。
+P-11 README、VALIDATION、profile 是封裝輸入，保留原始位元組及當時 experimental 字樣；後續成功記錄另寫 baseline。候選封裝有兩個獨立資源，Arsenal 同一開關控制。不能因 P-11 bytes 相同就宣稱新包已遊戲實測。
 
-日常維護可使用另行保存在本機的一鍵離線收集工具。
-磁碟資料不足時應具體記錄缺口，不改用原生 hook，也不只換雜湊略過保護。
-候選位置、舊日誌與一次資料寫入都不能直接當成新版治療成功。
+## 更新檢查
+
+版本常數同時存在 profile、core、writer、version、builder；新版本須共同核對，不只改雜湊。核對載入布局、12 個錨點、玩家與武器／附件所有權、槽位原值、寫前重檢及寫後讀回。擴展部分仍需排除 P-11，手槍 ID 和廣域機制需分別驗證。
+
+保留成功舊包並新增版本。離線不足時列明缺口，不要求新遊戲內捕捉；沒有新玩法證據就維持候選。模擬不啟動遊戲，不能證明 native 碰撞或並行原子性。

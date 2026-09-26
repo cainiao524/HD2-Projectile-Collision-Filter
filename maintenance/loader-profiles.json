@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "resource_hash": "7251fdd9bb62480a",
+      "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+      "public_release": "v17",
+      "internal_version": 16,
+      "api": 1,
+      "package_sha256": "7212b3228f6946db41a02652e439ba881b060d9c337499584986d67316109d3e",
+      "source": "Bingus-Shared-Loader-v17.zip; API/internal version confirmed against loader author documentation and source. No loader code is redistributed."
+    }
+  ]
+}

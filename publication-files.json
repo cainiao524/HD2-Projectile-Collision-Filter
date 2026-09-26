@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "standalone self-hit release only",
+  "scope": "Three self-hit variants, offline diagnostics and repair handoff; no game binaries or third-party gameplay mods",
   "files": [
     ".gitignore",
     ".gitattributes",
@@ -22,12 +22,37 @@
     "docs/release/CHANGELOG.md",
     "docs/release/RELEASE-v0.2.1.md",
     "docs/release/PUBLISH.md",
-    "docs/release/COVER-BRIEF.md"
+    "docs/release/COVER-BRIEF.md",
+    "Collect-HD2-Update.cmd",
+    "Rebuild-Mods.cmd",
+    "requirements-build.txt",
+    "maintenance/loader-profiles.json",
+    "tools/build_variants_release.py",
+    "tools/collect_build_info.py",
+    "tools/compatibility_report.py",
+    "tools/offline_locator.py",
+    "tools/offline_update.py",
+    "tools/log_parser.py",
+    "tools/maintenance.py",
+    "tools/portable_entry.py",
+    "tests/test_diagnostics.py",
+    "tests/test_offline_update.py",
+    "tests/test_maintenance.py",
+    "tests/test_release.py",
+    "docs/release/VARIANTS.md",
+    "docs/release/COLLECTION.md",
+    "docs/release/UPDATE_TOOL.md",
+    "docs/release/RELEASE-v0.3.0-preview.1.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
       ".lua",
       ".json",
+      ".py",
+      ".md"
+    ],
+    "mods/weapon_self_hit_candidate": [
+      ".lua",
       ".py",
       ".md"
     ]
@@ -43,7 +68,11 @@
     "docs/release/CHANGELOG.md": "CHANGELOG.md",
     "docs/release/RELEASE-v0.2.1.md": "releases/v0.2.1.md",
     "docs/release/PUBLISH.md": "docs/PUBLISH.md",
-    "docs/release/COVER-BRIEF.md": "docs/COVER-BRIEF.md"
+    "docs/release/COVER-BRIEF.md": "docs/COVER-BRIEF.md",
+    "docs/release/VARIANTS.md": "docs/VARIANTS.md",
+    "docs/release/COLLECTION.md": "docs/COLLECTION.md",
+    "docs/release/UPDATE_TOOL.md": "docs/UPDATE_TOOL.md",
+    "docs/release/RELEASE-v0.3.0-preview.1.md": "releases/v0.3.0-preview.1.md"
   },
-  "note": "Only the standalone self-hit implementation, build tools, mock tests and release documentation. Local diagnostics and earlier collection work are not publication inputs."
+  "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

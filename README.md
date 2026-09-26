@@ -1,40 +1,56 @@
-# P11-Enhanced — 一個模組，四種自命中範圍
+# P11-Enhanced — Projectile Collision Filter
 
-**前三個方案排除霰彈，第四個方案主動選用包含霰彈的處理。所有方案都內建同一份 P-11 0.2.1 自療程式。**
+四選一整合模組名稱為 **Projectile Collision Filter（投射物碰撞過濾器）**。GitHub 專案仍名為 P11-Enhanced；原模組身份不變，升級時可替換既有整合包。
 
-[English](README.en.md) · [下載 v0.3.0-preview.4](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.4) · [安裝與切換](docs/SELECTABLE.md) · [原理與範圍](docs/VARIANTS.md)
+**一個 Arsenal 模組、四種生效範圍。前三項排除霰彈，第四項可能造成嚴重性能影響。所有方案都包含同一份 P-11 0.2.1 自療程式。**
 
-直接把 **P11-Enhanced-Selectable-v0.3.0-preview.4-build25480438.zip** 匯入 Arsenal，在「Self-hit scope」下四選一：
+[English](README.en.md) · [下載 v0.3.0-preview.5](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.5)
 
-| 選項 | 內容 |
+## 從這裡開始
+
+| 我要做的事 | 入口 |
 |---|---|
-| 1. 僅 P-11，首次預選 | 只處理治療槍飛鏢，其他彈丸包含霰彈均略過 |
-| 2. 手槍排除霰彈 + P-11 | 八個候選手槍 ID 範圍；排除已知霰彈、多彈丸及表外類型 |
-| 3. 廣域排除霰彈 + P-11 | 本機原生武器投射物；使用相同前置排除 |
-| 4. 全部含霰彈 + P-11 | 包含霰彈與多彈丸的原生投射物候選；可能造成卡頓 |
+| 安裝、升級、切換範圍或回退 | [玩家操作指南](docs/SELECTABLE.md) |
+| 遊戲或 loader 更新後一次收集資料 | [離線更新工具](docs/UPDATE_TOOL.md) |
+| 交給 AI／Agent 接手、分析與修補 | [AGENTS.md](AGENTS.md) → [逐步接手指南](docs/AGENT_GUIDE.md) → [建置與移植](docs/PORTING.md) |
+| 驗證、建置與發布 | [驗證記錄](docs/VERIFICATION.md) · [發布指南](docs/PUBLISH.md) |
 
-第 2、3 項按彈種直接排除，在讀來源武器和逐顆寫入之前跳過。排除表共有 38 個 ID，含已辨識霰彈家族（包括獨頭變體）與表內全部多彈丸；為保守控制效能，也跳過表外未知類型及其他一次多彈丸機制。P-11 未修改。擴展部分仍會核對本機所有者、武器身份、原值，寫前重檢及寫後讀回；沒有 native hook 或生命／體力／彈藥／傷害數值寫入。
+## 選擇生效範圍
 
-32 顆霰彈的合成測試：排除版 **10 次讀取、0 寫入**，包含版 **985 次讀取、32 寫入**。仍遍歷槽位，不能把邏輯讀取量當成 FPS 或零卡頓證據。[效能與來源](docs/PERFORMANCE.md)
+將整合版 ZIP 直接匯入 Arsenal，在「**生效範圍**」中四選一：
 
-## 安裝
+| 選項 | 說明 |
+|---|---|
+| **僅治療手槍** | 僅讓 P-11 治療飛鏢對自己生效。推薦，首次預選。 |
+| **手槍全部** | 包含 P-11 與目前支援的手槍；排除霰彈及多彈丸類型。 |
+| **全部武器不包括霰彈槍** | 包含 P-11 與支援的武器投射物；排除霰彈及多彈丸類型。 |
+| **全部武器包括霰彈槍** | 包含霰彈及多彈丸類型，**可能造成嚴重性能影響**。 |
 
-關閉遊戲，另外安裝相容 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。停用舊三選一／独立自命中版本，匯入新包、確認範圍、啟用並重新部署。選项互斥，遊戲只載入所選方案。切換或停用也先關閉遊戲，再重新部署。
+「手槍全部」目前限八個候選手槍識別 ID；「全部武器」指目前支援的原生投射物，並不代表射線、光束、近戰、爆炸或 entity 投射物均已驗證。第 2、3 項也保守略過其他多彈丸機制及參考表外類型。[完整範圍與原理](docs/VARIANTS.md)
 
-對應 **Steam build 25480438 / EXE 1.8.46015.0 / loader v17 / API 1 / internal 16**。未知版本停止修改。
+## 六個下載檔
 
-P-11 原實作已有使用者基本成功回報；三個擴展方案、霰彈覆蓋及效能仍缺少完整遊戲內驗證，保持預覽版。「全部」是廣域原生投射物，並不保證射線、光束、近戰、爆炸或 entity 投射物均受支援。[驗證記錄](docs/VERIFICATION.md)
+[Release](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.5) 提供以下六個 ZIP。**模組只選一個啟用；工具包另行解壓，不匯入 Arsenal。**
 
-P-11 推薦搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/)，另外下載。使用者也回報第一人稱朝自己的腳射擊及已啟用 Experimental Infusion 的效果。[P-11 詳情](docs/SELF_HIT.md)
+| 下載檔 | 用途 |
+|---|---|
+| `Projectile-Collision-Filter-v0.3.0-preview.5-build25480438.zip` | **推薦**：整合版，Arsenal 內四選一 |
+| `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` | 固定「僅治療手槍」；保留已使用成功的原始包 |
+| `weapon_self_hit_pistols-0.1.2-build25480438-CANDIDATE.zip` | 固定「手槍全部」；排除霰彈 |
+| `weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip` | 固定「全部武器不包括霰彈槍」 |
+| `weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip` | 固定「全部武器包括霰彈槍」；**可能造成嚴重性能影響** |
+| `P11-Enhanced-Update-Toolkit-1.3.0-win-x64.zip` | 離線收集工具、完整源碼、建置工具與接手指南 |
 
-## 完整工具包與更新
+工具包包含可直接開啟的 `Source/P11-Enhanced/`，不必再解壓一層來源 ZIP。六個檔案的 SHA-256 見 Release 正文。GitHub 自動產生的 Source code 連結是額外的原始碼下載入口，不是可直接安裝的模組。舊 Release 保留供回退。
 
-**P11-Enhanced-Full-Kit-v0.3.0-preview.4.zip** 含一個四選一模組、公開來源及 Windows x64 離線工具。先解壓，再匯入 `Mods/` 中的 ZIP，外層工具包不是模組。
+## 安裝與更新
 
-更新後雙擊 **Collect-HD2-Update.cmd**，會辨識四種範圍、比較指紋及產生維修交接。工具不需 Python，不啟動遊戲、不讀程序、不部署、不上傳；不保證未知版本自動修復。霰彈排除表的來源與更新核對要求一併提供。
+關閉遊戲，另外安裝相容的 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。停用舊版或其他重複自命中包，匯入一個模組 ZIP、確認範圍、啟用並重新部署。切換、停用及回退也先關閉遊戲，再重新部署。若 Arsenal 提示相同模組身份，使用替換功能，或停用並移除舊項目後匯入。
 
-修正來源後，維修者可用 **Rebuild-Mods.cmd** 重建四選一包及四個獨立輸入包（Python 3.10+）。歷史 Release 保留。
+目前目標為 **Steam build 25480438 / EXE 1.8.46015.0 / Bingus Shared Loader v17 / API 1 / internal 16**。未知版本停止修改。遊戲更新後，完整解壓工具包，雙擊 `Collect-HD2-Update.cmd`，查看 `diagnostics` 的中文摘要及維修交接。工具不需 Python，不啟動遊戲、不讀程序、不部署、不上傳；一次收齊可取得的離線資料，不保證未知版本全自動修復。
 
-[建置與移植](docs/PORTING.md) · [更新工具](docs/UPDATE_TOOL.md) · [來源](docs/THIRD_PARTY.md) · [授權聲明](LICENSE-NOTICE.md)。未選定整體授權，與 Arrowhead Game Studios 無隸屬關係。程式與文件使用 OpenAI 工具協助製作。
+P-11 推薦搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/)，另外下載。隊友追蹤與動作模組由各自原模組管理，本包沒有改動或附帶它們。[P-11 用法](docs/SELF_HIT.md)
 
-升級提示：新包沿用相同模組身份。若 Arsenal 提示重複，使用管理器的替換功能，或先停用並移除舊三選一項目，再匯入新版；不要保留兩個同時啟用。 / Upgrade: the mod identity is unchanged. If Arsenal reports a duplicate, replace the old package or disable/remove its old entry before importing.
+P-11 原實作有使用者基本成功回報；擴展範圍、目前遊戲的完整霰彈覆蓋、組合共存及效能仍未全面實測，因此維持預覽版。程式只對經身份與所有權檢查的投射物清除來源碰撞排除位元，讓原生碰撞處理效果，沒有 native hook 或生命／體力／彈藥／傷害數值寫入。仍有槽位掃描，不能承諾零開銷。[效能與證據](docs/PERFORMANCE.md)
+
+[來源聲明](docs/THIRD_PARTY.md) · [授權聲明](LICENSE-NOTICE.md)。整體授權尚未選定；與 Arrowhead Game Studios 無隸屬關係。程式與文件使用 OpenAI 工具協助製作。

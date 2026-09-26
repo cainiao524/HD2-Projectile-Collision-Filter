@@ -15,10 +15,10 @@ from compatibility_report import compare_manifest, load_manifest
 from log_parser import parse_log
 from resource_archive import inspect_file, resource_hash
 from offline_locator import scan
-from maintenance import assess, load_metadata, write_handoff
+from maintenance import TOOLKIT_VERSION, assess, load_metadata, write_handoff
 
 ROOT=Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parents[1]
-PACKAGE_WORDS=re.compile(r'bingus.*loader|homing[ _-]?stim|p11.*(?:homing|self|enhanced)|stim.*self|weapon[ _-]self[ _-]hit',re.I)
+PACKAGE_WORDS=re.compile(r'bingus.*loader|homing[ _-]?stim|p11.*(?:homing|self|enhanced)|stim.*self|weapon[ _-]self[ _-]hit|projectile[ _-]collision[ _-]filter',re.I)
 LOG_WORDS=re.compile(r'^(?:BingusSharedLoader|StimHoming.*|HealingPistolEnhanced|P11StimSelfHit|StimSelfHit.*|P11ReadOnlyCapture|P11OwnedProjectileObserver|WeaponSelfHitCandidate)\.log$',re.I)
 SCHEMA_NAMES={'projectile_settings.json','generated_projectile_settings.json','generated_projectile_settings.dl_bin','projectile_settings.go','weapon_settings.go'}
 
@@ -182,7 +182,7 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     state=steam_state(game)
     for rel in ('bin/helldivers2.exe','data/game/game.dll'): watched[game/rel]=signature(game/rel)
     build=collect_build_info(game)
-    report={'schema_version':1,'collected_utc':datetime.now(timezone.utc).isoformat(),'build':build,'steam_state':state,'runtime_verified':False,'complete':False,'errors':errors,'packages':[],'schema_sources':[],'log_reports':[]}
+    report={'schema_version':1,'collector':{'name':'P11-Enhanced Update Toolkit','version':TOOLKIT_VERSION},'collected_utc':datetime.now(timezone.utc).isoformat(),'build':build,'steam_state':state,'runtime_verified':False,'complete':False,'errors':errors,'packages':[],'schema_sources':[],'log_reports':[]}
     for key,rel in [('executable','bin/helldivers2.exe'),('game_dll','data/game/game.dll')]:
         try:
             if not build['files'][key].get('sha256'): raise ValueError('required binary missing or unreadable')
@@ -265,7 +265,7 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
         c=item['comparison']; summary.append(f"- {c['patch_id']}: {c['status']}")
         for candidate in item['offline_candidates']:
             summary.append(f"  - {candidate['id']}: {candidate['status']}；候選 {len(candidate['candidates'])} 個，不能據此啟用功能。")
-    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的四選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。任兩個擴展方案同時部署時必須先排除衝突。','- 維修時提供本診斷 ZIP 與公開 Source ZIP；維修要求已寫入「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
+    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的四選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。任兩個擴展方案同時部署時必須先排除衝突。','- 維修時使用本診斷 ZIP 與同版本工具包內的 Source/P11-Enhanced/；先讀該源碼的 AGENTS.md 與 docs/AGENT_GUIDE.md。路徑相對於工具包解壓根目錄，詳細要求見本診斷的「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
     if report['deployed']['mutually_exclusive_scopes_present']:
         summary += ['', '## 互斥版本衝突', '多個擴展候選同時存在，執行時會停止。關閉遊戲後在 Arsenal 四選一並重新部署。']
     if any(f['required_p11_missing'] for f in report['feature_assessment']):

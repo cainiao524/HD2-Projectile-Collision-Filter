@@ -1,23 +1,35 @@
-# 四方案範圍與原理
+# 四種生效範圍與實現原理
 
-四個互斥方案均內建同一份 P-11 0.2.1，Lua SHA256：
+四個方案互斥，全部包含同一份 P-11 0.2.1。P-11 Lua SHA-256：
 `b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a`。
 
-1. **僅 P-11**：只處理本機 P-11 的 type 318 飛鏢；霰彈與其他武器原本就不會進入修改流程，成功程式未更改。
-2. **手槍排除霰彈**：P-11 加八個候選手槍 ID；先按彈丸種類排除霰彈，再做原本的武器／所有權篩選。
-3. **廣域排除霰彈**：P-11 加本機武器原生投射物；同樣先排除霰彈。
-4. **全部含霰彈**：P-11 加包含霰彈與多彈丸的廣域候選，逐顆保留完整身份與寫前重檢；可能造成較高負擔。
+| 選項 | 程式實際處理範圍 |
+|---|---|
+| **僅治療手槍** | 僅本機 P-11 的 type 318 飛鏢；其他武器包括霰彈均略過 |
+| **手槍全部** | 同一份 P-11 加八個候選手槍 ID；先排除霰彈與多彈丸，再檢查來源武器和所有權 |
+| **全部武器不包括霰彈槍** | 同一份 P-11 加支援的本機原生武器投射物；同樣先排除霰彈 |
+| **全部武器包括霰彈槍** | 同一份 P-11 加包含霰彈、多彈丸的原生投射物候選；**可能造成嚴重性能影響** |
 
-第 2、3 項的 38 個排除 ID 包含 27 個可由舊名稱與當前參考表欄位對上的霰彈記錄，以及表內全部 32 個多彈丸記錄的聯集。名稱匹配使用三個名稱雜湊、口徑、彈丸數；不同數字 ID 可共用同名資料。包括霰彈的獨頭變體；其他一次多彈丸機制也保守略過。表外類型不進入後續查詢。詳見 maintenance/projectile-exclusions-25480438.json 與 [來源界限](PERFORMANCE.md)。
+整合版與對應獨立版使用相同遊戲資源。短文案不改變玩法；「手槍全部」不是已驗證全部手槍，「全部武器」不是所有傷害機制。第 4 項也未增加射線、光束、近戰、爆炸或 entity 投射物支援。
 
-手槍資源候選：P-2 Peacemaker、P-4 Senator、P-19 Redeemer、P-69 Veto、P-92 Warrant、P-113 Verdict、P/40-K Bolt Pistol、M6C SOCOM Pistol。清單來自較早離線索引，尚未驗證目前遊戲內所有實例。霰彈排除優先於這份武器清單，因此即使合格手槍發出排除彈種也不修改。
+## 投射物資料修改
 
-擴展核心始終排除 P-11 資源及 type 318，由同包原 P-11 addon 處理。只有本機來源、有效武器登記與附件所有者核對通過後，才清除槽位 0x20；保留其他位元、寫前完整依賴核對和寫後讀回。沒有全域定義、血量、體力、彈藥或傷害數值寫入。
+只識別本機玩家射出的有效武器投射物。核對槽位仍有效、來源與所有者、武器登記／附件、類型、原旗標和版本後，才清除旗標中的來源碰撞排除位元 `0x20`，保留其他位元。寫前重新檢查依據，寫後讀回確認；實際碰撞和效果由遊戲原生邏輯處理。
 
-第四項並不擴展到其他原生機制：射線、光束、近戰、爆炸和 entity 投射物仍未驗證。所有擴展、組合共存與並行時序仍是候選。未知遊戲版本停止修改，不能只替換雜湊。
+不修改全域武器定義、生命值、體力、彈藥或傷害數值，也沒有 native hook。關閉功能後不再處理新彈丸，既有投射物保留原生生命週期，不把失效槽位當作可還原物件。
 
-## English
+擴展核心排除 P-11 資源與 type 318，由同包獨立的原始 P-11 addon 處理。這避免兩套核心重複修改 P-11。仍需對每顆適用投射物做身份與寫前核對，不能把一次分類視為永久授權。
 
-Four exclusive choices: original P-11; pistols excluding shotguns; broad native projectiles excluding shotguns; or broad including shotguns. Every choice includes unchanged P-11. The filtered scopes reject the union of known shotgun records and every multishot record in the pinned table, plus out-of-table types, before source lookup. This also conservatively skips other multishot mechanisms.
+## 霰彈與手槍分類
 
-Expanded guards remain unchanged, and the fourth choice retains per-projectile work. Pinned offline classification does not prove complete current-game weapon coverage, timing, native collisions or FPS. Broad is not universal damage-system support.
+第 2、3 項的 38 個排除 ID 是 27 個已辨識霰彈記錄與參考表內全部 32 個多彈丸記錄的聯集。霰彈包括獨頭變體；其他一次多彈丸機制亦保守排除，參考表外類型略過。排除發生在來源／武器查詢之前，主武器和手槍使用同一規則。第 1 項只認 P-11，天然不處理霰彈。
+
+手槍清單：P-2 Peacemaker、P-4 Senator、P-19 Redeemer、P-69 Veto、P-92 Warrant、P-113 Verdict、P/40-K Bolt Pistol、M6C SOCOM Pistol。清單來自離線索引，未驗證目前遊戲中全部實例；霰彈排除優先於武器清單。
+
+排除資料來源與指紋記錄於 `maintenance/projectile-exclusions-25480438.json`；名稱對照使用三個名稱雜湊、口徑及彈丸數。數字匹配是離線證據，不能代表当前版本玩法已驗證。[效能與來源界限](PERFORMANCE.md)
+
+## 更新界限
+
+未知版本停止修改。更新必須重新核對資料布局、身份與所有權、寫入條件、霰彈分類和碰撞時機；不能只換雜湊或套用候選地址。
+
+P-11 有既有基本自療成功回報。三種擴展方案的自傷、武器覆蓋、與 P-11 的原生共存及並行時序仍是候選。固定槽位掃描仍存在，排除霰彈不等於零性能開銷。[驗證記錄](VERIFICATION.md) · [逐步接手指南](AGENT_GUIDE.md)

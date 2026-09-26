@@ -1,30 +1,54 @@
-# P11-Enhanced — One mod, four self-hit scopes
+# P11-Enhanced — Projectile Collision Filter
 
-**The first three choices exclude shotguns; the fourth explicitly includes them. Every choice preserves original P-11 0.2.1 healing.**
+The four-choice mod is named **Projectile Collision Filter（投射物碰撞過濾器）**. The repository remains P11-Enhanced. The mod identity is unchanged, so replace the existing selectable package when upgrading.
 
-[繁體中文](README.md) · [Download v0.3.0-preview.4](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.4) · [Install guide](docs/SELECTABLE.md)
+**One Arsenal mod, four exclusive scopes. The first three exclude shotguns; the fourth may cause severe performance impact. All preserve original P-11 0.2.1.**
 
-Import **P11-Enhanced-Selectable-v0.3.0-preview.4-build25480438.zip** directly into Arsenal, then select one exclusive sub-option:
+[繁體中文](README.md) · [Download v0.3.0-preview.5](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.5)
 
-| Choice | Scope |
+| Task | Start here |
 |---|---|
-| 1. P-11 only, initially selected | Only original healing darts; other projectiles are skipped |
-| 2. Pistols, no shotguns + P-11 | Eight candidate pistol resource IDs with early projectile filtering |
-| 3. Broad, no shotguns + P-11 | Local native weapon projectiles with the same early filter |
-| 4. Include shotguns + P-11 | Broad native projectile scope including shotguns; potentially heavy |
+| Install, switch, upgrade or roll back | [Player guide](docs/SELECTABLE.md) |
+| Collect evidence after a game/loader update | [Offline diagnostics](docs/UPDATE_TOOL.md) |
+| Hand over to another developer or AI agent | [AGENTS.md](AGENTS.md), then [step-by-step runbook](docs/AGENT_GUIDE.md) and [porting guide](docs/PORTING.md) |
+| Validate, build and publish | [Verification](docs/VERIFICATION.md) · [Publishing](docs/PUBLISH.md) |
 
-Filtered scopes skip 38 pinned shotgun/multishot types before source or weapon lookup. Named shotgun families include single-projectile variants; all multishot rows in the reference table and out-of-table types are excluded conservatively. Other multishot mechanisms can therefore be skipped too. The P-11 implementation is unchanged.
+The detailed operating and maintenance guides are in Traditional Chinese. Commands, file names and report fields retain their original spelling.
 
-Synthetic 32-pellet results: filtered scopes make 10 logical reads and no writes; inclusive scope makes 985 reads and 32 writes. The fixed-slot scan remains. These are not game FPS measurements or proof of stutter elimination. [Performance and evidence](docs/PERFORMANCE.md).
+## Choices and downloads
 
-Close the game, install the compatible [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) separately, disable old selectable/standalone variants, import, confirm the scope and redeploy. Repeat the close-and-redeploy cycle when switching. Confirm the choice after upgrading from the three-way selector.
+Import the selectable ZIP into Arsenal. Under **生效範圍** (scope), select one:
 
-Target: build 25480438 / EXE 1.8.46015.0 / loader v17 / API 1 / internal 16. Unknown versions stop writes. Expanded scopes, current-game shotgun coverage and performance remain unverified candidates. “All” refers to the supported native subsystem, not universal hitscan/beam/melee/explosion/entity-projectile support. [Verification](docs/VERIFICATION.md).
+| Exact option label | Meaning |
+|---|---|
+| 僅治療手槍 | P-11 only; recommended and initially selected |
+| 手槍全部 | Supported pistols plus P-11; excludes shotguns and multishot types |
+| 全部武器不包括霰彈槍 | Supported native weapon projectiles plus P-11; excludes shotguns and multishot types |
+| 全部武器包括霰彈槍 | Includes shotguns and multishot types; **may cause severe performance impact** |
 
-Recommended companion: [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/), separately downloaded. Native collision performs healing/damage; no native hooks or health/stamina/ammo/damage writes.
+“All pistols” is limited to the existing eight candidate pistol IDs. “All weapons” means the supported native projectile subsystem, not verified universal hitscan, beam, melee, explosion or entity-projectile support. Filtered scopes also conservatively skip other multishot mechanisms and types outside the pinned table. [Scope and implementation](docs/VARIANTS.md).
 
-**P11-Enhanced-Full-Kit-v0.3.0-preview.4.zip** contains the one mod, source and portable offline tool. Extract first; import the ZIP inside Mods. Run Collect-HD2-Update.cmd after updates for four-scope diagnostics and a repair handoff. No Python, game launch, process access, deployment or upload; automatic repair is not guaranteed. Rebuild-Mods.cmd rebuilds edited sources with Python 3.10+.
+The release has exactly six manually uploaded ZIPs:
 
-[Build and porting](docs/PORTING.md) · [Sources](docs/THIRD_PARTY.md) · [License notice](LICENSE-NOTICE.md). No overall project license has been selected.
+| File | Purpose |
+|---|---|
+| `Projectile-Collision-Filter-v0.3.0-preview.5-build25480438.zip` | Recommended four-choice mod |
+| `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` | Unchanged original P-11-only mod |
+| `weapon_self_hit_pistols-0.1.2-build25480438-CANDIDATE.zip` | Fixed pistol scope, excluding shotguns |
+| `weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip` | Fixed native scope, excluding shotguns |
+| `weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip` | Fixed inclusive scope; **potentially severe performance impact** |
+| `P11-Enhanced-Update-Toolkit-1.3.0-win-x64.zip` | Portable offline collector, complete matching source and maintenance guides |
 
-升級提示：新包沿用相同模組身份。若 Arsenal 提示重複，使用管理器的替換功能，或先停用並移除舊三選一項目，再匯入新版；不要保留兩個同時啟用。 / Upgrade: the mod identity is unchanged. If Arsenal reports a duplicate, replace the old package or disable/remove its old entry before importing.
+**Enable only one of the five mod packages.** The toolkit is extracted separately and is not imported into Arsenal. Source is directly available under `Source/P11-Enhanced/`. All six SHA-256 values are in the release body; GitHub's automatic Source code links are additional source downloads. Historical releases remain available.
+
+## Installation and maintenance
+
+Close the game. Install compatible [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) separately, disable old selectable/standalone self-hit packages, import one new ZIP, confirm scope, enable and redeploy. Close and redeploy when switching or disabling too. If Arsenal detects the unchanged mod identity, replace the old package or disable/remove its old entry before importing.
+
+Target: **build 25480438 / EXE 1.8.46015.0 / loader v17 / API 1 / internal 16**. Unknown versions stop writes. After updates finish, extract the toolkit and run `Collect-HD2-Update.cmd`; inspect the summary and repair handoff in `diagnostics`. No Python is required for collection. It does not launch the game, read running processes, deploy, upload or promise automatic repair.
+
+Recommended companion: [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/), downloaded separately. Teammate homing and animation mods remain independently managed and are not bundled or changed.
+
+Only original P-11 basic healing has user confirmation. Expanded gameplay, complete current-game shotgun coverage, coexistence and performance remain candidates. The implementation clears a checked projectile's source-collision exclusion flag, with native collision handling the effect; no native hooks or health/stamina/ammo/damage writes. Fixed-slot scanning still exists, so zero overhead is not promised. [Evidence and performance](docs/PERFORMANCE.md).
+
+[Third-party sources](docs/THIRD_PARTY.md) · [License notice](LICENSE-NOTICE.md). No overall project license has been selected. Unaffiliated with Arrowhead Game Studios; made with assistance from OpenAI tools.

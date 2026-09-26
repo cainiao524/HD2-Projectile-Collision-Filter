@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.0-preview.5 — Clear choices, six downloads and maintenance handoff
+
+- Rename the selectable mod to Projectile Collision Filter（投射物碰撞過濾器） while retaining the P11-Enhanced repository, mod identity and runtime.
+- Simplify the four Arsenal labels under 生效範圍; preserve the first-three shotgun exclusion and explicitly warn that the inclusive fourth scope may cause severe performance impact.
+- Preserve original P-11 0.2.1, expanded runtime 0.1.2 and all four standalone package bytes; no gameplay change.
+- Publish five alternative mod ZIPs plus Update Toolkit 1.3.0. Source is directly available under Source/P11-Enhanced; no additional Full Kit, Source ZIP or checksum asset.
+- Add AGENTS.md, player/developer navigation, a step-by-step collect/triage/port/test/publish runbook and a handoff template. Define canonical documentation and explicit alias synchronization.
+- Improve diagnostic handoff and record collector version; publish a six-asset validation/publishing/remote-verification CLI.
+- Retain historical releases and gameplay evidence limits. Hash matches, offline tests and clearer packaging do not establish new gameplay or FPS results.
+
 ## v0.3.0-preview.4 — Early shotgun exclusion and fourth opt-in scope
 
 - Add a broad no-shotgun scope; first three selector choices exclude shotguns, fourth includes them.

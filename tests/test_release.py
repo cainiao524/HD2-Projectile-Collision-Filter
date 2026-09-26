@@ -11,7 +11,7 @@ import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
-from build_variants_release import build_mods, collection_files, source_files, SELF_NAME, SELF_HASH
+from build_variants_release import build_mods, toolkit_files, source_files, public_asset_names, TOOLKIT_NAME, SELF_NAME, SELF_HASH
 from resource_archive import lua_resources, make_lua_archive, make_archive
 from build_selectable_mod import NAME as SELECTABLE_NAME, CHOICES, ARCHIVE
 
@@ -52,10 +52,15 @@ class ReleaseTests(unittest.TestCase):
         with zipfile.ZipFile(io.BytesIO(self.packages[SELECTABLE_NAME])) as z:
             self.assertIsNone(z.testzip())
             manifest=json.loads(z.read('manifest.json'))
+            self.assertTrue(manifest['Name'].startswith('Projectile Collision Filter '))
             self.assertEqual(len(manifest['Options']),1)
             parent=manifest['Options'][0]
+            self.assertEqual(parent['Name'],'生效範圍')
             self.assertFalse(parent.get('Include'))
             self.assertEqual(len(parent['SubOptions']),4)
+            self.assertEqual([item['Name'] for item in parent['SubOptions']],
+                             ['僅治療手槍','手槍全部','全部武器不包括霰彈槍','全部武器包括霰彈槍'])
+            self.assertIn('可能造成嚴重性能影響',parent['SubOptions'][3]['Description'])
             self.assertEqual(parent['SubOptions'][0]['Include'],['Variants/P11'])
             deployed=set()
             for choice,(folder,package,label,_) in zip(parent['SubOptions'],CHOICES):
@@ -84,12 +89,29 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual({r['declaration']:r['body'] for r in lua_resources(io.BytesIO(raw),len(raw))},items)
         self.assertEqual(make_lua_archive({'mods/test/a':b'x'}),make_archive('mods/test/a',b'x'))
 
-    def test_collection_contains_only_explicit_inputs(self):
-        selected={SELECTABLE_NAME:self.packages[SELECTABLE_NAME]}
-        files=collection_files({'P11-Update.exe':b'fixture'},selected,'source.zip',b'source')
-        self.assertEqual(files['Mods/'+SELECTABLE_NAME],selected[SELECTABLE_NAME])
-        self.assertFalse(any(n.startswith(('diagnostics/','binaries/','local-settings')) for n in files))
-        self.assertEqual(len([n for n in files if n.startswith('Mods/')]),1)
+    def test_six_downloads_and_toolkit_source_are_complete(self):
+        sources=source_files()
+        files=toolkit_files(sources,b'fixture',self.packages,{'runtime-licenses/test.txt':b'license'})
+        self.assertEqual(set(public_asset_names()),set(self.packages)|{TOOLKIT_NAME})
+        self.assertEqual(len(public_asset_names()),6)
+        self.assertTrue(all(n.endswith('.zip') for n in public_asset_names()))
+        self.assertEqual({n.removeprefix('Source/P11-Enhanced/'):d for n,d in files.items()
+                          if n.startswith('Source/P11-Enhanced/')},sources)
+        self.assertEqual(files['README.md'],sources['docs/COLLECTION.md'])
+        self.assertIn('Source/P11-Enhanced/AGENTS.md',files['AGENTS.md'].decode())
+        self.assertEqual(set(line.split('  ')[1] for line in files['MOD-SHA256SUMS.txt'].decode().splitlines()),set(self.packages))
+        self.assertFalse(any(n.startswith(('diagnostics/','binaries/','Mods/','local-settings')) for n in files))
+        self.assertFalse(any(n.endswith('.zip') for n in files))
+
+    def test_standalone_packages_preserve_preview4_bytes(self):
+        expected={
+            SELF_NAME:SELF_HASH,
+            'weapon_self_hit_pistols-0.1.2-build25480438-CANDIDATE.zip':'7cdb730fce4c8da0f07b5868b5d652ddeea80aee4765720de59b6f8b4d4a11f2',
+            'weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip':'001888c8c614b3df53052499eee974bb7e8b47cecffdb9284c3d3af38c76ba3f',
+            'weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip':'e19b0d528d0e8cdd195918d8de8af3f555446d0991666c00e5ae91b82946c206',
+        }
+        for name,digest in expected.items():
+            self.assertEqual(hashlib.sha256(self.packages[name]).hexdigest(),digest,name)
 
     def test_public_source_excludes_private_evidence(self):
         files=source_files()

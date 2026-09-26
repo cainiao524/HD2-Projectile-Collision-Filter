@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "One selectable self-hit mod with four exclusive scopes; first three exclude shotguns, fourth opts in. Offline diagnostics and repair handoff.",
+  "scope": "One selectable self-hit mod, four standalone alternatives, and a source-inclusive offline maintenance toolkit; six public ZIP assets.",
   "files": [
     ".gitignore",
     ".gitattributes",
@@ -51,7 +51,15 @@
     "docs/release/RELEASE-v0.3.0-preview.3.md",
     "maintenance/projectile-exclusions-25480438.json",
     "tools/verify_projectile_filter.py",
-    "docs/release/RELEASE-v0.3.0-preview.4.md"
+    "docs/release/RELEASE-v0.3.0-preview.4.md",
+    "AGENTS.md",
+    "docs/release/AGENT_GUIDE.md",
+    "docs/release/HANDOFF_TEMPLATE.md",
+    "docs/release/RELEASE-v0.3.0-preview.5.md",
+    "tools/release_manager.py",
+    "tests/test_release_manager.py",
+    "tools/sync_docs.py",
+    "tests/test_sync_docs.py"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -86,7 +94,10 @@
     "docs/release/RELEASE-v0.3.0-preview.2.md": "releases/v0.3.0-preview.2.md",
     "docs/release/SELECTABLE.md": "docs/SELECTABLE.md",
     "docs/release/RELEASE-v0.3.0-preview.3.md": "releases/v0.3.0-preview.3.md",
-    "docs/release/RELEASE-v0.3.0-preview.4.md": "releases/v0.3.0-preview.4.md"
+    "docs/release/RELEASE-v0.3.0-preview.4.md": "releases/v0.3.0-preview.4.md",
+    "docs/release/AGENT_GUIDE.md": "docs/AGENT_GUIDE.md",
+    "docs/release/HANDOFF_TEMPLATE.md": "docs/HANDOFF_TEMPLATE.md",
+    "docs/release/RELEASE-v0.3.0-preview.5.md": "releases/v0.3.0-preview.5.md"
   },
   "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

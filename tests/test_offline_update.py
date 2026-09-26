@@ -5,6 +5,7 @@ import struct
 import sys
 import tempfile
 import unittest
+import zipfile
 from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -31,6 +32,19 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(len(result['build']['files']['game_dll']['pe']['sections']),1)
         self.assertNotIn('76561199999999999',json.dumps(result))
         self.assertNotIn('LastOwner',json.dumps(result))
+    def test_renamed_selectable_package_is_found_in_downloads(self):
+        downloads=self.root/'Downloads';downloads.mkdir()
+        name='Projectile-Collision-Filter-v0.3.0-preview.5-build25480438.zip'
+        with zipfile.ZipFile(downloads/name,'w') as archive:
+            archive.writestr('manifest.json',json.dumps({'Name':'Projectile Collision Filter'}))
+        output=self.root/'cli-diagnostics'
+        with patch.object(Path,'home',return_value=self.root),patch.object(sys,'argv',
+            ['offline_update.py','--game',str(self.game),'--output',str(output),'--logs',str(self.root/'empty-logs')]):
+            self.assertEqual(collector.main(),0)
+        latest=json.loads((output/'latest.json').read_bytes())
+        result=json.loads((output/latest['folder']/'report.json').read_bytes())
+        self.assertTrue(any(item['file']==name for item in result['packages']))
+        self.assertFalse(result['runtime_verified'])
     def test_update_in_progress_is_incomplete(self):
         self.manifest.write_text(self.manifest.read_text().replace('"4"','"1026"'))
         self.assertFalse(self.collect()['complete'])

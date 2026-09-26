@@ -11,12 +11,14 @@ import sys
 import time
 import zipfile
 from build_self_hit_release import NAME as SELF_NAME, EXPECTED as SELF_HASH, export_source, zip_files
-from build_selectable_mod import VERSION, NAME as SELECTABLE_NAME, build_selectable
+from build_selectable_mod import VERSION, NAME as SELECTABLE_NAME, CHOICES, build_selectable
+from maintenance import TOOLKIT_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist/release'
 TOOLS = ('collect_build_info.py', 'compatibility_report.py', 'resource_archive.py',
          'offline_locator.py', 'offline_update.py', 'log_parser.py', 'maintenance.py', 'portable_entry.py')
+TOOLKIT_NAME = f'P11-Enhanced-Update-Toolkit-{TOOLKIT_VERSION}-win-x64.zip'
 
 def sha(data): return hashlib.sha256(data).hexdigest()
 def json_bytes(value): return (json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8')
@@ -90,43 +92,42 @@ def runtime_licenses():
     if len(files)!=2:raise ValueError('Missing bundled runtime license')
     return files
 
-def collection_files(tool_files,packages,source_name,source_data):
-    # Explicit maps only: never walk a user extraction folder or copy diagnostics.
-    files=dict(tool_files)
-    files.update({'Mods/'+n:d for n,d in packages.items()})
-    files['Source/'+source_name]=source_data
-    files['README.md']=(ROOT/'docs/release/COLLECTION.md').read_bytes()
-    for n in ('UPDATE_TOOL','VARIANTS','VERIFICATION','SELF_HIT','PORTING','THIRD_PARTY','PERFORMANCE','SELECTABLE'):
-        files['docs/'+n+'.md']=(ROOT/'docs/release'/f'{n}.md').read_bytes()
-    files['MOD-SHA256SUMS.txt']=''.join(sha(d)+'  Mods/'+n+'\n' for n,d in sorted(packages.items())).encode('ascii')
+def toolkit_files(sources, exe, packages, licenses):
+    """Explicit public inputs only; the toolkit is not an installable mod."""
+    files = {
+        'P11-Update.exe': exe,
+        'Collect-HD2-Update.cmd': sources['Collect-HD2-Update.cmd'],
+        'README.md': sources['docs/COLLECTION.md'],
+        'LICENSE-NOTICE.md': sources['LICENSE-NOTICE.md'],
+        'AGENTS.md': ('# P11-Enhanced 維護工具包\n\n'
+                      '先閱讀 README.md，再進入 Source/P11-Enhanced/。\n'
+                      '開發與修補必須先讀 Source/P11-Enhanced/AGENTS.md，'
+                      '依 Source/P11-Enhanced/docs/AGENT_GUIDE.md 操作。\n'
+                      '本目錄只執行離線收集；建置命令從源碼目錄執行。\n'
+                      'diagnostics/ 是私人證據，不屬於源碼或發布內容。\n').encode('utf-8'),
+        'MOD-SHA256SUMS.txt': ''.join(sha(d)+'  '+n+'\n' for n,d in sorted(packages.items())).encode('ascii'),
+    }
+    files.update({'tools/'+n:sources['tools/'+n] for n in TOOLS})
+    files.update({n:d for n,d in sources.items() if n.startswith(('maintenance/','patches/'))})
+    files.update({'Source/P11-Enhanced/'+n:d for n,d in sources.items()})
+    files.update(licenses)
     return files
 
+
+def public_asset_names():
+    return [SELECTABLE_NAME, *(choice[1] for choice in CHOICES), TOOLKIT_NAME]
+
 def build(reuse=False):
-    # Retain standalone builds in dist for reproducibility and historical users.
-    # Publish one installable mod; the full kit also contains only that mod.
-    all_packages=build_mods()
-    packages={SELECTABLE_NAME:all_packages[SELECTABLE_NAME]}
+    packages=build_mods()
     exe=build_portable(reuse)
     files=source_files();export_source(files)
     DIST.mkdir(parents=True,exist_ok=True)
     for n,d in packages.items():(DIST/n).write_bytes(d)
-    source_name='P11-Enhanced-Source-'+VERSION+'.zip'
-    zip_files(DIST/source_name,{'P11-Enhanced/'+n:d for n,d in files.items()})
-    toolkit={'P11-Update.exe':exe.read_bytes(),
-             'Collect-HD2-Update.cmd':files['Collect-HD2-Update.cmd'],
-             'README.md':files['docs/UPDATE_TOOL.md'],
-             'LICENSE-NOTICE.md':files['LICENSE-NOTICE.md']}
-    for n in TOOLS:toolkit['tools/'+n]=files['tools/'+n]
-    for n,d in files.items():
-        if n.startswith(('maintenance/','patches/')):toolkit[n]=d
-    toolkit.update(runtime_licenses())
-    tool_name='P11-Enhanced-Update-Toolkit-1.2.0-win-x64.zip'
-    collection_name='P11-Enhanced-Full-Kit-'+VERSION+'.zip'
-    zip_files(DIST/tool_name,toolkit)
-    zip_files(DIST/collection_name,collection_files(toolkit,packages,source_name,(DIST/source_name).read_bytes()))
-    names=list(packages)+[tool_name,source_name,collection_name]
+    toolkit=toolkit_files(files,exe.read_bytes(),packages,runtime_licenses())
+    zip_files(DIST/TOOLKIT_NAME,toolkit)
+    names=public_asset_names()
     (DIST/'SHA256SUMS.txt').write_bytes(''.join(sha((DIST/n).read_bytes())+'  '+n+'\n' for n in names).encode('ascii'))
-    names.append('SHA256SUMS.txt')
+    # The checksum file is local-only; the publisher includes its table in release notes.
     report={'project':'P11-Enhanced','release':VERSION,'prerelease':True,'public_assets':names,
             'published':False,'self_hit_original_preserved':True,'expanded_scopes_gameplay_verified':False,
             'source_manifest':{n:sha(d) for n,d in files.items()},

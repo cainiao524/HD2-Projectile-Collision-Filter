@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0-preview.4 — Early shotgun exclusion and fourth opt-in scope
+
+- Add a broad no-shotgun scope; first three selector choices exclude shotguns, fourth includes them.
+- Filter 38 pinned shotgun/multishot types before source lookup; filtered scopes skip out-of-table types.
+- Preserve P-11 bytes, ownership checks and all per-write guards; candidate 0.1.2.
+- Track four scopes and all expanded conflicts in toolkit 1.2.0; include filter provenance and offline verification.
+- Add shotgun/burst/policy tests; expanded Lua now has 638 mock assertions.
+
+
 ## v0.3.0-preview.3 — Arsenal three-way selector
 
 - One importable mod with a single parent and three exclusive sub-options; P-11 is listed first.

@@ -24,4 +24,17 @@ all.scope='native_weapons'
 local second=Entry(core,version,make,make,all,env)
 check(second.status=='stopped' and second.reason:find('one weapon self-hit',1,true),'mutual exclusion')
 check(env.update==old,'second scope does not replace active callback')
+for _,a in ipairs({'pistols','native_no_shotguns','native_weapons'}) do
+ for _,b in ipairs({'pistols','native_no_shotguns','native_weapons'}) do
+  if a~=b then
+   local e={unpack=unpack,update=function() end,CowboyBingusModLoader=env.CowboyBingusModLoader}
+   local pa,pb={},{};for k,v in pairs(Profile) do pa[k]=v;pb[k]=v end
+   pa.scope=a;pb.scope=b
+   local writes=0;local stub={tick=function() writes=writes+1;return 1,'ready' end}
+   local first=Entry(stub,version,make,make,pa,e);e.update()
+   local second=Entry(stub,version,make,make,pb,e);e.update()
+   check(first.status=='stopped' and second.status=='stopped' and writes==0,'every expanded pair stops before candidate writes')
+  end
+ end
+end
 return checks

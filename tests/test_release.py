@@ -36,17 +36,26 @@ class ReleaseTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(p11[0]['body']).hexdigest(),'b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a')
                 self.assertEqual(z.read('Source/p11_self_hit_dataonly.lua'),p11[0]['body'])
                 self.assertFalse(any(r['resource_hash']=='7251fdd9bb62480a' for r in resources))
-        self.assertEqual(len(guids),3)
+                if name!=SELF_NAME:
+                    profile=json.loads(z.read('Source/profile.json'))
+                    if profile['scope']=='native_weapons':
+                        self.assertFalse(profile['exclude_shotguns'])
+                        self.assertEqual(profile['excluded_projectile_types'],{})
+                    else:
+                        self.assertTrue(profile['exclude_shotguns'])
+                        self.assertEqual(len(profile['excluded_projectile_types']),38)
+                        self.assertNotIn('318',profile['excluded_projectile_types'])
+        self.assertEqual(len(guids),4)
         self.assertEqual(hashlib.sha256(self.packages[SELF_NAME]).hexdigest(),SELF_HASH)
 
-    def test_single_mod_has_three_exclusive_suboptions_with_original_payloads(self):
+    def test_single_mod_has_four_exclusive_suboptions_with_original_payloads(self):
         with zipfile.ZipFile(io.BytesIO(self.packages[SELECTABLE_NAME])) as z:
             self.assertIsNone(z.testzip())
             manifest=json.loads(z.read('manifest.json'))
             self.assertEqual(len(manifest['Options']),1)
             parent=manifest['Options'][0]
             self.assertFalse(parent.get('Include'))
-            self.assertEqual(len(parent['SubOptions']),3)
+            self.assertEqual(len(parent['SubOptions']),4)
             self.assertEqual(parent['SubOptions'][0]['Include'],['Variants/P11'])
             deployed=set()
             for choice,(folder,package,label,_) in zip(parent['SubOptions'],CHOICES):
@@ -88,6 +97,6 @@ class ReleaseTests(unittest.TestCase):
             self.assertFalse(name.startswith(('research/','work/','vendor/','diagnostics/','local-history/')))
             self.assertNotIn(Path(name).suffix.lower(),('.bin','.exe','.dll','.log'))
         self.assertEqual(set(json.loads(files['maintenance/baselines.json'])['baselines'][0]['components']),
-                         {'self_heal','pistol_self_hit','native_weapon_self_hit'})
+                         {'self_heal','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'})
 
 if __name__=='__main__':unittest.main()

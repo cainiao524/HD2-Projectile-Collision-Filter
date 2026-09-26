@@ -93,8 +93,8 @@ function verify(choice){
  // Arsenal auto-enables a sole parent option even when all-options preference is off.
  assert.equal(mod.options[0].enabled,true);
  assert.equal(mod.options[0].include.length,0);
- assert.equal(mod.options[0].suboptions.length,3);
- for(let i=0;i<3;i++){
+ assert.equal(mod.options[0].suboptions.length,4);
+ for(let i=0;i<4;i++){
   const sub=mod.options[0].suboptions[i];
   assert.equal(sub.name,manifest.Options[0].SubOptions[i].Name);
   assert.equal(sub.include[0],manifest.Options[0].SubOptions[i].Include[0]);
@@ -110,14 +110,14 @@ function verify(choice){
   mod=result[0];save(mod);
   verify(enabled&&parent?choice:null);
  }
- for(let old=0;old<3;old++)for(let next=0;next<3;next++){
+ for(let old=0;old<4;old++)for(let next=0;next<4;next++){
   await deploy(old);await deploy(next);checks.push({from:old,to:next,payload_matches:true});
  }
  await deploy(null);await deploy(1,false);await deploy(2,true,false);await deploy(0);
  await remover.purgeMods();assert.equal(listFiles(game).length,0);
  const result={manager_version:JSON.parse(fs.readFileSync(path.join(source,'package.json'))).version,
   release_sha256:digest(fs.readFileSync(release)),one_mod:true,one_parent_option:true,
-  exclusive_suboptions:3,default_suboption:0,import_enable_preference:records.setAllOptionsActive,
+  exclusive_suboptions:4,default_suboption:0,import_enable_preference:records.setAllOptionsActive,
   checks,no_selection_parent_disabled_mod_disabled:true,purge_leaves_fixture_empty:true,
   payload_hashes_preserved:true,live_profile_changed:false,game_launched:false};
  fs.writeFileSync(path.join(base,'arsenal-selectable-'+(records.setAllOptionsActive?'on':'off')+'.json'),JSON.stringify(result,null,2));

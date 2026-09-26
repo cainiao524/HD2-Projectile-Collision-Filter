@@ -10,9 +10,11 @@ LABELS = {
     'offline_evidence_insufficient': '離線資料不足',
     'collection_incomplete': '收集不完整，不能判定',
 }
-FEATURES = {'self_heal': '僅 P-11 自命中治療', 'pistol_self_hit': '手槍系列自命中候選',
-            'native_weapon_self_hit': '全部武器範圍／原生投射物自命中候選'}
+FEATURES = {'self_heal': '僅 P-11 自命中治療', 'pistol_self_hit': '手槍排除霰彈候選',
+            'native_no_shotgun_self_hit': '廣域排除霰彈候選',
+            'native_weapon_self_hit': '廣域包含霰彈候選（可能影響效能）'}
 ROLES = {'self_heal': 'self_hit', 'pistol_self_hit': 'pistol_self_hit',
+         'native_no_shotgun_self_hit': 'native_no_shotgun_self_hit',
          'native_weapon_self_hit': 'native_weapon_self_hit'}
 
 
@@ -82,8 +84,10 @@ def write_handoff(folder, report, porting_map):
         '## 必須保留的功能',
         '- 自療只清除經本機 P-11／所有者檢查的單發飛鏢來源碰撞排除位元；原生碰撞與治療。',
         '- 不加入原生 hook、不修改執行碼、不寫血量／體力，不弱化身份與版本檢查。',
-        '- 保留三種範圍：P-11、手槍候選、原生武器投射物候選；由 Arsenal 管理。',
-        '- 三個套件擇一，全部內建原始 P-11 0.2.1；擴展核心排除 P-11，由同包獨立 P-11 資源處理。',
+        '- 保留四種範圍：P-11、手槍排除霰彈、廣域排除霰彈、廣域包含霰彈；由 Arsenal 管理。',
+        '- 四個方案擇一，全部內建原始 P-11 0.2.1；擴展核心排除 P-11，由同包獨立 P-11 資源處理。',
+        '- 前三方案不處理霰彈；排除版在來源查詢之前拒絕已知霰彈、表內多彈丸及表外未知類型。第四方案可包含霰彈，需主動選用。',
+        '- 核對 maintenance/projectile-exclusions-25480438.json 的表來源、類型編號及全部多彈丸覆蓋；不能只沿用舊型號。',
         '- 手槍資源白名單及廣泛武器的機制覆蓋仍需驗證，不能外推 P-11 成功。',
         '- 不要求額外遊戲內資料捕捉；離線不足時列出具體不能判定的欄位。',
         '- 不能只替換雜湊、抄候選位址或把舊日誌視為新版治療成功。', '',
@@ -94,7 +98,7 @@ def write_handoff(folder, report, porting_map):
                   f"  原驗證範圍：{f['recorded_scope']}"]
     lines += ['', '## 維修順序',
               '1. 若收集不完整，先解決 report.json 的檔案變動／缺檔錯誤。',
-              '2. 核對 EXE、DLL、loader、三種 addon 的身份；先處理重複／互斥項目。',
+              '2. 核對 EXE、DLL、loader、四種 addon 的身份；先處理重複／互斥項目。',
               '3. 依 porting-map.json 檢查資料布局、12 個原有指令錨點與所有權鏈。',
               '4. 新增新 build 的相容性設定與必要實作修正，保留 0.2.1 成功套件。',
               '5. 跑 Python／Lua 模擬測試、封裝及雜湊核對；標為候選直到玩法確認。', '',

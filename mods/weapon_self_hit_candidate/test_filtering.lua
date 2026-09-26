@@ -10,7 +10,7 @@ local function setup(n,resource,owner)
     return f
 end
 local function tick(f,scope)
-    return pcall(Core.tick,f.api,{scope=scope or 'pistols',pistol_unit_hashes={P2}})
+    return pcall(Core.tick,f.api,TestProfile(scope or 'pistols'))
 end
 local function reads(f)
     local n=0;for _,v in pairs(f.hits) do n=n+v end;return n

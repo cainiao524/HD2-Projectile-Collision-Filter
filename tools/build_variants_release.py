@@ -43,7 +43,7 @@ def build_mods():
     baselines=json.loads(baseline_path.read_bytes())
     components=baselines['baselines'][0]['components']
     packages={SELF_NAME:original.read_bytes()}
-    for scope,feature in [('pistols','pistol_self_hit'),('native_weapons','native_weapon_self_hit')]:
+    for scope,feature in [('pistols','pistol_self_hit'),('native_no_shotguns','native_no_shotgun_self_hit'),('native_weapons','native_weapon_self_hit')]:
         result=builder.build(scope);p=Path(result['path']);source,profile=builder.bundle(scope)
         packages[p.name]=p.read_bytes()
         components[feature]={'package':p.name,'package_sha256':sha(p.read_bytes()),'lua_sha256':sha(source),
@@ -120,7 +120,7 @@ def build(reuse=False):
     for n,d in files.items():
         if n.startswith(('maintenance/','patches/')):toolkit[n]=d
     toolkit.update(runtime_licenses())
-    tool_name='P11-Enhanced-Update-Toolkit-1.1.2-win-x64.zip'
+    tool_name='P11-Enhanced-Update-Toolkit-1.2.0-win-x64.zip'
     collection_name='P11-Enhanced-Full-Kit-'+VERSION+'.zip'
     zip_files(DIST/tool_name,toolkit)
     zip_files(DIST/collection_name,collection_files(toolkit,packages,source_name,(DIST/source_name).read_bytes()))
@@ -137,7 +137,7 @@ def build(reuse=False):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mods-only',action='store_true',help='Rebuild the selectable mod and its three standalone inputs using only Python standard library')
+    parser.add_argument('--mods-only',action='store_true',help='Rebuild the selectable mod and its four standalone inputs using only Python standard library')
     parser.add_argument('--reuse-portable',action='store_true',help='Reuse only an EXE with matching recorded source hashes')
     args=parser.parse_args()
     if args.mods_only: print(json.dumps({n:sha(d) for n,d in build_mods().items()},indent=2))

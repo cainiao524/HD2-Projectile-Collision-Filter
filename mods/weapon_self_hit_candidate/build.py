@@ -1,4 +1,4 @@
-"""Build two independent, unverified Arsenal candidate ZIPs; never deploy."""
+"""Build three independent, unverified Arsenal candidate ZIPs; never deploy."""
 import hashlib
 import importlib.util
 import io
@@ -25,7 +25,8 @@ PISTOLS = {
     'M6C SOCOM Pistol': '4d58c77087b774c5',
 }
 SCOPES = {
-    'pistols': ('Pistol Series Self-Hit Candidate', 'weapon_self_hit_pistols'),
+    'pistols': ('Pistols No Shotguns Self-Hit Candidate', 'weapon_self_hit_pistols'),
+    'native_no_shotguns': ('Native Weapons No Shotguns Self-Hit Candidate', 'weapon_self_hit_native_no_shotguns'),
     'native_weapons': ('All Native Weapon Projectiles Self-Hit Candidate', 'weapon_self_hit_native'),
 }
 
@@ -44,8 +45,16 @@ def lua(v):
 def profile(scope):
     assert scope in SCOPES
     p = dict(BASE)
-    p.update(id='weapon-self-hit-candidate-0.1.1-25480438-' + scope,
-             version='0.1.1-candidate', scope=scope,
+    filters=json.loads((ROOT/'maintenance/projectile-exclusions-25480438.json').read_bytes())
+    assert filters['target_build']=='25480438' and filters['p11_type']==318
+    denied={r['type']:True for r in filters['excluded']}
+    assert len(denied)==38 and 318 not in denied and filters['projectile_type_max']==350
+    p.update(id='weapon-self-hit-candidate-0.1.2-25480438-' + scope,
+             version='0.1.2-candidate', scope=scope,
+             exclude_shotguns=scope!='native_weapons',
+             excluded_projectile_types=denied if scope!='native_weapons' else {},
+             projectile_type_max=filters['projectile_type_max'],
+             projectile_filter_source_sha256=filters['table_source']['sha256'],
              resource='mods/weapon_self_hit/' + scope,
              manager_guid=str(uuid.uuid5(uuid.NAMESPACE_URL, 'P11-Enhanced/weapon-self-hit-candidate/' + scope)),
              pistol_unit_hashes=list(PISTOLS.values()),
@@ -88,11 +97,13 @@ def build(scope):
     title, stem = SCOPES[scope]
     description = ('Build 25480438; Shared Loader API 1/internal 16. Experimental local native-projectile '
                    'source exclusion change, plus unchanged P-11 0.2.1 healing addon. '
-                   'Expanded self-damage and coexistence unverified. Choose one of the three variants.')
+                   'Expanded self-damage and coexistence unverified. Choose one of four variants. '
+                   + ('Known shotgun/multishot types excluded before source lookup.' if p['exclude_shotguns'] else
+                      'INCLUDES SHOTGUNS: additional per-pellet work can affect performance.'))
     manifest = {'Version': 1, 'Guid': p['manager_guid'], 'Name': title,
                 'Description': description,
                 'Options': [{'Name': 'Enable ' + title,
-                             'Description': 'Includes unchanged P-11 0.2.1. Install only one of the three self-hit variants.',
+                             'Description': 'Includes unchanged P-11 0.2.1. Install only one of the four self-hit variants.',
                              'Include': ['Addon']}]}
     files = {'manifest.json': (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode(),
              'Addon/9ba626afa44a3aa3.patch_0': archive,
@@ -103,8 +114,9 @@ def build(scope):
              'Source/p11_self_hit_dataonly.lua': p11_source,
              'Source/p11_profile.json': (json.dumps(p11_profile,ensure_ascii=False,indent=2)+'\n').encode(),
              'Source/profile.json': (json.dumps(p, ensure_ascii=False, indent=2) + '\n').encode(),
+             'Source/projectile-exclusions.json': (ROOT/'maintenance/projectile-exclusions-25480438.json').read_bytes(),
              'Source/VALIDATION.md': (HERE / 'VALIDATION.md').read_bytes()}
-    target = ROOT / 'dist' / f'{stem}-0.1.1-build25480438-CANDIDATE.zip'
+    target = ROOT / 'dist' / f'{stem}-0.1.2-build25480438-CANDIDATE.zip'
     target.parent.mkdir(parents=True,exist_ok=True)
     with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as z:
         for name, data in sorted(files.items()):

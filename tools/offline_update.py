@@ -87,6 +87,7 @@ def steam_state(game):
 def classify_resource(body,declaration,resource_id=None):
     if declaration == 'mods/p11/self_hit_dataonly': return ['p11_addon','self_hit']
     if declaration == 'mods/weapon_self_hit/pistols': return ['p11_addon','pistol_self_hit']
+    if declaration == 'mods/weapon_self_hit/native_no_shotguns': return ['p11_addon','native_no_shotgun_self_hit']
     if declaration == 'mods/weapon_self_hit/native_weapons': return ['p11_addon','native_weapon_self_hit']
     # Research source contains conflict-marker names, not those gameplay writers.
     if declaration in ('mods/p11_research/code_capture_25480438',
@@ -140,9 +141,9 @@ def collect_deployed(game,folder,watched):
     for row in records: row['winning_resource']=winners.get(row['resource_hash']) is row
     active=[r for r in records if r['winning_resource']]
     loader=[r for r in active if 'loader' in r['roles']]
-    gameplay=[r for r in active if set(r['roles']) & {'homing','self_hit','integrated','pistol_self_hit','native_weapon_self_hit'}]
-    duplicates=[role for role in ('self_hit','homing','integrated','pistol_self_hit','native_weapon_self_hit') if sum(role in r['roles'] for r in gameplay)>1]
-    scope_conflict=all(any(role in r['roles'] for r in gameplay) for role in ('pistol_self_hit','native_weapon_self_hit'))
+    gameplay=[r for r in active if set(r['roles']) & {'homing','self_hit','integrated','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'}]
+    duplicates=[role for role in ('self_hit','homing','integrated','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit') if sum(role in r['roles'] for r in gameplay)>1]
+    scope_conflict=sum(any(role in r['roles'] for r in gameplay) for role in ('pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'))>1
     combined_legacy=any('integrated' in r['roles'] for r in gameplay) and len(gameplay)>1
     return {'resources':records,'archive_errors':errors,'loader_observed':bool(loader),
             'possible_gameplay_conflict':bool(duplicates or combined_legacy or scope_conflict),'duplicate_roles':duplicates,
@@ -164,10 +165,10 @@ def changes_from(previous,current):
     for key in ('executable','game_dll'):
         before=previous.get('build',{}).get('files',{}).get(key,{}).get('sha256')
         after=current['build']['files'].get(key,{}).get('sha256')
-        if before!=after: changes.append({'item':key,'affected_features':['self_heal','pistol_self_hit','native_weapon_self_hit']})
+        if before!=after: changes.append({'item':key,'affected_features':['self_heal','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit']})
     def resources(report):
         return {r['resource_hash']:r['sha256'] for r in report.get('deployed',{}).get('resources',[]) if r.get('winning_resource')}
-    if resources(previous)!=resources(current): changes.append({'item':'deployed_resources','affected_features':['addon_loading','self_heal','pistol_self_hit','native_weapon_self_hit']})
+    if resources(previous)!=resources(current): changes.append({'item':'deployed_resources','affected_features':['addon_loading','self_heal','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit']})
     # Collections alone can never be promoted to verified baselines.
     return {'baseline_available':True,'verified_baseline':False,'changes':changes}
 
@@ -264,11 +265,11 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
         c=item['comparison']; summary.append(f"- {c['patch_id']}: {c['status']}")
         for candidate in item['offline_candidates']:
             summary.append(f"  - {candidate['id']}: {candidate['status']}；候選 {len(candidate['candidates'])} 個，不能據此啟用功能。")
-    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的三選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。手槍／廣域同時部署時必須先排除衝突。','- 維修時提供本診斷 ZIP 與公開 Source ZIP；維修要求已寫入「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
+    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的四選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。任兩個擴展方案同時部署時必須先排除衝突。','- 維修時提供本診斷 ZIP 與公開 Source ZIP；維修要求已寫入「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
     if report['deployed']['mutually_exclusive_scopes_present']:
-        summary += ['', '## 互斥版本衝突', '手槍與廣域候選同時存在，執行時會停止。關閉遊戲後在 Arsenal 二選一並重新部署。']
+        summary += ['', '## 互斥版本衝突', '多個擴展候選同時存在，執行時會停止。關閉遊戲後在 Arsenal 四選一並重新部署。']
     if any(f['required_p11_missing'] for f in report['feature_assessment']):
-        summary += ['', '## 缺少內建 P-11 自療資源', '已發現擴展候選，卻未辨識到 P-11 自療資源；可能是舊獨立候選包或部署不完整。新的三個版本均內建 P-11。關閉遊戲後在 Arsenal 停用舊版、選擇一個完整新包並重新部署。工具沒有自動修復或部署。']
+        summary += ['', '## 缺少內建 P-11 自療資源', '已發現擴展候選，卻未辨識到 P-11 自療資源；可能是舊獨立候選包或部署不完整。新的四個方案均內建 P-11。關閉遊戲後在 Arsenal 停用舊版、選擇一個完整新包並重新部署。工具沒有自動修復或部署。']
     if errors: summary+=['','## 收集錯誤']+[f"- {e['item']}: {e['error']}" for e in errors]
     (output/'摘要.md').write_text('\n'.join(summary)+'\n',encoding='utf-8')
     return report

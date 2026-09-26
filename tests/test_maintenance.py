@@ -23,7 +23,7 @@ class AssessmentTests(unittest.TestCase):
             'files':{k:{'sha256':b['target'][k+'_sha256']} for k in ('game_dll','executable')}},
             'deployed':{'resources':[]},'profiles':[]}
     def test_known_files_retain_only_recorded_confirmation(self):
-        self_hit,pistols,native=assess(self.report,self.baselines)
+        self_hit,pistols,no_shotguns,native=assess(self.report,self.baselines)
         self.assertEqual(self_hit['state'],'matches_confirmed_baseline')
         self.assertEqual(self_hit['deployment'],'not_deployed')
         self.assertEqual(self_hit['loader'],'missing')
@@ -60,7 +60,7 @@ class AssessmentTests(unittest.TestCase):
         self.assertTrue(all(f['loader']=='incompatible' for f in assess(self.report,self.baselines)))
 
     def test_expanded_candidate_cannot_inherit_p11_confirmation(self):
-        for feature in ('pistol_self_hit','native_weapon_self_hit'):
+        for feature in ('pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'):
             self.report['deployed']['resources'].append({'roles':[feature],'winning_resource':True,
                 'sha256':self.baselines[0]['components'][feature]['lua_sha256']})
         self.report['deployed']['possible_gameplay_conflict']=True
@@ -77,7 +77,7 @@ class DeploymentTests(unittest.TestCase):
         from log_parser import parse_log
         report=parse_log('STOPPED: Enable only one weapon self-hit candidate scope\nUnsupported loader')
         issue=next(i for i in report['issues'] if i['code']=='candidate_scope_conflict')
-        self.assertEqual(issue['affected_features'],['pistol_self_hit','native_weapon_self_hit'])
+        self.assertEqual(issue['affected_features'],['pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'])
         self.assertFalse(report['runtime_verified'])
         self.assertTrue(any(i['code']=='unsupported_shared_loader' for i in report['issues']))
     def test_expanded_scopes_conflict_and_p11_is_not_misclassified(self):
@@ -109,6 +109,35 @@ class DeploymentTests(unittest.TestCase):
             self.assertFalse(report['deployed']['possible_gameplay_conflict'])
             self.assertEqual(len(report['deployed']['active_gameplay_resources']),2)
             self.assertFalse(any(f['required_p11_missing'] for f in report['feature_assessment']))
+        finally:fixture.tearDown()
+    def test_all_expanded_scope_pairs_conflict_including_shotgun_policy(self):
+        from itertools import combinations
+        from resource_archive import make_lua_archive
+        scopes=['pistols','native_no_shotguns','native_weapons']
+        for pair in combinations(scopes,2):
+            fixture=fixtures.CollectorTests();fixture.setUp()
+            try:
+                names=['mods/p11/self_hit_dataonly']+['mods/weapon_self_hit/'+s for s in pair]
+                raw=make_lua_archive({n:'-- HD2-Addon: '+n+'\nreturn {}' for n in names})
+                (fixture.game/'data/9ba626afa44a3aa3.patch_0').write_bytes(raw)
+                report=fixture.collect()
+                self.assertTrue(report['deployed']['mutually_exclusive_scopes_present'],pair)
+                self.assertTrue(report['deployed']['possible_gameplay_conflict'],pair)
+            finally:fixture.tearDown()
+
+    def test_single_filtered_scope_is_recognized_without_conflict(self):
+        from resource_archive import make_lua_archive
+        fixture=fixtures.CollectorTests();fixture.setUp()
+        try:
+            names=['mods/p11/self_hit_dataonly','mods/weapon_self_hit/native_no_shotguns']
+            raw=make_lua_archive({n:'-- HD2-Addon: '+n+'\nreturn {}' for n in names})
+            (fixture.game/'data/9ba626afa44a3aa3.patch_0').write_bytes(raw)
+            report=fixture.collect()
+            self.assertFalse(report['deployed']['possible_gameplay_conflict'])
+            self.assertEqual(len(report['deployed']['active_gameplay_resources']),2)
+            filtered=next(f for f in report['feature_assessment'] if f['id']=='native_no_shotgun_self_hit')
+            self.assertNotEqual(filtered['deployment'],'not_deployed')
+            self.assertFalse(filtered['required_p11_missing'])
         finally:fixture.tearDown()
     def test_compiled_loader_is_detected_without_executing_bytecode(self):
         fixture=fixtures.CollectorTests();fixture.setUp()

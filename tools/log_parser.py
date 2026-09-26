@@ -23,7 +23,7 @@ SOURCE_MAP = {
 }
 GUARD_ADVICE = "Keep the feature disabled. Re-derive and verify the address, original instructions, structure layout and calling convention; never replace expected bytes blindly or copy observed bytes just to pass a guard."
 RULES = (
-    ('candidate_scope_conflict', r'Enable only one weapon self-hit candidate scope', ['pistol_self_hit', 'native_weapon_self_hit'], ['candidate.lua'], 'Close the game and select only one of the three self-hit variants in Arsenal, then redeploy.'),
+    ('candidate_scope_conflict', r'Enable only one weapon self-hit candidate scope', ['pistol_self_hit', 'native_no_shotgun_self_hit', 'native_weapon_self_hit'], ['candidate.lua'], 'Close the game and select only one of the four self-hit variants in Arsenal, then redeploy.'),
     ('unsupported_shared_loader', r'Unsupported loader', ['addon_loading','self_heal','pistol_self_hit','native_weapon_self_hit'], ['main.lua','candidate.lua'], 'These addons require API 1 and internal version 16; a newer internal version is not automatically compatible.'),
     ("self_hit_version_gate", r"Unsupported game files|Unsupported loaded build|Loaded section.*differs|Code anchor differs|STARTUP TIMEOUT", ["self_heal"], ["main.lua"], "Compare both file hashes, virtual sections and instruction anchors. Deferred startup rejection is not a loader-discovery failure. " + GUARD_ADVICE),
     ("self_hit_data_guard", r"write_failed|write_readback_failed|write_page_rejected|invalid_write_request", ["self_heal"], ["hooks/self_heal.lua"], "Inspect the narrow data adapter and identity guards; do not bypass a failed write/readback check."),

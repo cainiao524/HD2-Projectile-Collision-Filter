@@ -11,7 +11,7 @@ local function setup(resource,owner)
     return f
 end
 local function tick(f,scope)
-    return pcall(Core.tick,f.api,{scope=scope,pistol_unit_hashes={P2}})
+    return pcall(Core.tick,f.api,TestProfile(scope))
 end
 do
     local f=setup(P2)
@@ -53,7 +53,8 @@ do
 end
 do
     local f=setup(P2)
-    local success=pcall(Core.tick,f.api,{scope='pistols',pistol_unit_hashes={}})
+    local profile=TestProfile('pistols');profile.pistol_unit_hashes={}
+    local success=pcall(Core.tick,f.api,profile)
     check(not success and #f.writes==0,'empty pistol mapping fails closed')
 end
 return checks

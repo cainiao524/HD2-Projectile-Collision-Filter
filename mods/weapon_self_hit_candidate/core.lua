@@ -19,7 +19,14 @@ local function short(s,at)
     assert(b,'short_read'); return a+b*256
 end
 function M.tick(api,profile)
-    assert(profile and (profile.scope=='pistols' or profile.scope=='native_weapons'),'invalid_scope')
+    assert(profile and (profile.scope=='pistols' or profile.scope=='native_no_shotguns' or profile.scope=='native_weapons'),'invalid_scope')
+    assert(profile.exclude_shotguns==(profile.scope~='native_weapons'),'invalid_projectile_policy')
+    if profile.exclude_shotguns then
+        assert(type(profile.excluded_projectile_types)=='table'
+            and next(profile.excluded_projectile_types)~=nil
+            and profile.projectile_type_max==350,'missing_projectile_filter')
+        assert(not profile.excluded_projectile_types[318],'p11_filter_conflict')
+    end
     local allowed={}
     for _,h in ipairs(profile.pistol_unit_hashes or {}) do
         assert(type(h)=='string' and h:match('^[0-9a-f]+$') and #h==16,'invalid_allowlist')
@@ -133,7 +140,12 @@ function M.tick(api,profile)
         local expected=short(flags,slot*2)
         if bit.band(expected,0x22)==0x22 then
           local typ=slot_type(slot)
-          if typ>0 and typ<=4096 and typ~=318 then
+          -- Constant-time data-only rejection, before source/weapon/owner
+          -- discovery and before any per-projectile write guards. No extra
+          -- memory read, definition lookup, or per-tick classification table.
+          if typ>0 and typ<=4096 and typ~=318 and
+             (not profile.exclude_shotguns or
+              (typ<=profile.projectile_type_max and not profile.excluded_projectile_types[typ])) then
             -- Never retain an address/identity from the previous Lua update.
             for i=#guards,common+1,-1 do guards[i]=nil end
             local source=read(system+0x3b040+36*slot+8,8,true)

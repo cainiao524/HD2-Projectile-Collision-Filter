@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baselines": [
     {
-      "id": "build25480438-three-self-hit-scopes",
+      "id": "build25480438-four-self-hit-scopes",
       "target": {
         "steam_build_id": "25480438",
         "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
@@ -30,22 +30,32 @@
           "verification_scope": "2026-09-26 使用者確認 0.2.1 基本自命中治療有效；日誌另證明啟用和資料寫入。完整場景、主客機與雙模組共存尚未全數驗證。"
         },
         "pistol_self_hit": {
-          "package": "weapon_self_hit_pistols-0.1.1-build25480438-CANDIDATE.zip",
-          "package_sha256": "904ef2d887b4d83035587e09d59f5b0289e50af0523a0a5559cca4e640f26543",
-          "lua_sha256": "e0029c5e88855e084a35a0b2a39f0d5b72e6b651dee8d4bed0bc086622109e3e",
+          "package": "weapon_self_hit_pistols-0.1.2-build25480438-CANDIDATE.zip",
+          "package_sha256": "7cdb730fce4c8da0f07b5868b5d652ddeea80aee4765720de59b6f8b4d4a11f2",
+          "lua_sha256": "4abee3b87285c01cbfc2ac1fd620fcf4e2aefefc43de65c63ccaeed9fea87df0",
           "resource": "mods/weapon_self_hit/pistols",
           "scope": "pistols",
-          "version": "0.1.1-candidate",
+          "version": "0.1.2-candidate",
           "user_confirmed_basic_behavior": false,
           "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
         },
         "native_weapon_self_hit": {
-          "package": "weapon_self_hit_native-0.1.1-build25480438-CANDIDATE.zip",
-          "package_sha256": "3da50ea647bd2422dddfd5ac6a94730930d1697cbb94af613862662a467c937c",
-          "lua_sha256": "dfa5cad84e7221395815cd7b6183f20260d6871861f6424de9f96e534b130f41",
+          "package": "weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip",
+          "package_sha256": "e19b0d528d0e8cdd195918d8de8af3f555446d0991666c00e5ae91b82946c206",
+          "lua_sha256": "1b37685aaf8e3bee187da9310cb798e0cb103d5693a68d5f657b2c90399e9b18",
           "resource": "mods/weapon_self_hit/native_weapons",
           "scope": "native_weapons",
-          "version": "0.1.1-candidate",
+          "version": "0.1.2-candidate",
+          "user_confirmed_basic_behavior": false,
+          "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
+        },
+        "native_no_shotgun_self_hit": {
+          "package": "weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip",
+          "package_sha256": "001888c8c614b3df53052499eee974bb7e8b47cecffdb9284c3d3af38c76ba3f",
+          "lua_sha256": "32d96e3ecc355b5689ee2457e763bea20e0949cee870abc311a054732123fb02",
+          "resource": "mods/weapon_self_hit/native_no_shotguns",
+          "scope": "native_no_shotguns",
+          "version": "0.1.2-candidate",
           "user_confirmed_basic_behavior": false,
           "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
         }

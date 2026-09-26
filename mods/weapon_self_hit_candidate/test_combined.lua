@@ -1,6 +1,6 @@
 local checks=0
 local function check(ok,why) checks=checks+1;assert(ok,why) end
-for _,scope in ipairs({'pistols','native_weapons'}) do
+for _,scope in ipairs({'pistols','native_no_shotguns','native_weapons'}) do
  for _,reverse in ipairs({false,true}) do
   for _,fail in ipairs({false,true}) do
    local calls,p11_calls,expanded_calls,closed=0,0,0,0

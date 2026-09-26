@@ -55,3 +55,17 @@ python mods/weapon_self_hit_candidate/benchmark_reads.py --baseline-core old-cor
 This update reuses discovery work within a single update and rejects non-pistols earlier. It preserves every cached dependency in the writer's fresh per-projectile validation chain. Discovery reuse is never write authorization, and nothing is cached across updates. Slot decoding no longer creates an FFI scalar for every type/flag.
 
 Original P-11 0.2.1 and the narrow Windows writer are unchanged. The fixed 2,048-slot scan remains. The table measures synthetic logical reads, not full native API counts, frame times or FPS; no claim is made that stutter is eliminated. Expanded gameplay and current-build pistol coverage remain unverified.
+
+## 0.1.2：霰彈在來源讀取之前略過
+
+排除模式依 profile 內建的數字型別集合做常數時間查表，不新增遠端記憶體讀取、不每幀建立分類表。38 種排除集合涵蓋已辨識霰彈與參考表全部 32 個多彈丸種類；另外拒絕表外類型。來源／武器／附件與逐顆寫前重檢只對剩下候選執行。包含版仍保留原完整檢查。
+
+| 32 顆 type 179 的合成情境 | 邏輯讀取 | 寫入 |
+|---|---:|---:|
+| 手槍排除霰彈（即使武器在白名單） | 10 | 0 |
+| 廣域排除霰彈 | 10 | 0 |
+| 第四項廣域包含霰彈 | 985 | 32 |
+
+仍需遍歷 2048 槽位，還會讀旗標及需要的類型頁；沒有零效能成本、FPS 或不卡頓保證。大量排除彈丸不消耗寫入數上限，混合的普通投射物仍可處理。
+
+參考表固定於 [Filediver bf0ce329 的 projectile settings](https://github.com/xypwn/filediver/blob/bf0ce329db3cf0043994eb717ea86433c303cb36/datalibrary/projectile_settings.go)，數字資料指紋及 URL 保存於 maintenance/projectile-exclusions-25480438.json。舊命名資料以名稱雜湊、口徑和彈丸數交叉匹配；參考表中原 P-11 對應 type 318 且單彈丸。這些都是離線分類依據，不證明所有當前遊戲武器或其他模組改寫後仍採用同一分類。新 build 必須重新核對。

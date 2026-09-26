@@ -1,7 +1,9 @@
 -- Standard API 1 callback composition; Arsenal selects one candidate scope.
 return function(Core,Version,MakeImage,MakeData,Profile,env)
-    local marker=Profile.scope=='pistols' and 'WeaponSelfHitPistolsCandidate010' or 'WeaponSelfHitNativeCandidate010'
-    local other=Profile.scope=='pistols' and 'WeaponSelfHitNativeCandidate010' or 'WeaponSelfHitPistolsCandidate010'
+    local markers={pistols='WeaponSelfHitPistolsCandidate010',
+        native_no_shotguns='WeaponSelfHitNativeNoShotgunsCandidate012',
+        native_weapons='WeaponSelfHitNativeCandidate010'}
+    local marker=assert(markers[Profile.scope],'invalid_scope')
     if rawget(env,marker) then return rawget(env,marker) end
     local loader=rawget(env,'CowboyBingusModLoader')
     if type(loader)~='table' or type(loader.open_log)~='function' then return nil end
@@ -25,11 +27,15 @@ return function(Core,Version,MakeImage,MakeData,Profile,env)
         if shutdown_wrapper and rawget(env,'shutdown')==shutdown_wrapper then rawset(env,'shutdown',previous_shutdown) end
     end
     local function conflicts()
-        assert(not rawget(env,other),'Enable only one weapon self-hit candidate scope')
+        for _,other in pairs(markers) do
+            assert(other==marker or not rawget(env,other),'Enable only one weapon self-hit candidate scope')
+        end
     end
     local ok,err=pcall(function()
         note('Weapon Self-Hit '..Profile.scope..' '..tostring(Profile.version or 'candidate')..' DATA-ONLY CANDIDATE / build 25480438')
         note('Only local owner-checked native projectile flag 0x20; P-11 excluded. No native hook. Self-damage is NOT verified.')
+        note(Profile.exclude_shotguns and 'Projectile policy: skip known shotguns, all pinned multi-projectile types and unknown types before source lookup.'
+            or 'Projectile policy: include shotgun and multi-projectile types; increased per-pellet work is possible.')
         assert(loader.api==Profile.loader.api and type(loader.version)=='number'
             and loader.version>=Profile.loader.internal_min and loader.version<=Profile.loader.internal_max,'Unsupported loader')
         assert(type(previous)=='function','Existing update unavailable')

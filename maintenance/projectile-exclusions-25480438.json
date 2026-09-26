@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "target_build": "25480438",
+  "policy": "exclude_named_shotguns_and_all_multishot; reject types outside pinned table",
+  "table_source": {
+    "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/datalibrary/generated_projectile_settings.dl_bin",
+    "sha256": "50af7cccf03697a0ef96b7f9ddeb19279adc3b887bd95e0f972996844b7221ea",
+    "record_offset": 44,
+    "record_size": 272,
+    "count": 350
+  },
+  "legacy_names_source": {
+    "description": "Existing local named projectile_settings.json cache; old names matched to pinned numeric records by three name hashes, calibre and projectile count, including all matching numeric variants. Cache does not prove the current game build.",
+    "sha256": "729f11b50f3c9ab18afbe3df70f9ca85b3b364dda6ae383a7741c3aad87ba142"
+  },
+  "projectile_type_max": 350,
+  "p11_type": 318,
+  "p11_unit_hash": "4431931242cbcd54",
+  "excluded": [
+    {
+      "type": 1,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_sab",
+      "name_hashes": [
+        3028854855,
+        3910397585,
+        1923332231
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 2,
+      "num_projectiles": 10,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 14,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_scs",
+      "name_hashes": [
+        927878793,
+        3282178145,
+        142841130
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 37,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_sabhv",
+      "name_hashes": [
+        583487571,
+        3780597010,
+        656327693
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 47,
+      "num_projectiles": 3,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_tri",
+      "name_hashes": [
+        3905442367,
+        1956039782,
+        3484520495
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 62,
+      "num_projectiles": 11,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 68,
+      "num_projectiles": 40,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 73,
+      "num_projectiles": 3,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_magtri",
+      "name_hashes": [
+        3658534561,
+        648255169,
+        2916944254
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 91,
+      "num_projectiles": 7,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_bug",
+      "name_hashes": [
+        3960518775,
+        2390010387,
+        4056765033
+      ],
+      "calibre": 12
+    },
+    {
+      "type": 121,
+      "num_projectiles": 25,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 160,
+      "num_projectiles": 8,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_mag",
+      "name_hashes": [
+        1121040653,
+        1880455446,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 174,
+      "num_projectiles": 16,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_bir",
+      "name_hashes": [
+        3500789039,
+        4189160103,
+        4056765033
+      ],
+      "calibre": 3
+    },
+    {
+      "type": 176,
+      "num_projectiles": 8,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 179,
+      "num_projectiles": 11,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_buc",
+      "name_hashes": [
+        2407297704,
+        1037303660,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 180,
+      "num_projectiles": 8,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 183,
+      "num_projectiles": 11,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_fle",
+      "name_hashes": [
+        928593591,
+        3875128073,
+        1884694869
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 191,
+      "num_projectiles": 20,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_stun",
+      "name_hashes": [
+        3317342803,
+        2138837812,
+        2080585689
+      ],
+      "calibre": 5.5
+    },
+    {
+      "type": 198,
+      "num_projectiles": 9,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_TripleBarrelShotgun_10g_buc",
+      "name_hashes": [
+        2434806620,
+        2398893769,
+        749656758
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 199,
+      "num_projectiles": 6,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_bug",
+      "name_hashes": [
+        2621718089,
+        2495515626,
+        604009910
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 217,
+      "num_projectiles": 9,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_mag",
+      "name_hashes": [
+        2185124783,
+        566653809,
+        1995390179
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 227,
+      "num_projectiles": 3,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_tri",
+      "name_hashes": [
+        1465740486,
+        4195408834,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 232,
+      "num_projectiles": 16,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_bir",
+      "name_hashes": [
+        2755224776,
+        3741166472,
+        3149381118
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 240,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_slug",
+      "name_hashes": [
+        3837994681,
+        1259065120,
+        676547820
+      ],
+      "calibre": 18
+    },
+    {
+      "type": 252,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_scs",
+      "name_hashes": [
+        285598812,
+        4201282979,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 260,
+      "num_projectiles": 9,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_buc",
+      "name_hashes": [
+        2169962031,
+        3127548814,
+        3676528842
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 262,
+      "num_projectiles": 12,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 265,
+      "num_projectiles": 11,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_fle",
+      "name_hashes": [
+        3532118678,
+        1491792151,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 289,
+      "num_projectiles": 6,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 290,
+      "num_projectiles": 9,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_TripleBarrelShotgun_10g_buc",
+      "name_hashes": [
+        2434806620,
+        2398893769,
+        749656758
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 292,
+      "num_projectiles": 5,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_flm",
+      "name_hashes": [
+        2364144613,
+        2731845108,
+        2020494211
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 295,
+      "num_projectiles": 100,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 307,
+      "num_projectiles": 3,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_magtri",
+      "name_hashes": [
+        1744484582,
+        3071879380,
+        4056765033
+      ],
+      "calibre": 13
+    },
+    {
+      "type": 314,
+      "num_projectiles": 12,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_12g_flm",
+      "name_hashes": [
+        3870342324,
+        3317762411,
+        4056765033
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 317,
+      "num_projectiles": 12,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 322,
+      "num_projectiles": 1,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_frag",
+      "name_hashes": [
+        4278309157,
+        346739478,
+        3795763272
+      ],
+      "calibre": 18
+    },
+    {
+      "type": 323,
+      "num_projectiles": 6,
+      "reason": "other_multishot"
+    },
+    {
+      "type": 332,
+      "num_projectiles": 2,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_10g_sab2",
+      "name_hashes": [
+        1975714793,
+        2111768563,
+        2269408248
+      ],
+      "calibre": 8
+    },
+    {
+      "type": 347,
+      "num_projectiles": 20,
+      "reason": "named_shotgun",
+      "legacy_name": "ProjectileType_Shotgun_Dragon_10g_flm",
+      "name_hashes": [
+        106723583,
+        4076905200,
+        4056765033
+      ],
+      "calibre": 8
+    }
+  ],
+  "evidence_scope": "Offline table classification only. Numeric mappings and every shotgun variant have not been independently validated in current gameplay. Unknown game builds remain disabled."
+}

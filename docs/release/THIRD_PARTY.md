@@ -24,3 +24,5 @@ Lupa／LuaJIT 僅用於開發時的模擬測試，沒有隨模組成品分發。
 ## Portable runtime
 
 Windows 工具包含 Python 與 PyInstaller runtime；各自的授權文字隨 toolkit 的 runtime-licenses 提供。它們不屬於遊戲模組 runtime。候選手槍資源 ID 取自較早本機模組索引，只發布識別值與来源限制，不重分發索引、遊戲碼流或其他作者模組。
+
+霰彈分類參考 [Filediver](https://github.com/xypwn/filediver) 固定提交 bf0ce329db3cf0043994eb717ea86433c303cb36 的 projectile settings 表與結構。僅分發必要衍生類型／欄位識別事實及來源指紋，不分發完整二進位資料表。較早的本機命名表 SHA256 也記錄在排除表中；不把舊快取當成當前玩法驗證。

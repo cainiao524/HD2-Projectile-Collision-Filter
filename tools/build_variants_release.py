@@ -11,10 +11,10 @@ import sys
 import time
 import zipfile
 from build_self_hit_release import NAME as SELF_NAME, EXPECTED as SELF_HASH, export_source, zip_files
+from build_selectable_mod import VERSION, NAME as SELECTABLE_NAME, build_selectable
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist/release'
-VERSION = 'v0.3.0-preview.2'
 TOOLS = ('collect_build_info.py', 'compatibility_report.py', 'resource_archive.py',
          'offline_locator.py', 'offline_update.py', 'log_parser.py', 'maintenance.py', 'portable_entry.py')
 
@@ -50,6 +50,8 @@ def build_mods():
             'resource':profile['resource'],'scope':scope,'version':profile['version'],'user_confirmed_basic_behavior':False,
             'verification_scope':'Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation.'}
     baseline_path.write_bytes(json_bytes(baselines))
+    name, data = build_selectable(packages)
+    packages[name] = data
     return packages
 
 def portable_sources(): return {n:sha((ROOT/'tools'/n).read_bytes()) for n in TOOLS}
@@ -94,13 +96,16 @@ def collection_files(tool_files,packages,source_name,source_data):
     files.update({'Mods/'+n:d for n,d in packages.items()})
     files['Source/'+source_name]=source_data
     files['README.md']=(ROOT/'docs/release/COLLECTION.md').read_bytes()
-    for n in ('UPDATE_TOOL','VARIANTS','VERIFICATION','SELF_HIT','PORTING','THIRD_PARTY','PERFORMANCE'):
+    for n in ('UPDATE_TOOL','VARIANTS','VERIFICATION','SELF_HIT','PORTING','THIRD_PARTY','PERFORMANCE','SELECTABLE'):
         files['docs/'+n+'.md']=(ROOT/'docs/release'/f'{n}.md').read_bytes()
     files['MOD-SHA256SUMS.txt']=''.join(sha(d)+'  Mods/'+n+'\n' for n,d in sorted(packages.items())).encode('ascii')
     return files
 
 def build(reuse=False):
-    packages=build_mods()
+    # Retain standalone builds in dist for reproducibility and historical users.
+    # Publish one installable mod; the full kit also contains only that mod.
+    all_packages=build_mods()
+    packages={SELECTABLE_NAME:all_packages[SELECTABLE_NAME]}
     exe=build_portable(reuse)
     files=source_files();export_source(files)
     DIST.mkdir(parents=True,exist_ok=True)
@@ -115,8 +120,8 @@ def build(reuse=False):
     for n,d in files.items():
         if n.startswith(('maintenance/','patches/')):toolkit[n]=d
     toolkit.update(runtime_licenses())
-    tool_name='P11-Enhanced-Update-Toolkit-1.1.1-win-x64.zip'
-    collection_name='P11-Enhanced-Three-Variants-'+VERSION+'.zip'
+    tool_name='P11-Enhanced-Update-Toolkit-1.1.2-win-x64.zip'
+    collection_name='P11-Enhanced-Full-Kit-'+VERSION+'.zip'
     zip_files(DIST/tool_name,toolkit)
     zip_files(DIST/collection_name,collection_files(toolkit,packages,source_name,(DIST/source_name).read_bytes()))
     names=list(packages)+[tool_name,source_name,collection_name]
@@ -132,7 +137,7 @@ def build(reuse=False):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--mods-only',action='store_true',help='Rebuild all mod ZIPs using only Python standard library')
+    parser.add_argument('--mods-only',action='store_true',help='Rebuild the selectable mod and its three standalone inputs using only Python standard library')
     parser.add_argument('--reuse-portable',action='store_true',help='Reuse only an EXE with matching recorded source hashes')
     args=parser.parse_args()
     if args.mods_only: print(json.dumps({n:sha(d) for n,d in build_mods().items()},indent=2))

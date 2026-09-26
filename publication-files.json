@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "Three self-hit variants, offline diagnostics and repair handoff; no game binaries or third-party gameplay mods",
+  "scope": "One selectable self-hit mod with three exclusive scopes, offline diagnostics and repair handoff; no game binaries or third-party gameplay mods",
   "files": [
     ".gitignore",
     ".gitattributes",
@@ -44,7 +44,11 @@
     "docs/release/UPDATE_TOOL.md",
     "docs/release/RELEASE-v0.3.0-preview.1.md",
     "docs/release/PERFORMANCE.md",
-    "docs/release/RELEASE-v0.3.0-preview.2.md"
+    "docs/release/RELEASE-v0.3.0-preview.2.md",
+    "tools/build_selectable_mod.py",
+    "tests/test_arsenal_selectable.cjs",
+    "docs/release/SELECTABLE.md",
+    "docs/release/RELEASE-v0.3.0-preview.3.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -76,7 +80,9 @@
     "docs/release/UPDATE_TOOL.md": "docs/UPDATE_TOOL.md",
     "docs/release/RELEASE-v0.3.0-preview.1.md": "releases/v0.3.0-preview.1.md",
     "docs/release/PERFORMANCE.md": "docs/PERFORMANCE.md",
-    "docs/release/RELEASE-v0.3.0-preview.2.md": "releases/v0.3.0-preview.2.md"
+    "docs/release/RELEASE-v0.3.0-preview.2.md": "releases/v0.3.0-preview.2.md",
+    "docs/release/SELECTABLE.md": "docs/SELECTABLE.md",
+    "docs/release/RELEASE-v0.3.0-preview.3.md": "releases/v0.3.0-preview.3.md"
   },
   "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

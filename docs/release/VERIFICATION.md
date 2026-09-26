@@ -47,3 +47,11 @@ Every variant includes the exact P-11 Lua; packaging checks and mocked callback 
 候選 Lua 共 153 個斷言：核心 17、篩選／重用 45、入口 7、P-11 回呼组合 84。P-11 原 429 個斷言及成功 ZIP/Lua 不變。新增測試逐一改動快取所依賴的 23 個共同欄位，後續彈丸均拒絕使用舊依據寫入；另測試槽位與來源改變、不同來源武器共用彈種、跨更新重新分類。
 
 benchmark_reads.py 僅記錄合成資料下的邏輯讀取量，不是 Windows API 實測或遊戲 FPS。未新增遊戲內測試；效能改善幅度、卡頓是否消失與擴展玩法仍待確認。
+
+## v0.3.0-preview.3 三選一封裝
+
+2026-09-26：54 項 Python 測試通過。新包的一個父選項含三個互斥子選項；三個完整 archive、sidecar 及其中 P-11 bytes 與上一版相同。沒有變更 Lua，所以沿用上一版 runtime 測試記錄，未新增玩法測試。
+
+以本機 Arsenal **0.36.2** 的實際匯入／部署／清除後端在隔離假遊戲目錄測試：自動啟用偏好開／關兩種設定、預選 P-11、所有 9 種前後方案切換、無選项、父項停用、模組停用、重新啟用、清除皆通過。每次部署與所選原始 archive 的 SHA256 一致，未選方案無殘留。僅有一個父選項時，該父選項會自動開啟；模組總開關仍遵從匯入偏好。
+
+測試使用 purge 後重新 deploy 的管理器流程，沒有操作真實 UI、真實 profile 或遊戲目錄。官方互斥子選項格式見 [Arsenal 文件](https://docs.rsnl.gg/mod-builder/options)。UI 點選操作與遊戲內原生共存沒有新增實測。

@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0-preview.3 — Arsenal three-way selector
+
+- One importable mod with a single parent and three exclusive sub-options; P-11 is listed first.
+- Preserve each previous complete archive byte for byte; no runtime code change.
+- Full kit contains one selectable mod, source and diagnostic toolkit 1.1.2.
+- Add an isolated Arsenal backend harness for import preferences, all transitions and disabled states.
+- Update offline-tool wording; collection and compatibility logic remain unchanged.
+
+
 ## v0.3.0-preview.2 — Candidate 0.1.1 filtering
 
 - Reject non-pistol weapons before attachment/definition lookup; reuse source-weapon and definition discovery within one update.

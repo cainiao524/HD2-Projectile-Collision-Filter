@@ -264,7 +264,7 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
         c=item['comparison']; summary.append(f"- {c['patch_id']}: {c['status']}")
         for candidate in item['offline_candidates']:
             summary.append(f"  - {candidate['id']}: {candidate['status']}；候選 {len(candidate['candidates'])} 個，不能據此啟用功能。")
-    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 三包擇一，全部內建 P-11；手槍／廣域兩個候選同時部署時必須先停用其中一個。','- 維修時提供本診斷 ZIP 與公開 Source ZIP；維修要求已寫入「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
+    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的三選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。手槍／廣域同時部署時必須先排除衝突。','- 維修時提供本診斷 ZIP 與公開 Source ZIP；維修要求已寫入「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
     if report['deployed']['mutually_exclusive_scopes_present']:
         summary += ['', '## 互斥版本衝突', '手槍與廣域候選同時存在，執行時會停止。關閉遊戲後在 Arsenal 二選一並重新部署。']
     if any(f['required_p11_missing'] for f in report['feature_assessment']):

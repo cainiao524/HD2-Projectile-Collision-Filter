@@ -10,7 +10,7 @@ python -m unittest discover -s tests -v
 python tools/build_release.py --mods-only
 ```
 
-也可雙擊 **Rebuild-Mods.cmd**。這只重建三包，不安裝依賴、不部署、不自動修改版本保護。
+也可雙擊 **Rebuild-Mods.cmd**。這重建三選一包及三個原始獨立输入包，不安裝依賴、不部署、不自動修改版本保護。
 
 Windows x64 完整發布建置：
 
@@ -26,7 +26,8 @@ python tools/build_release.py
 - maintenance/baselines.json：三範圍身份與證據；porting-map.json：布局與必要檢查。
 - patches/25480438/manifest.json：離線比較與候選模式，不授權執行時寫入。
 - tools/offline_update.py、maintenance.py：收集和維修交接。
-- tools/build_variants_release.py：三包、portable、來源與合集建置。
+- tools/build_variants_release.py：單包、portable、來源與完整工具包建置。
+- tools/build_selectable_mod.py：三個完整既有 archive 對應一個父選項的三個互斥 SubOptions，P-11 排第一。
 
 ## 保留成功實作
 
@@ -34,6 +35,15 @@ P-11 原始 ZIP SHA256：`73c8c1e85b9732b85e0324b45b19d2c8b6c104abcd394c0f82ac49
 三包的 P-11 Lua SHA256：`b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a`。
 
 P-11 README、VALIDATION、profile 是封裝輸入，保留原始位元組及當時 experimental 字樣；後續成功記錄另寫 baseline。候選封裝有兩個獨立資源，Arsenal 同一開關控制。不能因 P-11 bytes 相同就宣稱新包已遊戲實測。
+
+## Arsenal 封裝檢查
+
+```powershell
+node tests/test_arsenal_selectable.cjs <selectable.zip> <unpacked-Arsenal-app> <isolated-output-dir>
+node tests/test_arsenal_selectable.cjs <selectable.zip> <unpacked-Arsenal-app> <isolated-output-dir> off
+```
+
+需本機 Arsenal 0.36.2 應用程式解包內容，包含 obfuscated_src/main 與 node_modules；不分發管理器程式。測試建立全新隔離 profile／假遊戲目錄，檢查匯入預選、九種切換、停用與清除，不碰真實遊戲。
 
 ## 更新檢查
 

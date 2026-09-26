@@ -13,6 +13,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 from build_variants_release import build_mods, collection_files, source_files, SELF_NAME, SELF_HASH
 from resource_archive import lua_resources, make_lua_archive, make_archive
+from build_selectable_mod import NAME as SELECTABLE_NAME, CHOICES, ARCHIVE
 
 class ReleaseTests(unittest.TestCase):
     @classmethod
@@ -21,6 +22,8 @@ class ReleaseTests(unittest.TestCase):
     def test_every_variant_contains_exact_working_p11(self):
         guids=set()
         for name,data in self.packages.items():
+            if name == SELECTABLE_NAME:
+                continue
             with self.subTest(package=name),zipfile.ZipFile(io.BytesIO(data)) as z:
                 self.assertIsNone(z.testzip())
                 manager=json.loads(z.read('manifest.json'));guids.add(manager['Guid'])
@@ -35,6 +38,26 @@ class ReleaseTests(unittest.TestCase):
                 self.assertFalse(any(r['resource_hash']=='7251fdd9bb62480a' for r in resources))
         self.assertEqual(len(guids),3)
         self.assertEqual(hashlib.sha256(self.packages[SELF_NAME]).hexdigest(),SELF_HASH)
+
+    def test_single_mod_has_three_exclusive_suboptions_with_original_payloads(self):
+        with zipfile.ZipFile(io.BytesIO(self.packages[SELECTABLE_NAME])) as z:
+            self.assertIsNone(z.testzip())
+            manifest=json.loads(z.read('manifest.json'))
+            self.assertEqual(len(manifest['Options']),1)
+            parent=manifest['Options'][0]
+            self.assertFalse(parent.get('Include'))
+            self.assertEqual(len(parent['SubOptions']),3)
+            self.assertEqual(parent['SubOptions'][0]['Include'],['Variants/P11'])
+            deployed=set()
+            for choice,(folder,package,label,_) in zip(parent['SubOptions'],CHOICES):
+                self.assertEqual(choice['Name'],label)
+                self.assertEqual(choice['Include'],[f'Variants/{folder}'])
+                with zipfile.ZipFile(io.BytesIO(self.packages[package])) as original:
+                    for suffix in ('','.stream','.gpu_resources'):
+                        name=f'Variants/{folder}/{ARCHIVE}{suffix}'
+                        deployed.add(name)
+                        self.assertEqual(z.read(name),original.read(f'Addon/{ARCHIVE}{suffix}'))
+            self.assertEqual({n for n in z.namelist() if '.patch_' in n},deployed)
 
     def test_native_archive_table_and_payload_boundaries(self):
         items={'mods/test/a':b'-- HD2-Addon: mods/test/a\nreturn 1',
@@ -53,10 +76,11 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(make_lua_archive({'mods/test/a':b'x'}),make_archive('mods/test/a',b'x'))
 
     def test_collection_contains_only_explicit_inputs(self):
-        files=collection_files({'P11-Update.exe':b'fixture'},self.packages,'source.zip',b'source')
-        for name,data in self.packages.items(): self.assertEqual(files['Mods/'+name],data)
+        selected={SELECTABLE_NAME:self.packages[SELECTABLE_NAME]}
+        files=collection_files({'P11-Update.exe':b'fixture'},selected,'source.zip',b'source')
+        self.assertEqual(files['Mods/'+SELECTABLE_NAME],selected[SELECTABLE_NAME])
         self.assertFalse(any(n.startswith(('diagnostics/','binaries/','local-settings')) for n in files))
-        self.assertEqual(len([n for n in files if n.startswith('Mods/')]),3)
+        self.assertEqual(len([n for n in files if n.startswith('Mods/')]),1)
 
     def test_public_source_excludes_private_evidence(self):
         files=source_files()

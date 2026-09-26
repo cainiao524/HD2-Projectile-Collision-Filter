@@ -70,6 +70,7 @@
 | 安裝、切換、停用、回退 | [玩家操作指南](docs/SELECTABLE.md) |
 | 遊戲更新後一次收集資料 | [離線更新工具](docs/UPDATE_TOOL.md) |
 | 開發、判讀、修補、交接 | [AGENTS.md](AGENTS.md) → [逐步接手指南](docs/AGENT_GUIDE.md) → [建置與移植](docs/PORTING.md) |
+| FileDiver、副武器與霰彈資料核對 | [固定來源、重播與更新交接教程](docs/FILEDIVER_HANDOFF.md) |
 | 驗證與發布 | [驗證記錄](docs/VERIFICATION.md) · [發布指南](docs/PUBLISH.md) |
 | 兩個 AyakaMods 頁面標題、介紹、BBCode、封面 | [發布素材導航](docs/PAGE-PUBLISHING.md) |
 

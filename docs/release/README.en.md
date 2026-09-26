@@ -70,6 +70,7 @@ Complete source is already extracted under `Source/HD2-Projectile-Collision-Filt
 | Install, switch, disable or roll back | [Player guide](docs/SELECTABLE.md) |
 | Collect once after an update | [Offline update tool](docs/UPDATE_TOOL.md) |
 | Develop, triage, port and hand over | [AGENTS.md](AGENTS.md) → [Agent runbook](docs/AGENT_GUIDE.md) → [Build and porting](docs/PORTING.md) |
+| Audit FileDiver, sidearm and shotgun reference data | [Pinned sources, replay commands and update handoff (Chinese)](docs/FILEDIVER_HANDOFF.md) |
 | Validate and publish | [Verification](docs/VERIFICATION.md) · [Publishing](docs/PUBLISH.md) |
 | Copy both AyakaMods pages, titles, BBCode and covers | [Publishing kit](docs/PAGE-PUBLISHING.md) |
 

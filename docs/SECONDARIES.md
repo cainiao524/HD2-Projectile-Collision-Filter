@@ -83,6 +83,8 @@ Arsenal 雙語選項為「All Sidearms / 手槍全部」。開發目標是裝備
 
 ## 更新時如何使用
 
+完整的來源取得、校驗命令、`.gz` 與收集器差異、新舊版本分析及交接欄位見 [FileDiver 資料交接教程](FILEDIVER_HANDOFF.md)。
+
 先在源碼根目錄核對附帶 catalog：
 
 ```powershell

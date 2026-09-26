@@ -2,6 +2,8 @@
 
 先讀根 [AGENTS.md](../AGENTS.md)。目前為 preview.8 / Toolkit 1.3.2，四選一單 addon、兩個公開 ZIP；四項有使用者正常回報，仍維持預覽與機制限制。
 
+副武器、霰彈分類或 FileDiver 資料工作另讀 [FileDiver 逐步教程](FILEDIVER_HANDOFF.md)。教程包括固定三表取得／重播、彈頭排除核對、收集器格式限制及新 build 移植；目前的「手槍全部」仍排除霰彈／多彈丸，完整分類不等於所有機制已支援。
+
 ## 0. 確认根目錄與任務
 
 **輸入：** GitHub checkout，或解壓工具包 `Source/HD2-Projectile-Collision-Filter/`；移植時另備本機診斷資料。
@@ -42,6 +44,8 @@ $gameDirectory = Read-Host '輸入 Helldivers 2 安裝資料夾'
 | offline_evidence_insufficient | 明列缺檔、受阻功能和下一份可取得資料 | 不猜偏移、不換 hash、不改 hook |
 
 **預期輸出：** 各功能有證據、缺口和下一步。未選範圍 not_deployed 可以正常；舊日誌只證明當時事件，activated／readback 不是原生命中。**失敗處理：** 對加密 DLL、所有權或碰撞時機不足保留具體未決問題，受影響功能停用／候選。
+
+資料表工作先做 [FileDiver 教程第 1–4 步](FILEDIVER_HANDOFF.md)：catalog 的 `--check` 沒有讀原始三表；完整 replay 仍不會把 `matches_game_build` 或 `gameplay_verified` 改成 true。`.gz` 可交給三表校驗器，但離線收集器不會自動解壓或遞迴收集，必須按其檔名白名單提供來源。
 
 ## 3. 移植與保護
 

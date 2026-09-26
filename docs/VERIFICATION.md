@@ -77,3 +77,29 @@ Arsenal 0.36.2 的隔離後端再次通過兩種匯入啟用偏好、四項互�
 Update Toolkit 1.3.0 在 PATH 沒有 Python 的環境可啟動；已封裝 EXE 對合成未知 build 完成離線收集，記錄工具版本並產生交接，仍正確顯示離線證據不足與玩法未驗證。測試亦覆蓋缺 DLL、Steam 更新中、複製期間檔案變動、loader 不相容、部署衝突及改名後下載包辨識。固定參考表重新核對 38 個排除 ID、全部 32 個多彈丸類型及 P-11 例外。
 
 以上是源碼、封裝、模擬與隔離工具驗證，沒有新增實際遊戲自命中、擴展自傷、共存或 FPS 測試。原 P-11 成功範圍及擴展候選狀態維持原記錄。
+
+
+## v0.3.0-preview.6：副武器分類擴展的初始本機驗證
+
+本節記錄發布整理前的開發候選驗證，並未完成全部可射擊副武器機制。P-11 保留既有回報；新增副武器沒有新的玩法或 FPS 證據。
+
+- 116 項 Python 檢查通過，包含副武器 catalog 完整性、身份篡改拒絕、來源指紋、政策限制，以及安裝資料表收集／中途變更／前後比較。
+- P-11 Lua：429 項既有模擬檢查通過；擴展 Lua：3,322 項通過，其中 2,684 項使用真正編入套件的副武器清單，涵蓋每個來源、38 個排除彈種、所有權與物件重用。
+- 固定 Filediver 三表完整重播，27 個副武器記錄的身份、元件、差量、位置及統計與 catalog proof 相符。這不證明與目前安裝的加密表等價。
+- 新舊來源清單在 0／1／32／64 個相同有效槽位的測試中，遊戲記憶體讀取次數相同。這是讀取次數回歸，不是零效能成本或實際 FPS 測試。
+- Arsenal 0.36.2 隔離後端檢查：匯入的啟用／停用偏好、P-11 預選、16 種切換、總開關、清除及四份部署內容一致；未改使用者 profile 或真實部署。
+- 原 P-11 ZIP／Lua 和兩個 0.1.2 廣泛範圍 ZIP 雜湊保持不變。擴展核心的五個 runtime Lua 檔保持不變，手槍範圍改為 0.1.3 的生成設定。
+- Toolkit 1.3.1 已對目標 build 25480438 完成一次穩定的實際離線收集，取得五份安裝資料表，沒有收集錯誤；`runtime_verified` 和各表 `matches_game_build` 均為 false。
+
+Dagger 光束與 Crisper 噴射沒有實作；Warrant、P33、Hornet 的 entity 後續鏈未驗證。來源清單的 16 個 ID 只是原生槽位候選，不是 16 把已證明能自命中的武器。完整限制與資料來源見 [副武器狀態](SECONDARIES.md)。此初始候選驗證不改變 preview.5 的歷史玩法驗證結論。
+
+
+## v0.3.0-preview.6：雙語發布頁與封面整理
+
+發布前完整回歸通過 120 項 Python 測試、429 項 P-11 Lua 斷言及 3,322 項擴展 Lua 斷言。新增發布檢查只允許兩張經核對的 PNG 封面，驗證結構、大小、解析度、CRC 及 SHA-256；其他二進位檔仍不屬於公開源碼。BBCode 與 Markdown 同樣通過私人路徑／憑證檢查。
+
+Arsenal 選項說明補上英文，保留四個中文名稱、選項顺序及 GUID。中英首頁、Release 介紹、兩個模組的網站文案與封面同步準備；動作封面參考 P3R 召喚姿勢，但原動作包未更動。封面都是宣傳插畫，不是遊戲截圖。
+
+維持預覽版狀態，擴展機制、共存與實際效能未新增玩法證據；Dagger／Crisper 及 entity 分支限制維持不變。AyakaMods 網站尚未更新，本次只準備可直接複製的本機資料。
+
+Pre-publication regression passed 120 Python tests, 429 P-11 Lua assertions and 3,322 expanded Lua assertions. Artwork and BBCode are checked against the public source allowlist. Bilingual packaging and promotional artwork do not establish additional gameplay or performance verification. The original animation package is unchanged; AyakaMods editing remains deferred.

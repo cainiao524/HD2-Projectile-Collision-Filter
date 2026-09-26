@@ -110,6 +110,7 @@ class HandoffTests(unittest.TestCase):
         self.assertIn('可能造成嚴重性能影響',result)
 
     def test_collection_records_actual_toolkit_version_and_renders_it(self):
+        self.assertEqual(TOOLKIT_VERSION,'1.3.1')
         fixture=fixtures.CollectorTests();fixture.setUp()
         try:
             report=fixture.collect()

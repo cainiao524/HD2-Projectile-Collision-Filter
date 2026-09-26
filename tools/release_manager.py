@@ -12,9 +12,11 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import stat
+import struct
 import subprocess
 import tempfile
 import zipfile
+import zlib
 
 from build_selectable_mod import ARCHIVE, CHOICES, GUID as SELECTABLE_GUID, NAME as SELECTABLE_NAME, VERSION
 from build_self_hit_release import EXPECTED as SELF_HASH, NAME as SELF_NAME
@@ -24,9 +26,19 @@ from resource_archive import lua_resources
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPO = 'cainiao524/P11-Enhanced'
 P11_BODY_HASH = 'b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a'
-TEXT_SUFFIXES = {'.md', '.py', '.lua', '.json', '.cmd', '.txt', '.cjs'}
+TEXT_SUFFIXES = {'.md', '.py', '.lua', '.json', '.cmd', '.txt', '.cjs', '.bbcode'}
 SOURCE_PREFIX = 'Source/P11-Enhanced/'
 SHA_MARKER = '<!-- p11-release-sha256 -->'
+KNOWN_PUBLIC_IMAGES = {
+    'docs/assets/projectile-collision-filter-cover.png': {
+        'sha256': '43a3bcfbf4cb9a0cf1225cbc12baa361da946a8115cfcc8d3b8da69cc92d856d',
+        'width': 1672, 'height': 941,
+    },
+    'docs/assets/raise-weapon-aim-at-yourself-cover.png': {
+        'sha256': 'c44209c93781f28a207637bde79b4c2dc5b5e5081c0e7553029c0fe9463963e5',
+        'width': 1672, 'height': 941,
+    },
+}
 
 
 def sha(data):
@@ -60,6 +72,39 @@ def check_public_text(name, data):
     require(private is None, 'Private path or credential pattern in: ' + name)
 
 
+def check_public_image(name, data):
+    """Allow only reviewed artwork, with its exact identity and a valid PNG envelope."""
+    safe_name(name)
+    require(name in KNOWN_PUBLIC_IMAGES, 'Unapproved public image path: ' + name)
+    expected = KNOWN_PUBLIC_IMAGES[name]
+    require(len(data) <= 16 * 1024 * 1024 and data[:8] == b'\x89PNG\r\n\x1a\n',
+            'Invalid public PNG signature or size: ' + name)
+    at, chunks, ended = 8, [], False
+    while at < len(data):
+        require(at + 12 <= len(data), 'Truncated public PNG chunk: ' + name)
+        length = struct.unpack_from('>I', data, at)[0]
+        kind = data[at + 4:at + 8]
+        end = at + 12 + length
+        require(end <= len(data), 'Public PNG chunk exceeds file: ' + name)
+        require(zlib.crc32(data[at + 4:end - 4]) == struct.unpack_from('>I', data, end - 4)[0],
+                'Public PNG chunk CRC differs: ' + name)
+        if not chunks:
+            require(kind == b'IHDR' and length == 13, 'Public PNG must begin with IHDR: ' + name)
+            width, height = struct.unpack_from('>II', data, at + 8)
+            require((width, height) == (expected['width'], expected['height']),
+                    'Public PNG dimensions differ: ' + name)
+        else:
+            require(kind != b'IHDR', 'Duplicate public PNG header: ' + name)
+        chunks.append(kind)
+        at = end
+        if kind == b'IEND':
+            require(length == 0 and at == len(data), 'Public PNG contains trailing data: ' + name)
+            ended = True
+            break
+    require(ended and b'IDAT' in chunks, 'Public PNG lacks image data or IEND: ' + name)
+    require(sha(data) == expected['sha256'], 'Reviewed public image SHA-256 differs: ' + name)
+
+
 def check_source(files):
     require(bool(files), 'Public source set is empty')
     for name, data in files.items():
@@ -67,6 +112,9 @@ def check_source(files):
         require(path.parts[0] not in ('research', 'work', 'vendor', 'diagnostics', 'build',
                                       'dist', 'publication', 'local-history', 'binaries', '.git'),
                 'Private directory in public source: ' + name)
+        if name in KNOWN_PUBLIC_IMAGES:
+            check_public_image(name, data)
+            continue
         require(path.suffix in TEXT_SUFFIXES or path.name in ('.gitignore', '.gitattributes'),
                 'Forbidden public source file type: ' + name)
         check_public_text(name, data)
@@ -266,7 +314,7 @@ def publish_release(release_dir, repo, target, notes, git_dir=ROOT):
         notes_path.write_text(body, encoding='utf-8', newline='\n')
         paths = [str((Path(release_dir) / name).resolve()) for name in report['public_assets']]
         url = run('gh', 'release', 'create', report['release'], *paths, '--repo', repo,
-                  '--target', target, '--title', 'Projectile Collision Filter ' + report['release'] + ' — 四選一與維護工具包',
+                  '--target', target, '--title', 'Projectile Collision Filter ' + report['release'] + ' — P-11 Self-Heal / 自療・四選一',
                   '--notes-file', str(notes_path), '--prerelease').decode().strip()
     return {'operation': 'publish', 'release': report['release'], 'release_url': url,
             'target': target, 'assets': len(paths), 'prerelease': True,

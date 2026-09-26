@@ -134,6 +134,47 @@ class ReleaseManagerTests(unittest.TestCase):
             with self.subTest(files=files), self.assertRaises(ValueError):
                 release.check_source(files)
 
+    def test_only_exact_reviewed_cover_is_allowed_in_public_source(self):
+        for name in release.KNOWN_PUBLIC_IMAGES:
+            image = (ROOT / name).read_bytes()
+            with self.subTest(name=name):
+                release.check_source({name: image})
+                with self.assertRaisesRegex(ValueError, 'Forbidden public source file type'):
+                    release.check_source({'docs/assets/unreviewed.png': image})
+                for wrong in (b'MZgame', image[:-1], image + b'private', image[:45] + bytes([image[45] ^ 1]) + image[46:]):
+                    with self.assertRaises(ValueError):
+                        release.check_source({name: wrong})
+
+    def test_bbcode_is_public_text_with_the_same_privacy_checks(self):
+        name = 'docs/release/bilingual.bbcode'
+        release.check_source({name: '[b]治療手槍 / Stim Pistol[/b]\n'.encode('utf-8')})
+        for data in (b'\xff\xfe', b'MZ\x00binary', ('C:' + '\\Users\\Someone\\game').encode()):
+            with self.subTest(data=data), self.assertRaises(ValueError):
+                release.check_source({name: data})
+
+    def test_cover_dimensions_and_reviewed_hash_are_both_enforced(self):
+        name = next(iter(release.KNOWN_PUBLIC_IMAGES))
+        image = (ROOT / name).read_bytes()
+        expected = release.KNOWN_PUBLIC_IMAGES[name]
+        with patch.object(release, 'KNOWN_PUBLIC_IMAGES', {name: dict(expected, width=expected['width'] + 1)}):
+            with self.assertRaisesRegex(ValueError, 'dimensions differ'):
+                release.check_source({name: image})
+        with patch.object(release, 'KNOWN_PUBLIC_IMAGES', {name: dict(expected, sha256='0' * 64)}):
+            with self.assertRaisesRegex(ValueError, 'SHA-256 differs'):
+                release.check_source({name: image})
+
+    def test_toolkit_includes_exact_source_artwork_without_an_extra_asset(self):
+        for name in release.KNOWN_PUBLIC_IMAGES:
+            image = (ROOT / name).read_bytes()
+            self.files[name] = image
+            self.report['source_manifest'][name] = release.sha(image)
+            self.change_zip(release.TOOLKIT_NAME, release.SOURCE_PREFIX + name, image)
+        report = release.verify_release(self.directory)
+        self.assertEqual(len(report['public_assets']), 6)
+        self.change_zip(release.TOOLKIT_NAME, release.SOURCE_PREFIX + name, b'changed')
+        with self.assertRaisesRegex(ValueError, 'Toolkit source differs'):
+            release.verify_release(self.directory)
+
     def test_unsafe_zip_path_is_rejected_even_with_matching_asset_hash(self):
         self.change_zip(release.TOOLKIT_NAME, '../game.dll', b'private')
         with self.assertRaisesRegex(ValueError, 'Unsafe path'):
@@ -202,6 +243,8 @@ class ReleaseManagerTests(unittest.TestCase):
             self.assertEqual(set(args[4:10]), {str((self.directory / name).resolve())
                                              for name in release.asset_roles()})
             self.assertIn('--prerelease', args)
+            self.assertEqual(args[args.index('--title') + 1],
+                             'Projectile Collision Filter ' + release.VERSION + ' — P-11 Self-Heal / 自療・四選一')
             self.assertEqual(args[args.index('--target') + 1], self.target)
             generated = Path(args[args.index('--notes-file') + 1]).read_text(encoding='utf-8')
             self.assertIn(release.SHA_MARKER, generated)

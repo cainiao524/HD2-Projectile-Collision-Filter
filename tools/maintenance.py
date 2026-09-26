@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-TOOLKIT_VERSION = '1.3.0'
+TOOLKIT_VERSION = '1.3.1'
 
 LABELS = {
     'matches_confirmed_baseline': '符合已確認基準（限記錄範圍）',
@@ -195,7 +195,8 @@ def write_handoff(folder, report, porting_map):
         '- 四個方案擇一，全部內建原始 P-11 0.2.1；擴展核心排除 P-11，由同包獨立 P-11 資源處理。',
         '- 前三方案不處理霰彈；排除版在來源查詢之前拒絕已知霰彈、表內多彈丸及表外未知類型。第四方案包含霰彈，可能造成嚴重性能影響，需主動選用。',
         '- 核對 maintenance/projectile-exclusions-25480438.json 的表來源、類型編號及全部多彈丸覆蓋；不能只沿用舊型號。',
-        '- 手槍資源白名單及廣泛武器的機制覆蓋仍需驗證，不能外推 P-11 成功。',
+        '- 副武器分類來源見 maintenance/secondary-catalog-25480438.json；依 tools/verify_secondary_catalog.py 核對固定參考資料中的全部 SidearmWeapon 記錄，不能用 EquipmentType 代替裝備欄。完整參考清單不等於本次遊戲的完整支援。',
+        '- Dagger 光束、Crisper 噴射尚未實作；Warrant、P33 與內部 Hornet 的實體投射物分支仍需證據。只加入資源 ID 不能補齊這些機制，也不能外推 P-11 成功。',
         '- 不要求額外遊戲內資料捕捉；離線不足時列出具體不能判定的欄位。',
         '- 不能只替換雜湊、抄候選位址或把舊日誌視為新版治療成功。', '',
         '## 完成移植後如何交接', '',

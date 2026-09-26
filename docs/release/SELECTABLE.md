@@ -1,8 +1,10 @@
-# 玩家操作指南：安裝、切換與回退
+# 玩家操作指南 / Player Guide
 
-四選一整合模組名稱為 **Projectile Collision Filter（投射物碰撞過濾器）**。本次只改整合包名稱與說明，GitHub 專案名、模組身份及四個選項的功能不變。
+四選一整合模組名稱為 **Projectile Collision Filter（投射物碰撞過濾器）**。GitHub 專案仍為 P11-Enhanced，升級保留既有模組身份與四個選項名稱。
 
-一般使用者下載 **Projectile-Collision-Filter-v0.3.0-preview.5-build25480438.zip**，直接匯入 Arsenal。固定範圍的四個獨立 ZIP 與整合版效果對應；**五個模組包只啟用一個**。Update Toolkit 是離線工具，不能當模組匯入。[六檔下載表](../README.md)
+本頁對應 **v0.3.0-preview.6 預覽版／手槍 0.1.3 candidate**，新增副武器槽位分類與原生投射物來源候選。雷射／噴射尚未支援，entity 後續機制仍未證明；公開預覽版不代表全部可射擊副武器已完成。前三項仍排除霰彈／多彈丸；詳見 [副武器狀態](SECONDARIES.md)。
+
+一般使用者下載 **Projectile-Collision-Filter-v0.3.0-preview.6-build25480438.zip**，直接匯入 Arsenal。固定範圍的四個獨立 ZIP 與整合版效果對應；**五個模組包只啟用一個**。Update Toolkit 是離線工具，不能當模組匯入。[六檔下載表](../README.md) · [preview.6 Release](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6)
 
 ## 安裝前
 
@@ -20,11 +22,11 @@ P-11 推薦搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/rai
 | 選項 | 說明 |
 |---|---|
 | **僅治療手槍** | 僅讓 P-11 治療飛鏢對自己生效。推薦，首次預選。 |
-| **手槍全部** | 包含 P-11 與目前支援的手槍；排除霰彈及多彈丸類型。 |
+| **手槍全部** | 擴展副武器原生投射物候選，包含電漿與榴彈；排除霰彈及多彈丸。雷射、火焰尚未支援，實體彈藥分支待驗證。 |
 | **全部武器不包括霰彈槍** | 包含 P-11 與支援的武器投射物；排除霰彈及多彈丸類型。 |
 | **全部武器包括霰彈槍** | 包含霰彈及多彈丸類型，**可能造成嚴重性能影響**。 |
 
-四項均包含相同 P-11 0.2.1。獨立包維持原始檔案與當時說明；新版選項短文案顯示在整合包中。三個擴展包版本仍為 0.1.2。
+四項均包含相同 P-11 0.2.1。手槍獨立包更新為 0.1.3 candidate，兩個廣域獨立包保持 0.1.2；P-11 與兩個廣域包維持原始內容及歷史說明。preview.5 保留為歷史回退版本。
 
 ## 切換、停用與回退
 
@@ -46,7 +48,7 @@ P-11 推薦搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/rai
 
 ## 範圍與驗證界限
 
-「手槍全部」目前限八個候選手槍 ID。「全部武器」只指目前支援的原生投射物系統，並未驗證所有射線、光束、近戰、爆炸及 entity 投射物。
+preview.6 的「手槍全部」由副武器槽位 catalog 產生 16 個原生處理來源候選，另含原 P-11；候選數量不等於已生效武器數量。Dagger 光束、Crisper 噴射未支援，Warrant／P33／Hornet 的 entity 後續鏈仍未證明；完整分類與限制見 [SECONDARIES](SECONDARIES.md)。歷史 preview.5 保留舊八個 ID 清單。「全部武器」只指目前支援的原生投射物系統，並未驗證所有射線、光束、近戰、爆炸及 entity 投射物。
 
 第 2、3 項在來源／武器查詢之前排除固定表中的 38 個霰彈／多彈丸類型，也跳過表外未知類型。包含霰彈的獨頭變體；其他多彈丸機制也可能被排除。P-11 原程式只處理自己的 type 318，其他彈丸直接略過。
 
@@ -54,8 +56,29 @@ P-11 原實作已有使用者基本成功回報；擴展、目前遊戲的完整
 
 ## English
 
-Import one of the five mod ZIPs and enable only that package. The selectable package offers four exclusive scopes under 生效範圍; P-11 only is initially selected. Overall enablement follows Arsenal preferences. Close the game before changing scope, disabling or rolling back, and redeploy afterward. Replace the existing identical identity if Arsenal reports a duplicate.
+This guide covers **Projectile Collision Filter v0.3.0-preview.6**, a prerelease for Steam build **25480438 / EXE 1.8.46015.0**, with **Bingus Shared Loader v17 / API 1 / internal 16**, installed separately. Unknown game or loader versions stop modification. Do not bypass the version checks by changing hashes.
 
-The first three choices exclude shotguns. The fourth includes them and may cause severe performance impact. All include original P-11. Broader behavior remains a candidate; “all” is limited to supported native projectiles. The separate toolkit collects offline evidence and does not install or repair the mod automatically.
+Download the selectable ZIP from the [six-file Release](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6). The other four mod ZIPs offer fixed alternatives; **enable only one of the five mod packages**. Toolkit 1.3.1 is an offline maintenance tool, not an Arsenal mod.
+
+1. Close the game and wait for Steam updates to finish.
+2. Disable previous self-hit packages in Arsenal, including older selectable and standalone versions.
+3. Import one mod ZIP. If Arsenal reports the same identity, replace the old package or disable and remove its old library entry before importing.
+4. In the selectable package, open **生效範圍 (Scope)** and choose one of the following four options. P-11 only is initially selected; confirm the overall mod switch is enabled because it follows Arsenal import preferences.
+5. Clear the previous deployment and redeploy in Arsenal, then start the game.
+
+| Arsenal label | English meaning | Actual scope |
+|---|---|---|
+| 僅治療手槍 | Stim pistol only | Original P-11 healing dart self-hit. Recommended initial choice. |
+| 手槍全部 | All handguns | P-11 plus catalog-selected native projectile candidates, including plasma and grenade sources; excludes shotguns and multishot. Dagger beam and Crisper spray are unsupported; entity follow-up paths remain unverified. |
+| 全部武器不包括霰彈槍 | All weapons, excluding shotguns | P-11 plus supported local native weapon projectiles; excludes shotgun and multishot types. |
+| 全部武器包括霰彈槍 | All weapons, including shotguns | Includes shotgun and multishot native projectiles; **may cause severe performance impact**. |
+
+For switching, disabling or rollback, close the game first, make the change in Arsenal, clear the previous deployment and redeploy. Switching to a standalone package also requires disabling the selectable package. Historical releases retain compatible rollback files, but an old package does not automatically support a newer game build.
+
+If the fourth option stutters, switch to one of the first three; start with Stim pistol only. If an update breaks compatibility, extract Toolkit 1.3.1 and run **Collect-HD2-Update.cmd**, then read the summary and repair handoff. Resolve duplicate packages, missing P-11 resources or incompatible loader versions before recollecting. The tool does not deploy or repair automatically.
+
+All options contain identical original P-11 0.2.1 code. Its basic healing has a prior user report; expanded behavior, complete weapon coverage, coexistence and actual performance remain unverified. The 16 catalog source hashes are lookup candidates, not 16 confirmed working weapons. “All” does not add beam, spray, melee, explosion or complete entity-projectile handling, and synthetic read counts are not FPS measurements.
+
+For aiming the P-11 at yourself, optionally install [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/) separately. The aiming-action and teammate-homing mods are independently managed and are not included or modified here.
 
 [Arsenal Sub-options](https://docs.rsnl.gg/mod-builder/options) · [Version 1 schema](https://docs.rsnl.gg/mod-builder/manifest).

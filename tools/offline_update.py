@@ -20,7 +20,13 @@ from maintenance import TOOLKIT_VERSION, assess, load_metadata, write_handoff
 ROOT=Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parents[1]
 PACKAGE_WORDS=re.compile(r'bingus.*loader|homing[ _-]?stim|p11.*(?:homing|self|enhanced)|stim.*self|weapon[ _-]self[ _-]hit|projectile[ _-]collision[ _-]filter',re.I)
 LOG_WORDS=re.compile(r'^(?:BingusSharedLoader|StimHoming.*|HealingPistolEnhanced|P11StimSelfHit|StimSelfHit.*|P11ReadOnlyCapture|P11OwnedProjectileObserver|WeaponSelfHitCandidate)\.log$',re.I)
-SCHEMA_NAMES={'projectile_settings.json','generated_projectile_settings.json','generated_projectile_settings.dl_bin','projectile_settings.go','weapon_settings.go'}
+INSTALLED_SCHEMA_NAMES={'generated_entities.dl_bin','generated_entity_deltas.dl_bin',
+    'dl_library.dl_typelib','generated_weapon_customization_settings.dl_bin',
+    'generated_projectile_settings.dl_bin'}
+SCHEMA_NAMES=INSTALLED_SCHEMA_NAMES | {'projectile_settings.json',
+    'generated_projectile_settings.json','projectile_settings.go','weapon_settings.go'}
+SCHEMA_SIZE_LIMITS={name:(256 if name=='generated_entities.dl_bin' else 64)*1024*1024
+                    for name in SCHEMA_NAMES}
 
 def digest(path):
     h=hashlib.sha256()
@@ -169,6 +175,33 @@ def changes_from(previous,current):
     def resources(report):
         return {r['resource_hash']:r['sha256'] for r in report.get('deployed',{}).get('resources',[]) if r.get('winning_resource')}
     if resources(previous)!=resources(current): changes.append({'item':'deployed_resources','affected_features':['addon_loading','self_heal','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit']})
+    def schemas(report):
+        result={}
+        for row in report.get('schema_sources',[]):
+            name=row.get('source_relative_path') or row.get('file')
+            if not name or not row.get('sha256'): continue
+            # Before 1.3.1 every schema source was an explicitly supplied/cache
+            # file. Never relabel those old records as installed game evidence.
+            key=(row.get('source_kind') or 'local_cache',name)
+            entry=result.setdefault(key,{'sha256s':set(),'evidence_files':set()})
+            entry['sha256s'].add(row['sha256'].lower())
+            if row.get('evidence_file'): entry['evidence_files'].add(row['evidence_file'])
+        return result
+    before_schemas,after_schemas=schemas(previous),schemas(current)
+    for key in sorted(before_schemas.keys() | after_schemas.keys()):
+        before=before_schemas.get(key,{'sha256s':set(),'evidence_files':set()})
+        after=after_schemas.get(key,{'sha256s':set(),'evidence_files':set()})
+        if before['sha256s']==after['sha256s']: continue
+        affected=['pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit']
+        if 'projectile' in Path(key[1]).name or Path(key[1]).name=='weapon_settings.go':
+            affected.insert(0,'self_heal')
+        changes.append({'item':'schema_data','source_kind':key[0],
+            'source_relative_path':key[1],
+            'before_sha256s':sorted(before['sha256s']),
+            'after_sha256s':sorted(after['sha256s']),
+            'evidence_files_before':sorted(before['evidence_files']),
+            'evidence_files_after':sorted(after['evidence_files']),
+            'affected_features':affected})
     # Collections alone can never be promoted to verified baselines.
     return {'baseline_available':True,'verified_baseline':False,'changes':changes}
 
@@ -181,6 +214,12 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     manifest=game.parent.parent/'appmanifest_553850.acf'; watched[manifest]=signature(manifest)
     state=steam_state(game)
     for rel in ('bin/helldivers2.exe','data/game/game.dll'): watched[game/rel]=signature(game/rel)
+    installed_schema_dir=game/'data/game'
+    # Snapshot the exact installed catalog paths, including absent files, before
+    # collecting anything. An installation that changes during collection is
+    # incomplete; missing optional evidence on a stable install is a gap only.
+    for name in INSTALLED_SCHEMA_NAMES:
+        watched[installed_schema_dir/name]=signature(installed_schema_dir/name)
     build=collect_build_info(game)
     report={'schema_version':1,'collector':{'name':'P11-Enhanced Update Toolkit','version':TOOLKIT_VERSION},'collected_utc':datetime.now(timezone.utc).isoformat(),'build':build,'steam_state':state,'runtime_verified':False,'complete':False,'errors':errors,'packages':[],'schema_sources':[],'log_reports':[]}
     for key,rel in [('executable','bin/helldivers2.exe'),('game_dll','data/game/game.dll')]:
@@ -209,16 +248,30 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
                 info=safe_copy(path,output/'packages'/path.name,watched)
                 report['packages'].append({**info,'manager':metadata,'source':'local package, not evidence of deployment','entry_count':len(names)})
         except (OSError,ValueError,zipfile.BadZipFile) as exc: errors.append({'item':path.name,'error':str(exc)})
-    for directory in schema_dirs:
-        directory=Path(directory)
+    seen_schemas=set()
+    schema_locations=[(installed_schema_dir,'installed_game_data')]
+    schema_locations.extend((Path(directory),'local_cache') for directory in schema_dirs)
+    for directory,source_kind in schema_locations:
         for name in sorted(SCHEMA_NAMES):
-            p=directory/name
+            p=(directory/name).resolve()
+            if p in seen_schemas: continue
+            seen_schemas.add(p)
             if not p.is_file(): continue
             try:
-                if p.stat().st_size>64*1024*1024: raise ValueError('schema/data file exceeds collection limit')
+                watched.setdefault(p,signature(p))
+                if p.stat().st_size>SCHEMA_SIZE_LIMITS[name]: raise ValueError('schema/data file exceeds collection limit')
                 h=digest(p); target=output/'schemas'/h[:12]/name
-                info=safe_copy(p,target,watched)
-                report['schema_sources'].append({**info,'evidence_file':target.relative_to(output).as_posix(),'matches_game_build':False,'provenance':'local cached file; game-version correspondence unproven'})
+                info=safe_copy(p,target,watched,h)
+                installed=source_kind=='installed_game_data'
+                report['schema_sources'].append({**info,
+                    'evidence_file':target.relative_to(output).as_posix(),
+                    'source_kind':source_kind,
+                    'source_relative_path':('data/game/'+name) if installed else name,
+                    'observed_steam_build_id':build['game'].get('steam_build_id') if installed else None,
+                    'matches_game_build':False,
+                    'provenance':('Read from installed game data alongside the observed Steam build; '
+                        'file-to-build correspondence and gameplay are unverified.' if installed else
+                        'Local cached file; game-version correspondence and gameplay are unverified.')})
             except (OSError,ValueError) as exc: errors.append({'item':name,'error':str(exc)})
     if logs and Path(logs).is_dir():
         for p in sorted(Path(logs).glob('*.log')):
@@ -247,6 +300,12 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     report['gaps']=['Offline data and old logs do not verify current native hit/heal, host/client behavior, or candidate weapon coverage / coexistence. P-11 reports do not validate either broader candidate.']
     if not report['deployed']['loader_observed']: report['gaps'].append('No identifiable active loader resource found; loader deployment needs inspection.')
     if not report['schema_sources']: report['gaps'].append('No local projectile schema/data cache was available.')
+    collected_installed={item['file'] for item in report['schema_sources']
+                         if item['source_kind']=='installed_game_data'}
+    for name in sorted(INSTALLED_SCHEMA_NAMES-collected_installed):
+        report['gaps'].append('Installed catalog evidence unavailable: data/game/'+name+
+            '. Supply this exact file from the target installation for offline weapon-family analysis; '
+            'a cached copy does not establish its game-build correspondence.')
     report['complete']=not errors and all(x.get('sha256') and not x.get('pe_error') for x in build['files'].values())
     baselines,porting_map=load_metadata(ROOT)
     report['feature_assessment']=assess(report,baselines)

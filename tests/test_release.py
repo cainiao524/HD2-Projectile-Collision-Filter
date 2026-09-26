@@ -103,10 +103,9 @@ class ReleaseTests(unittest.TestCase):
         self.assertFalse(any(n.startswith(('diagnostics/','binaries/','Mods/','local-settings')) for n in files))
         self.assertFalse(any(n.endswith('.zip') for n in files))
 
-    def test_standalone_packages_preserve_preview4_bytes(self):
+    def test_unchanged_standalone_packages_preserve_preview4_bytes(self):
         expected={
             SELF_NAME:SELF_HASH,
-            'weapon_self_hit_pistols-0.1.2-build25480438-CANDIDATE.zip':'7cdb730fce4c8da0f07b5868b5d652ddeea80aee4765720de59b6f8b4d4a11f2',
             'weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip':'001888c8c614b3df53052499eee974bb7e8b47cecffdb9284c3d3af38c76ba3f',
             'weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip':'e19b0d528d0e8cdd195918d8de8af3f555446d0991666c00e5ae91b82946c206',
         }

@@ -1,0 +1,2308 @@
+{
+  "schema_version": 1,
+  "target_build": "25480438",
+  "reference_commit": "bf0ce329db3cf0043994eb717ea86433c303cb36",
+  "reference_scope": "Complete pinned LoadoutEntryComponentData SidearmWeapon entries; not the current playable roster or gameplay proof.",
+  "matches_game_build": false,
+  "gameplay_verified": false,
+  "sources": {
+    "generated_entities.dl_bin": {
+      "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/datalibrary/generated_entities.dl_bin.gz",
+      "size": 46612588,
+      "sha256": "21377252b81fdbc670eba1e59a8ab64b170323df208f175e708992e4c1fb515e"
+    },
+    "dl_library.dl_typelib": {
+      "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/datalibrary/dl_library.dl_typelib.gz",
+      "size": 1062658,
+      "sha256": "4d04870d0a0d4dc1284998c72cdfa6f8ff6d21aba0e36b6f758c6f73dd0417a4"
+    },
+    "generated_entity_deltas.dl_bin": {
+      "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/datalibrary/generated_entity_deltas.dl_bin.gz",
+      "size": 349570,
+      "sha256": "3fadc7c2475558000f9e8ad30e01d52caea481e1633e35674ed2864572694f4e"
+    }
+  },
+  "name_sources": [
+    {
+      "name": "hashes.txt",
+      "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/hashes/hashes.txt",
+      "sha256": "6ba50cf6a9eefd58978ce9f71d4635b92ab7d6ec29555ad607932c2b9766bf83",
+      "size": 3306121
+    },
+    {
+      "name": "dl_type_names.txt",
+      "url": "https://raw.githubusercontent.com/xypwn/filediver/bf0ce329db3cf0043994eb717ea86433c303cb36/hashes/dl_type_names.txt",
+      "sha256": "7b1207f4b4f2ee6d485fb039eee1fa0b21f9c497b3751b9b50dced10e078c6d3",
+      "size": 214568
+    }
+  ],
+  "policy": {
+    "loadout_type": 3,
+    "loadout_type_name": "LoadoutItemType_SidearmWeapon",
+    "shootable_requires_any_component": [
+      "ProjectileWeaponComponent",
+      "BeamWeaponComponent",
+      "ArcWeaponComponent",
+      "SprayWeaponComponent"
+    ],
+    "exclude_shotguns_and_multishot": true,
+    "excluded_weapon_entities": [
+      "2b28e17ffed05f7c"
+    ],
+    "p11_managed_separately": "d6b1fb05b9109353",
+    "native_handler_requires": "ProjectileWeaponComponent",
+    "unsupported_handlers": [
+      "BeamWeaponComponent",
+      "ArcWeaponComponent",
+      "SprayWeaponComponent"
+    ],
+    "unknown_game_build_disables_runtime": true
+  },
+  "counts": {
+    "all_loadout": 193,
+    "loadout_by_type": {
+      "1": 57,
+      "4": 27,
+      "2": 44,
+      "6": 35,
+      "3": 27,
+      "5": 3
+    },
+    "sidearm": 27,
+    "shootable_sidearm": 20,
+    "sidearm_mechanisms": {
+      "native_from_customization_unverified": 5,
+      "native_projectile_unverified": 10,
+      "entity_projectile_unverified": 3,
+      "no_known_firing_component": 7,
+      "spray_unsupported": 1,
+      "beam_unsupported": 1
+    }
+  },
+  "entries": [
+    {
+      "entity": "05e4e5c2db6e44a2",
+      "unit": "05e4e5c2db6e44a2",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 0,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 531,
+          "data_index": 170,
+          "file_offset": 26067772,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1189,
+          "data_index": 1017,
+          "file_offset": 1104652,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 32,
+          "data_index": 140,
+          "file_offset": 46499780,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 150,
+          "data_index": 190,
+          "file_offset": 26397444,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 521,
+          "data_index": 277,
+          "file_offset": 5730428,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 90,
+          "data_index": 234,
+          "file_offset": 706620,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 27,
+          "data_index": 67,
+          "file_offset": 724796,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 90,
+          "data_index": 145,
+          "file_offset": 560532,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 198,
+          "data_index": 30,
+          "file_offset": 735580,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_from_customization_unverified",
+      "name": "P-2 Peacemaker",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/standard_pistol/standard_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "0b882808c6f498e8",
+      "unit": "0b882808c6f498e8",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 343,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 649,
+          "data_index": 291,
+          "file_offset": 26095844,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 3090,
+          "data_index": 1597,
+          "file_offset": 1183532,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 212,
+          "data_index": 229,
+          "file_offset": 46554604,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 396,
+          "data_index": 312,
+          "file_offset": 26547748,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 637,
+          "data_index": 449,
+          "file_offset": 5735932,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 376,
+          "data_index": 484,
+          "file_offset": 714620,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 166,
+          "data_index": 144,
+          "file_offset": 727260,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 377,
+          "data_index": 233,
+          "file_offset": 574612,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 53,
+          "data_index": 111,
+          "file_offset": 736876,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "P-35 Re-Educator",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/caustic_dart_gun/caustic_dart_gun",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "14d5d4506056c7a4",
+      "unit": "14d5d4506056c7a4",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 152,
+      "projectile_entity": "a1470a4dab237264",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 180,
+          "data_index": 169,
+          "file_offset": 26067540,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1031,
+          "data_index": 1016,
+          "file_offset": 1104516,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 366,
+          "data_index": 139,
+          "file_offset": 46499164,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 662,
+          "data_index": 189,
+          "file_offset": 26396212,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 220,
+          "data_index": 276,
+          "file_offset": 5730396,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 740,
+          "data_index": 233,
+          "file_offset": 706588,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 202,
+          "data_index": 66,
+          "file_offset": 724764,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 200,
+          "data_index": 144,
+          "file_offset": 560372,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 308,
+          "data_index": 29,
+          "file_offset": 735564,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "entity_projectile_unverified",
+      "name": "P-33 Missile Pistol（內部名稱）",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/smart_pistol_missile/smart_pistol_missile",
+      "gameplay_verified": false,
+      "handler_status": "catalogued_native_slot_if_present_only_entity_handler_missing"
+    },
+    {
+      "entity": "1a437158e1b8d2a1",
+      "unit": "1a437158e1b8d2a1",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 15,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 353,
+          "data_index": 297,
+          "file_offset": 26097236,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1226,
+          "data_index": 1603,
+          "file_offset": 1184348,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 540,
+          "data_index": 233,
+          "file_offset": 46557068,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 340,
+          "data_index": 318,
+          "file_offset": 26555140,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 299,
+          "data_index": 455,
+          "file_offset": 5736124,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 130,
+          "data_index": 490,
+          "file_offset": 714812,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 187,
+          "data_index": 150,
+          "file_offset": 727452,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 130,
+          "data_index": 236,
+          "file_offset": 575092,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 25,
+          "data_index": 117,
+          "file_offset": 736972,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "P-113 Verdict",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/magnum_pistol/magnum_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "2b28e17ffed05f7c",
+      "unit": "2b28e17ffed05f7c",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 0,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 684,
+          "data_index": 289,
+          "file_offset": 26095380,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 697,
+          "data_index": 1595,
+          "file_offset": 1183260,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 208,
+          "data_index": 227,
+          "file_offset": 46553372,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 436,
+          "data_index": 310,
+          "file_offset": 26545284,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 826,
+          "data_index": 447,
+          "file_offset": 5735868,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 396,
+          "data_index": 482,
+          "file_offset": 714556,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 284,
+          "data_index": 142,
+          "file_offset": 727196,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 72,
+          "data_index": 109,
+          "file_offset": 736844,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_from_customization_unverified",
+      "name": "SG-22 Bushwhacker",
+      "unit_path": "content/fac_helldivers/equipment/primary_weapons/triple_barrel_breakshotgun/triple_barrel_breakshotgun",
+      "gameplay_verified": false,
+      "handler_status": "excluded_shotgun"
+    },
+    {
+      "entity": "2ec9cd598e31930f",
+      "unit": "64cdb52aca152be1",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 191,
+          "data_index": 247,
+          "file_offset": 26085636,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 445,
+          "data_index": 1553,
+          "file_offset": 1177548,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 631,
+          "data_index": 268,
+          "file_offset": 26493540,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 309,
+          "data_index": 405,
+          "file_offset": 5734524,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 161,
+          "data_index": 440,
+          "file_offset": 713212,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 374,
+          "data_index": 100,
+          "file_offset": 725852,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 159,
+          "data_index": 67,
+          "file_offset": 736172,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "未命名副武器項目（含近戰組件）",
+      "unit_path": null,
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "3575aabc5f1f9326",
+      "unit": "3575aabc5f1f9326",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 0,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 391,
+          "data_index": 290,
+          "file_offset": 26095612,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 575,
+          "data_index": 1596,
+          "file_offset": 1183396,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 119,
+          "data_index": 228,
+          "file_offset": 46553988,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 224,
+          "data_index": 311,
+          "file_offset": 26546516,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 125,
+          "data_index": 448,
+          "file_offset": 5735900,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 15,
+          "data_index": 483,
+          "file_offset": 714588,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 246,
+          "data_index": 143,
+          "file_offset": 727228,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 15,
+          "data_index": 232,
+          "file_offset": 574452,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 17,
+          "data_index": 110,
+          "file_offset": 736860,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_from_customization_unverified",
+      "name": "P-19 Redeemer",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/automatic_pistol/automatic_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "3f92ba65ef65cca9",
+      "unit": "3f92ba65ef65cca9",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "SprayWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 187,
+          "data_index": 293,
+          "file_offset": 26096308,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2936,
+          "data_index": 1599,
+          "file_offset": 1183804,
+          "size": 136,
+          "delta_count": 0
+        },
+        "SprayWeaponComponent": {
+          "hashmap_index": 21,
+          "data_index": 18,
+          "file_offset": 46374836,
+          "size": 224,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 499,
+          "data_index": 314,
+          "file_offset": 26550212,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 9,
+          "data_index": 451,
+          "file_offset": 5735996,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 129,
+          "data_index": 486,
+          "file_offset": 714684,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 316,
+          "data_index": 146,
+          "file_offset": 727324,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 129,
+          "data_index": 234,
+          "file_offset": 574772,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 24,
+          "data_index": 113,
+          "file_offset": 736908,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "spray_unsupported",
+      "name": "P-72 Crisper",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/flamer_pistol/flamer_pistol",
+      "gameplay_verified": false,
+      "handler_status": "missing_separate_handler"
+    },
+    {
+      "entity": "416d053372c4e433",
+      "unit": "416d053372c4e433",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 144,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 499,
+          "data_index": 292,
+          "file_offset": 26096076,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1338,
+          "data_index": 1598,
+          "file_offset": 1183668,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 369,
+          "data_index": 230,
+          "file_offset": 46555220,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 500,
+          "data_index": 313,
+          "file_offset": 26548980,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 580,
+          "data_index": 450,
+          "file_offset": 5735964,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 339,
+          "data_index": 485,
+          "file_offset": 714652,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 109,
+          "data_index": 145,
+          "file_offset": 727292,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 18,
+          "data_index": 112,
+          "file_offset": 736892,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "LAS-58 Talon",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/energy_revolver/energy_revolver",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "4d58c77087b774c5",
+      "unit": "4d58c77087b774c5",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 308,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 277,
+          "data_index": 300,
+          "file_offset": 26097932,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 369,
+          "data_index": 1606,
+          "file_offset": 1184756,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 82,
+          "data_index": 236,
+          "file_offset": 46558916,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 389,
+          "data_index": 321,
+          "file_offset": 26558836,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 447,
+          "data_index": 458,
+          "file_offset": 5736220,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 597,
+          "data_index": 493,
+          "file_offset": 714908,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 231,
+          "data_index": 153,
+          "file_offset": 727548,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 58,
+          "data_index": 238,
+          "file_offset": 575412,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 57,
+          "data_index": 120,
+          "file_offset": 737020,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "M6C SOCOM Pistol",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/pistol_nacho/pistol_nacho",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "52cdbfbaca3cb397",
+      "unit": "c5793b23852109f0",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 55,
+          "data_index": 243,
+          "file_offset": 26084708,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 238,
+          "data_index": 1549,
+          "file_offset": 1177004,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 471,
+          "data_index": 264,
+          "file_offset": 26488612,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 461,
+          "data_index": 401,
+          "file_offset": 5734396,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 791,
+          "data_index": 436,
+          "file_offset": 713084,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 13,
+          "data_index": 96,
+          "file_offset": 725724,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "CQC-30 Stun Baton",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/electric_baton/electric_baton",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "52e4334e6a128caf",
+      "unit": "52e4334e6a128caf",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 263,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 79,
+          "data_index": 294,
+          "file_offset": 26096540,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2093,
+          "data_index": 1600,
+          "file_offset": 1183940,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 362,
+          "data_index": 231,
+          "file_offset": 46555836,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 343,
+          "data_index": 315,
+          "file_offset": 26551444,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 474,
+          "data_index": 452,
+          "file_offset": 5736028,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 383,
+          "data_index": 487,
+          "file_offset": 714716,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 373,
+          "data_index": 147,
+          "file_offset": 727356,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 167,
+          "data_index": 114,
+          "file_offset": 736924,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "GP-31 Grenade Pistol",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/grenade_pistol/grenade_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "75816077c139c850",
+      "unit": "75816077c139c850",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 625,
+          "data_index": 245,
+          "file_offset": 26085172,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2888,
+          "data_index": 1551,
+          "file_offset": 1177276,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 246,
+          "data_index": 266,
+          "file_offset": 26491076,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 917,
+          "data_index": 403,
+          "file_offset": 5734460,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 256,
+          "data_index": 438,
+          "file_offset": 713148,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 192,
+          "data_index": 98,
+          "file_offset": 725788,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "CQC-5 Combat Hatchet",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/hand_axe/hand_axe",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "792d5d2a340fd6e6",
+      "unit": "792d5d2a340fd6e6",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 360,
+          "data_index": 246,
+          "file_offset": 26085404,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2997,
+          "data_index": 1552,
+          "file_offset": 1177412,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 283,
+          "data_index": 267,
+          "file_offset": 26492308,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 932,
+          "data_index": 404,
+          "file_offset": 5734492,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 424,
+          "data_index": 439,
+          "file_offset": 713180,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 208,
+          "data_index": 99,
+          "file_offset": 725820,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "CQC-42 Machete",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/machete/machete",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "7b06196e90154c88",
+      "unit": "7b06196e90154c88",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "BeamWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 168,
+          "data_index": 296,
+          "file_offset": 26097004,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2812,
+          "data_index": 1602,
+          "file_offset": 1184212,
+          "size": 136,
+          "delta_count": 0
+        },
+        "BeamWeaponComponent": {
+          "hashmap_index": 34,
+          "data_index": 20,
+          "file_offset": 27519292,
+          "size": 120,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 186,
+          "data_index": 317,
+          "file_offset": 26553908,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 398,
+          "data_index": 454,
+          "file_offset": 5736092,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 656,
+          "data_index": 489,
+          "file_offset": 714780,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 322,
+          "data_index": 149,
+          "file_offset": 727420,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 9,
+          "data_index": 116,
+          "file_offset": 736956,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "beam_unsupported",
+      "name": "LAS-7 Dagger",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/laser_pistol/laser_pistol",
+      "gameplay_verified": false,
+      "handler_status": "missing_separate_handler"
+    },
+    {
+      "entity": "7e1f76163c667e4b",
+      "unit": "7e1f76163c667e4b",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 587,
+          "data_index": 145,
+          "file_offset": 26061972,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1413,
+          "data_index": 992,
+          "file_offset": 1101252,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 595,
+          "data_index": 166,
+          "file_offset": 26367876,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 975,
+          "data_index": 252,
+          "file_offset": 5729628,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 795,
+          "data_index": 209,
+          "file_offset": 705820,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 371,
+          "data_index": 45,
+          "file_offset": 724092,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "Entrenchment Tool（內部資源）",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/survival_shovel/survival_shovel_trench",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "8d3d52a3b2f19402",
+      "unit": "8d3d52a3b2f19402",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 0,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 50,
+          "data_index": 303,
+          "file_offset": 26098628,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 167,
+          "data_index": 1609,
+          "file_offset": 1185164,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 294,
+          "data_index": 239,
+          "file_offset": 46560764,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 256,
+          "data_index": 324,
+          "file_offset": 26562532,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 977,
+          "data_index": 461,
+          "file_offset": 5736316,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 26,
+          "data_index": 496,
+          "file_offset": 715004,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 81,
+          "data_index": 156,
+          "file_offset": 727644,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 29,
+          "data_index": 123,
+          "file_offset": 737068,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_from_customization_unverified",
+      "name": "P-4 Senator",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/revolver_pistol/revolver_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "9eb160830321bfd6",
+      "unit": "9eb160830321bfd6",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 103,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 646,
+          "data_index": 299,
+          "file_offset": 26097700,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 3069,
+          "data_index": 1605,
+          "file_offset": 1184620,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 478,
+          "data_index": 235,
+          "file_offset": 46558300,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 128,
+          "data_index": 320,
+          "file_offset": 26557604,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 328,
+          "data_index": 457,
+          "file_offset": 5736188,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 598,
+          "data_index": 492,
+          "file_offset": 714876,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 4,
+          "data_index": 152,
+          "file_offset": 727516,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 60,
+          "data_index": 237,
+          "file_offset": 575252,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 166,
+          "data_index": 119,
+          "file_offset": 737004,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "GP-20 Ultimatum",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/pistol_cricket/pistol_cricket",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "aa69a60d74a3ec54",
+      "unit": "aa69a60d74a3ec54",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "WeaponChargeComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 171,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 4,
+          "data_index": 302,
+          "file_offset": 26098396,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 766,
+          "data_index": 1608,
+          "file_offset": 1185028,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 342,
+          "data_index": 238,
+          "file_offset": 46560148,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 378,
+          "data_index": 323,
+          "file_offset": 26561300,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 198,
+          "data_index": 460,
+          "file_offset": 5736284,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 115,
+          "data_index": 495,
+          "file_offset": 714972,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 44,
+          "data_index": 155,
+          "file_offset": 727612,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 110,
+          "data_index": 240,
+          "file_offset": 575732,
+          "size": 160,
+          "delta_count": 0
+        },
+        "WeaponChargeComponent": {
+          "hashmap_index": 8,
+          "data_index": 5,
+          "file_offset": 7566492,
+          "size": 216,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 216,
+          "data_index": 122,
+          "file_offset": 737052,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "PLAS-15 Loyalist",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/plasma_pistol/plasma_pistol",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "bde1f2534280300d",
+      "unit": "bde1f2534280300d",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 0,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 205,
+          "data_index": 304,
+          "file_offset": 26098860,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1149,
+          "data_index": 1610,
+          "file_offset": 1185300,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 264,
+          "data_index": 240,
+          "file_offset": 46561380,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 529,
+          "data_index": 325,
+          "file_offset": 26563764,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 370,
+          "data_index": 462,
+          "file_offset": 5736348,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 1069,
+          "data_index": 497,
+          "file_offset": 715036,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 262,
+          "data_index": 157,
+          "file_offset": 727676,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 205,
+          "data_index": 124,
+          "file_offset": 737084,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_from_customization_unverified",
+      "name": "P-41 Ombudsman",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/revolver_pistol_long/revolver_pistol_long",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "c780bcd79547da0f",
+      "unit": "c780bcd79547da0f",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 237,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 143,
+          "data_index": 298,
+          "file_offset": 26097468,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2049,
+          "data_index": 1604,
+          "file_offset": 1184484,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 450,
+          "data_index": 234,
+          "file_offset": 46557684,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 453,
+          "data_index": 319,
+          "file_offset": 26556372,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 434,
+          "data_index": 456,
+          "file_offset": 5736156,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 225,
+          "data_index": 491,
+          "file_offset": 714844,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 43,
+          "data_index": 151,
+          "file_offset": 727484,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 8,
+          "data_index": 118,
+          "file_offset": 736988,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "P-69 Veto",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/pistol_broomhandle/pistol_broomhandle",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "cf8934ff6567a42d",
+      "unit": "cf8934ff6567a42d",
+      "category": 10,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 326,
+      "projectile_entity": "8053da4358971392",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 349,
+          "data_index": 168,
+          "file_offset": 26067308,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 696,
+          "data_index": 1015,
+          "file_offset": 1104380,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 67,
+          "data_index": 138,
+          "file_offset": 46498548,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 469,
+          "data_index": 188,
+          "file_offset": 26394980,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 589,
+          "data_index": 275,
+          "file_offset": 5730364,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 390,
+          "data_index": 232,
+          "file_offset": 706556,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 226,
+          "data_index": 65,
+          "file_offset": 724732,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 389,
+          "data_index": 143,
+          "file_offset": 560212,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 65,
+          "data_index": 28,
+          "file_offset": 735548,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "entity_projectile_unverified",
+      "name": "P-92 Warrant",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/smart_pistol/smart_pistol",
+      "gameplay_verified": false,
+      "handler_status": "catalogued_native_slot_if_present_only_entity_handler_missing"
+    },
+    {
+      "entity": "d6b1fb05b9109353",
+      "unit": "d6b1fb05b9109353",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 318,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 243,
+          "data_index": 171,
+          "file_offset": 26068004,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 3113,
+          "data_index": 1018,
+          "file_offset": 1104788,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 537,
+          "data_index": 141,
+          "file_offset": 46500396,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 674,
+          "data_index": 191,
+          "file_offset": 26398676,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 764,
+          "data_index": 278,
+          "file_offset": 5730460,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 43,
+          "data_index": 235,
+          "file_offset": 706652,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 302,
+          "data_index": 68,
+          "file_offset": 724828,
+          "size": 32,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 151,
+          "data_index": 31,
+          "file_offset": 735596,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "P-11 Stim Pistol",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/stim_pistol_01/stim_pistol",
+      "gameplay_verified": false,
+      "handler_status": "preserved_p11_addon_prior_user_report"
+    },
+    {
+      "entity": "dbb6c961c59fadc1",
+      "unit": "dbb6c961c59fadc1",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 202,
+      "projectile_entity": "0000000000000000",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 436,
+          "data_index": 301,
+          "file_offset": 26098164,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 1121,
+          "data_index": 1607,
+          "file_offset": 1184892,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 489,
+          "data_index": 237,
+          "file_offset": 46559532,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 391,
+          "data_index": 322,
+          "file_offset": 26560068,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 901,
+          "data_index": 459,
+          "file_offset": 5736252,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 523,
+          "data_index": 494,
+          "file_offset": 714940,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 92,
+          "data_index": 154,
+          "file_offset": 727580,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 522,
+          "data_index": 239,
+          "file_offset": 575572,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 90,
+          "data_index": 121,
+          "file_offset": 737036,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "native_projectile_unverified",
+      "name": "P/40-K Bolt Pistol",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/pistol_shark/pistol_shark",
+      "gameplay_verified": false,
+      "handler_status": "native_slot_candidate_unverified"
+    },
+    {
+      "entity": "e3b6aedd07fcb464",
+      "unit": "e3b6aedd07fcb464",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 516,
+          "data_index": 143,
+          "file_offset": 26061508,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2012,
+          "data_index": 990,
+          "file_offset": 1100980,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 438,
+          "data_index": 164,
+          "file_offset": 26365412,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 219,
+          "data_index": 250,
+          "file_offset": 5729564,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 788,
+          "data_index": 207,
+          "file_offset": 705756,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 282,
+          "data_index": 43,
+          "file_offset": 724028,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "CQC-19 Stun Lance",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/stun_spear/stun_spear",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    },
+    {
+      "entity": "e91f569c2ad8af01",
+      "unit": "e91f569c2ad8af01",
+      "category": 31,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "ProjectileWeaponComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent",
+        "WeaponMagazineComponent",
+        "MeleeAttackComponent"
+      ],
+      "projectile_type": 270,
+      "projectile_entity": "87a8a187b6fd68fd",
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 33,
+          "data_index": 295,
+          "file_offset": 26096772,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2697,
+          "data_index": 1601,
+          "file_offset": 1184076,
+          "size": 136,
+          "delta_count": 0
+        },
+        "ProjectileWeaponComponent": {
+          "hashmap_index": 529,
+          "data_index": 232,
+          "file_offset": 46556452,
+          "size": 616,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 196,
+          "data_index": 316,
+          "file_offset": 26552676,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 867,
+          "data_index": 453,
+          "file_offset": 5736060,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 385,
+          "data_index": 488,
+          "file_offset": 714748,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 271,
+          "data_index": 148,
+          "file_offset": 727388,
+          "size": 32,
+          "delta_count": 0
+        },
+        "WeaponMagazineComponent": {
+          "hashmap_index": 385,
+          "data_index": 235,
+          "file_offset": 574932,
+          "size": 160,
+          "delta_count": 0
+        },
+        "MeleeAttackComponent": {
+          "hashmap_index": 278,
+          "data_index": 115,
+          "file_offset": 736940,
+          "size": 16,
+          "delta_count": 0
+        }
+      },
+      "shootable": true,
+      "mechanism": "entity_projectile_unverified",
+      "name": "Hornet Pistol（內部資源名稱，正式名稱未確認）",
+      "unit_path": "content/fac_helldivers/equipment/sidearm_weapons/hornet_pistol/hornet_pistol",
+      "gameplay_verified": false,
+      "handler_status": "catalogued_native_slot_if_present_only_entity_handler_missing"
+    },
+    {
+      "entity": "fcd8a6e67eac635a",
+      "unit": "fcd8a6e67eac635a",
+      "category": 30,
+      "loadout_type": 3,
+      "components": [
+        "EquipmentComponent",
+        "UnitComponent",
+        "WeaponDataComponent",
+        "WieldableComponent",
+        "LoadoutPackageComponent",
+        "LoadoutEntryComponent"
+      ],
+      "projectile_type": null,
+      "projectile_entity": null,
+      "record_evidence": {
+        "EquipmentComponent": {
+          "hashmap_index": 236,
+          "data_index": 241,
+          "file_offset": 26084244,
+          "size": 232,
+          "delta_count": 0
+        },
+        "UnitComponent": {
+          "hashmap_index": 2030,
+          "data_index": 1547,
+          "file_offset": 1176732,
+          "size": 136,
+          "delta_count": 0
+        },
+        "WeaponDataComponent": {
+          "hashmap_index": 376,
+          "data_index": 262,
+          "file_offset": 26486148,
+          "size": 1232,
+          "delta_count": 0
+        },
+        "WieldableComponent": {
+          "hashmap_index": 376,
+          "data_index": 399,
+          "file_offset": 5734332,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutPackageComponent": {
+          "hashmap_index": 226,
+          "data_index": 434,
+          "file_offset": 713020,
+          "size": 32,
+          "delta_count": 0
+        },
+        "LoadoutEntryComponent": {
+          "hashmap_index": 293,
+          "data_index": 94,
+          "file_offset": 725660,
+          "size": 32,
+          "delta_count": 0
+        }
+      },
+      "shootable": false,
+      "mechanism": "no_known_firing_component",
+      "name": "CQC-2 Saber",
+      "unit_path": "content/fac_helldivers/equipment/melee_weapons/ceremonial_saber/ceremonial_saber",
+      "gameplay_verified": false,
+      "handler_status": "outside_identified_shootable_scope"
+    }
+  ],
+  "limitations": [
+    "Installed data tables have encrypted/packed headers. Matching decrypted file size plus 48 bytes is not proof of equivalence.",
+    "EquipmentType is an AI classification and misclassifies several primaries/special secondaries; selection uses LoadoutItemType instead.",
+    "The 20 shootable rows means identified Projectile/Beam/Arc/Spray components. Six named melee rows and one unnamed row remain outside that identified firing scope; the unnamed row has MeleeAttackComponent.",
+    "Projectile type 0 is a base component value, not the actual shot type. Customization/attachment resolution is required at runtime.",
+    "Beam, spray and entity projectile collision mechanisms are not implemented by the native slot flag writer. Catalog completeness does not imply these weapons self-hit.",
+    "Internal or unreleased reference entries can be present. Human labels do not prove current availability. Unknown future table fingerprints require a reviewed catalog regeneration.",
+    "Shotgun and multishot projectile exclusion remains a separate earlier filter. P-11 stays in its unchanged original addon."
+  ],
+  "proof_sha256": "785d85ec34cd4d22bca2a4bef940419b3687fe2b1c61d47f70c7f1b781ad0970"
+}

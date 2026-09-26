@@ -1,36 +1,16 @@
-# P-11 自療模組封面 / Cover brief
+# 封面與發布圖片 / Cover artwork
 
-狀態：**待生成，尚無圖片成品**。
-2026-09-26 使用內建 imagegen 嘗試生成時，服務回傳驗證錯誤（401）。
-使用者選擇保留內建方案，稍後再生成；未改用 CLI/API 備用方案。
+兩張封面均已使用內建 image_gen 完成，保存於公開源碼的 `docs/assets/`；都是宣傳插畫，不是遊戲截圖或玩法驗證。
 
-## 設計用途
+Both covers were generated with the built-in image_gen tool and are included under `docs/assets/`. They are promotional illustrations, not screenshots or gameplay evidence.
 
-- 獨立 P-11 自療模組的發布頁封面，16:9 橫幅。
-- 標題 P-11 SELF-HEAL，專案名稱 P11-Enhanced。
-- 全盔甲角色以醫療飛鏢手槍朝自己的靴子射擊，綠色治療光效。
-- 煙灰色科幻船艙背景、少量工業黃與醫療綠，清晰大字與縮圖可讀性。
-- 原創宣傳插畫；不作為遊戲實拍或玩法驗證證據。
+| 模組 / Mod | 封面 / Cover | 構圖 / Design |
+|---|---|---|
+| Projectile Collision Filter | [PNG](assets/projectile-collision-filter-cover.png) | 黑黃／醫療綠；P-11 朝自身靴子射擊。Charcoal, yellow and medical green, with a P-11 aimed at the trooper's boot. |
+| Raise Weapon: Aim at Yourself | [PNG](assets/raise-weapon-aim-at-yourself-cover.png) | 參考 P3R 召喚動作；槍抵頭盔側面，藍色光影與碎片。P3R-inspired summoning pose, muzzle against helmet temple, blue light and abstract shards. |
 
-## 內建生成提示詞 / Built-in generation prompt
+兩張圖包含中英文名稱。動作模組封面已按要求改版；原黑黃稿只保留在本機工作資料。圖片更新沒有修改動作模組檔案。
 
-```text
-Use case: ads-marketing
-Asset type: landscape 16:9 cover artwork for a community Helldivers 2 mod release page.
-Primary request: create a polished, dramatic cover for P11-Enhanced, a P-11 stim pistol self-healing mod. The cover must communicate actual healing from a stim dart hitting the player's own armored boot, not auto-aim or teammate tracking.
-Scene/backdrop: atmospheric futuristic ship hangar, smoky charcoal metal, subtle industrial yellow accents.
-Subject: a single fully helmeted armored science-fiction trooper with a short cape, holding a compact medical dart pistol angled down toward their own armored boot. A small emerald healing glow at the boot and a restrained translucent green medical cross communicate healing. No injury, blood or ordinary bullet impact. Clearly an illustrated promotional concept, not an in-game screenshot.
-Style/medium: cinematic game key art with crisp graphic design, refined materials, restrained detail, strong readable silhouette and generous negative space for the title.
-Composition/framing: wide landscape with the trooper on one side and clean large title on the other; all lettering comfortably inside a safe margin and readable at thumbnail size.
-Lighting/mood: dark cinematic background, rim lighting and controlled emerald glow, premium community-mod cover.
-Text (verbatim): main title "P-11", second line "SELF-HEAL", small project label "P11-Enhanced", short bottom line "EXPERIMENTAL INFUSION".
-Typography: excellent clean condensed sans-serif, warm white title with restrained yellow accent; precise spelling. Only these four text elements.
-Constraints: one character, one compact pistol, physically coherent hands and limbs, original fan artwork, no publisher logos, no watermark, no extra UI, no teammate target markers, no unsupported feature labels.
-```
+Both images include English and Traditional Chinese titles. The revised animation cover replaces the previous charcoal/yellow draft. Artwork changes do not modify the animation mod.
 
-## 完成時
-
-以內建 imagegen 使用上方提示詞生成並檢查構圖、手部與文字。
-將實際生成的 PNG 保存至專案 assets/p11-self-hit-cover.png。
-加入明確來源清單與發布資產清單，再在首頁引用圖片。
-目前不引用尚未存在的圖片，不把本文件當成已完成的封面。
+[完整提示詞與參考來源 / Prompts and references](COVER-PROMPTS.md) · [發布頁操作入口 / Page publishing](PAGE-PUBLISHING.md)

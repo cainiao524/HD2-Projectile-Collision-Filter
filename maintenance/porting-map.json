@@ -56,7 +56,7 @@
     "required_checks": [
       "Preserve local avatar, source unit/entity, weapon registration and attachment owner checks",
       "Do not remove P-11 resource/type exclusions; P-11 belongs to standalone 0.2.1",
-      "Revalidate all eight pistol resource IDs against current build evidence",
+      "Re-derive all SidearmWeapon loadout entries from the pinned entity/schema/delta inputs. EquipmentType is an AI category and is not a weapon-slot classifier. Never silently drop unknown or non-shooting entries.",
       "Do not claim hitscan, beams, melee, explosion or entity-projectile coverage",
       "Clear only runtime flag 0x20 in non-executable private memory; no native hooks",
       "All expanded scopes are unverified in gameplay; mock success is not native collision proof",
@@ -64,6 +64,16 @@
       "Re-derive numeric shotgun families and all multi-projectile rows on game updates. Missing classification must not silently enable filtered scopes."
     ],
     "packaging": "Four mutually exclusive Arsenal sub-options, each includes unchanged P-11 0.2.1. First three exclude shotguns; fourth explicitly includes them.",
-    "projectile_filter": "maintenance/projectile-exclusions-25480438.json; pinned offline table, not current gameplay proof"
+    "projectile_filter": "maintenance/projectile-exclusions-25480438.json; pinned offline table, not current gameplay proof",
+    "secondary_catalog": "maintenance/secondary-catalog-25480438.json",
+    "secondary_catalog_verifier": "tools/verify_secondary_catalog.py",
+    "secondary_catalog_inputs": ["generated_entities.dl_bin", "dl_library.dl_typelib", "generated_entity_deltas.dl_bin", "generated_weapon_customization_settings.dl_bin"],
+    "secondary_mechanism_gaps": [
+      "The compiled resource lookup covers native-slot candidates only; a complete reference loadout catalog does not prove complete gameplay support or current-build correspondence.",
+      "Dagger beam and Crisper spray require their own evidenced ownership, collision-exclusion and timing model; the existing native-slot writer does not implement these mechanisms.",
+      "Warrant, P33 and the internal Hornet resource use projectile entities; downstream native slot production and collision timing remain unverified.",
+      "Base projectile type zero must be resolved through weapon customizations before claiming the fired type. Actual slot types still pass the existing shotgun/multishot filter.",
+      "The captured installed tables have unrecognized/packed headers; pinned plaintext reference inputs cannot be silently treated as those installed files."
+    ]
   }
 }

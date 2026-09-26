@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0-preview.6 — 副武器分類擴展預覽 / Expanded Secondary Catalog Prerelease
+
+- Target all shootable secondary-slot weapons while keeping shotgun/multishot exclusions. Pistol candidate 0.1.3 uses catalog-backed work; this does not establish support for all firing mechanisms.
+- Separate pinned-reference classification, runtime lookup/handler coverage and gameplay evidence. Do not use AI EquipmentType as a loadout-slot classifier.
+- Dagger beam and Crisper spray remain unsupported; Warrant, P33 and Hornet Pistol (internal resource name) entity follow-up paths remain unresolved. Keep original P-11 0.2.1.
+- Toolkit 1.3.1 collects five installed entity/structure/weapon/projectile data files, records installed-versus-cache provenance and reports specific gaps without asserting game-build equivalence.
+- Add SECONDARIES and update maintenance instructions, bilingual player guidance and release presentation. Preview.6 becomes the main prerelease download; preview.5 remains available as a historical release with its original assets and evidence.
+- Keep the six-ZIP layout, unchanged original P-11 and broad-scope packages. Expanded secondary coverage remains incomplete and unverified despite public prerelease availability.
+
 ## v0.3.0-preview.5 — Clear choices, six downloads and maintenance handoff
 
 - Rename the selectable mod to Projectile Collision Filter（投射物碰撞過濾器） while retaining the P11-Enhanced repository, mod identity and runtime.

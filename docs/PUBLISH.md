@@ -1,6 +1,8 @@
 # GitHub 發布與歷史版本管理
 
-目前發布目標為 **v0.3.0-preview.5，prerelease**。五個模組 ZIP 與一個 Update Toolkit 1.3.0 ZIP 是唯一手動資產；不另外上傳 Full Kit、Source ZIP 或 SHA256SUMS。GitHub 自動 Source code 連結不算手動資產。
+**本版為 v0.3.0-preview.6 預覽版／Toolkit 1.3.1，主要下載入口指向 preview.6；preview.5 保留為歷史版本。** 全部可射擊副武器機制仍未完成，發布正文必須明示候選與未支援範圍。發布依使用者現有授權執行；分類清單、mock 或公開預覽本身都不是玩法完成證明。未完成機制見 [SECONDARIES](SECONDARIES.md)。
+
+包裝維持五個模組 ZIP 加一個 Toolkit ZIP；不另外上傳 Full Kit、Source ZIP 或 SHA256SUMS。GitHub 自動 Source code 連結不算手動資產。以下步驟適用於來源、資產、證據限制及公開範圍已核對的版本，未支援機制保持明示，不因发布改為「已完成」。
 
 ## 1. 先核對來源與本機六檔
 
@@ -16,17 +18,19 @@ python tools/release_manager.py verify
 
 ## 2. 固定提交與發布正文
 
-正文原始檔是 `docs/release/RELEASE-v0.3.0-preview.5.md`，生成副本為 `releases/v0.3.0-preview.5.md`。文件改完先執行 `python tools/sync_docs.py --apply` 並檢查生成副本，再完整建置。將原始檔和更新的生成副本一起提交。由公開乾淨 checkout 發布時，先完成相關提交並推送同一目標分支；GitHub CLI 需已登入有權限的帳號。確認本次使用者授權包含公開發布；已有授權就不用反覆詢問。
+本版正文來源是 `docs/release/RELEASE-v0.3.0-preview.6.md`，生成副本為 `releases/v0.3.0-preview.6.md`，明示預覽與未完成機制。preview.5 原正文與資產保持不變，遠端只加歷史導航提示。文件改完先執行 `python tools/sync_docs.py --apply` 並檢查生成副本，再完整建置。將原始檔和更新的生成副本一起提交。由公開乾淨 checkout 發布時，先完成相關提交並推送同一目標分支；GitHub CLI 需已登入有權限的帳號。確認使用者授權包含相應公開發布；已有授權就不用反覆詢問。
 
-本版仍是候選／預覽，不為了成為 Latest 而移除 prerelease 標示。README 的主要下載連結直接指向本版。
+標題與介紹同時提供中文、英文，並核對六個下載檔的用途、相容版本、安裝入口、性能提示及玩法缺口在兩種語言中一致。封面來源為 `docs/assets/projectile-collision-filter-cover.png`；Release 正文使用指向本次 tag 或提交的完整圖片網址，不能依賴本機路徑或 Release 頁面的相對路徑。封面是介紹插圖，不是遊戲內驗證截圖。封面放在源碼中，不另增第七個手動下載資產。
+
+任何仍屬候選的發布維持 prerelease，不為了成為 Latest 移除標示。README 與当前操作指南的主要下載連結指向 preview.6；preview.5 及更早版本保留歷史回退入口。
 
 ## 3. 明確發布並核對遠端
 
-以下適用於公開源碼 checkout 根目錄：
+以下在完成核驗且已取得相應發布授權的公開源碼 checkout 根目錄執行：
 
 ```powershell
 $releaseTarget = (git rev-parse HEAD).Trim()
-python tools/release_manager.py publish --target "$releaseTarget" --notes releases/v0.3.0-preview.5.md
+python tools/release_manager.py publish --target "$releaseTarget" --notes releases/v0.3.0-preview.6.md
 python tools/release_manager.py verify-remote --target "$releaseTarget"
 ```
 
@@ -90,10 +94,10 @@ if ($LASTEXITCODE -ne 0) { throw '遠端核驗失敗，不能標示發布完成�
 
 ## 4. 保留歷史 Release
 
-本版成功發布且遠端核驗通過後，對目前較舊的 preview.1、preview.2、preview.3、preview.4：
+preview.6 遠端六檔核验成功後，將 preview.1 至 preview.5 的歷史導航統一指向 preview.6；舊正文中的當時功能與證據保持不變：
 
 1. 保留原始標籤、提交及全部下載資產。
-2. 在標題加上「歷史版本」標示，正文頂部加入指向 v0.3.0-preview.5 的主要下載連結。
+2. 在標題加上「歷史版本 / Historical」標示，正文頂部加入中英文提示及指向 v0.3.0-preview.6 的主要下載連結。
 3. 原正文保留，避免重寫當時的玩法或測試結論。
 4. 已有歷史標示就更新指向，不重複疊加提示。
 
@@ -104,3 +108,11 @@ if ($LASTEXITCODE -ne 0) { throw '遠端核驗失敗，不能標示發布完成�
 記錄新 Release 連結、目標提交、六個資產的 SHA-256、verify／verify-remote 結果及歷史版本整理結果。保留本機診斷與離線分析證據，不將它們上傳。
 
 GitHub 有六個檔案、來源能重建、mock／管理器隔離測試通過，均不能作為新版玩法或無卡頓證明。P-11 保留原使用者成功回報，擴展與性能仍按 [驗證記錄](VERIFICATION.md) 如實標示。
+
+## English release checklist
+
+Run the documented source and package checks, then verify the six ZIPs with `tools/release_manager.py verify`. Use a clean committed public checkout and the same source revision as the package. Prepare a bilingual title and introduction, a cover URL pinned to the release tag or commit, the exact download table, compatibility requirements and explicit mechanism limitations. The cover is promotional artwork, not a gameplay screenshot.
+
+Publish only within the user's existing authorization, using the publish command above, and retain prerelease status. Then run verify-remote and check the displayed title, cover and both language sections. Only after remote validation succeeds, mark preview.1 through preview.5 as historical and link to preview.6; preserve every original tag, asset and historical body. If an upload stops partway, use the recovery sequence above to verify existing assets before uploading only missing files.
+
+A public prerelease still leaves unsupported Dagger beam/Crisper spray and unresolved entity follow-up paths explicit. Classification, package validation and publishing do not establish complete secondary coverage or new gameplay evidence.

@@ -59,7 +59,22 @@
     "tools/release_manager.py",
     "tests/test_release_manager.py",
     "tools/sync_docs.py",
-    "tests/test_sync_docs.py"
+    "tests/test_sync_docs.py",
+    "maintenance/secondary-catalog-25480438.json",
+    "tools/verify_secondary_catalog.py",
+    "tests/test_secondary_catalog.py",
+    "docs/release/SECONDARIES.md",
+    "docs/release/RELEASE-v0.3.0-preview.6.md",
+    "docs/assets/projectile-collision-filter-cover.png",
+    "docs/assets/raise-weapon-aim-at-yourself-cover.png",
+    "docs/release/COVER-PROMPTS.md",
+    "docs/release/MOD-PAGE.zh-TW.md",
+    "docs/release/MOD-PAGE.en.md",
+    "docs/release/MOD-PAGE.bilingual.bbcode",
+    "docs/release/RAISE-WEAPON.zh-TW.md",
+    "docs/release/RAISE-WEAPON.en.md",
+    "docs/release/RAISE-WEAPON.bilingual.bbcode",
+    "docs/release/PAGE-PUBLISHING.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -97,7 +112,15 @@
     "docs/release/RELEASE-v0.3.0-preview.4.md": "releases/v0.3.0-preview.4.md",
     "docs/release/AGENT_GUIDE.md": "docs/AGENT_GUIDE.md",
     "docs/release/HANDOFF_TEMPLATE.md": "docs/HANDOFF_TEMPLATE.md",
-    "docs/release/RELEASE-v0.3.0-preview.5.md": "releases/v0.3.0-preview.5.md"
+    "docs/release/RELEASE-v0.3.0-preview.5.md": "releases/v0.3.0-preview.5.md",
+    "docs/release/SECONDARIES.md": "docs/SECONDARIES.md",
+    "docs/release/RELEASE-v0.3.0-preview.6.md": "releases/v0.3.0-preview.6.md",
+    "docs/release/COVER-PROMPTS.md": "docs/COVER-PROMPTS.md",
+    "docs/release/MOD-PAGE.zh-TW.md": "docs/MOD-PAGE.zh-TW.md",
+    "docs/release/MOD-PAGE.en.md": "docs/MOD-PAGE.en.md",
+    "docs/release/RAISE-WEAPON.zh-TW.md": "docs/RAISE-WEAPON.zh-TW.md",
+    "docs/release/RAISE-WEAPON.en.md": "docs/RAISE-WEAPON.en.md",
+    "docs/release/PAGE-PUBLISHING.md": "docs/PAGE-PUBLISHING.md"
   },
   "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

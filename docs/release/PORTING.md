@@ -2,12 +2,15 @@
 
 先讀 [AGENTS.md](../AGENTS.md) 和 [逐步接手指南](AGENT_GUIDE.md)。以下命令均從源碼根目錄執行；工具包內是 `Source/P11-Enhanced/`。
 
+目前源碼對應 **preview.6 預覽版／手槍 0.1.3 candidate／Toolkit 1.3.1**。主要下載為 preview.6，preview.5 保留為歷史版本。下列命令重建本版套件，建置與公開發布均不表示完成全部副武器；Dagger beam／Crisper spray 及 entity 後續鏈缺口見 [SECONDARIES](SECONDARIES.md)。
+
 ## 環境與建置
 
 模組封裝只需 Python 3.10+ 標準庫。Lua mock 需要 Lupa；用專案鎖定依賴安裝：
 
 ```powershell
 python tools/sync_docs.py --apply
+python tools/verify_secondary_catalog.py --check
 python -m pip install -r requirements-dev.txt
 python mods/p11_self_hit_dataonly/test_lua.py
 python mods/weapon_self_hit_candidate/test_lua.py
@@ -25,7 +28,7 @@ python tools/build_release.py
 python tools/release_manager.py verify
 ```
 
-輸出在 `dist/release/`；`PUBLIC-ASSETS.json` 是唯一發布清單。新版固定五個模組 ZIP 加 Toolkit 1.3.0 ZIP；源碼直接納入工具包，不另發來源或 Full Kit。完整建置會匯出 `publication/P11-Enhanced/`；`--reuse-portable` 只接受來源與 EXE 雜湊均吻合的舊建置，依賴改了就重建。
+輸出在 `dist/release/`；`PUBLIC-ASSETS.json` 是本版六檔清單，不是遠端發布已完成的證明。本版為五個模組 ZIP 加 Toolkit 1.3.1 ZIP；源碼直接納入工具包，不另發來源或 Full Kit。完整建置會匯出 `publication/P11-Enhanced/`；`--reuse-portable` 只接受來源與 EXE 雜湊均吻合的舊建置，依賴改了就重建。
 
 ## 檔案與依據
 
@@ -38,6 +41,8 @@ python tools/release_manager.py verify
 | maintenance/loader-profiles.json | 已知 loader 公開版本、API、內部版本及識別依據 |
 | maintenance/porting-map.json | 目前布局、所有權鏈與必要核對項目 |
 | maintenance/projectile-exclusions-25480438.json | 固定參考表的來源指紋、38 個排除 ID 與分類依據 |
+| maintenance/secondary-catalog-25480438.json | 固定參考資料中的副武器槽位、資源引用、機制與未決狀態；完整分類不代表全部實作 |
+| tools/verify_secondary_catalog.py | `--check` 核對固定 catalog；三份明文／.gz 原始資料重驗見 SECONDARIES，不下載或自動寫新表 |
 | patches/25480438/manifest.json | 離線版本比較與定位模式；不能當 runtime 寫入授權 |
 | tools/offline_update.py／maintenance.py | 收集、四項功能比較與維修交接；收集器版本在 maintenance.py |
 | tools/build_variants_release.py／publication-files.json | 可攜工具、六檔包裝、公開來源白名單、文件匯出 |
@@ -53,7 +58,7 @@ P-11 原始 ZIP SHA-256：
 四種方案中的 P-11 Lua SHA-256：
 `b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a`。
 
-文件／包裝更新必須重現四個原独立 ZIP。真正移植新 build 時保留舊版證據與成品，另建新版本／基準，重新審查 builder 的原包固定指紋保護，不能偷偷把舊版指紋替換成新值。P-11 位元組相同也不能證明新包中的原生共存或新版遊戲行為。
+純文件／包裝更新必須重現原獨立 ZIP。此次手槍候選的分類擴展另立 0.1.3，不覆寫已發布的 0.1.2 指紋或證據；P-11 原包保持不變。真正移植新 build 時保留舊版證據與成品，另建新版本／基準，重新審查 builder 的原包固定指紋保護，不能偷偷把舊版指紋替換成新值。P-11 位元組相同也不能證明新包中的原生共存或新版遊戲行為。
 
 ## 遊戲更新移植核對
 
@@ -65,6 +70,8 @@ P-11 原始 ZIP SHA-256：
 4. 擴展仍排除 P-11；手槍 ID 清單和原生投射物機制覆蓋各自驗證。
 5. 前三範圍排除霰彈；第 2、3 項先按彈種排除，再查來源／武器；表外類型跳過。
 6. 比對原成功證據與新候選證據，更新測試及文檔；沒有新版玩法證據就保留候選狀態。
+
+副武器不能由 AI 的 EquipmentType 判定。按固定 Filediver 參考中的 LoadoutEntryComponentData／SidearmWeapon 引用核對，未知名稱和未解析記錄保留；新旧清單、實際處理機制、直接命中與爆炸等後續效果分別審查。分類工具的成功只代表其核對範圍，不是光束、噴射或 entity 後續鏈已能自命中。
 
 不能由離線資料確認碰撞生效時機或所有權時，明列缺口並保持受影響功能停用／候選。不要求新的遊戲內捕捉，不退回 native hook、不改生命／體力等數值。mock 不啟動遊戲，不能證明 native 碰撞或並行原子性。
 
@@ -87,7 +94,7 @@ python tools/verify_projectile_filter.py --table "$referenceTable"
 
 ```powershell
 $arsenalSource = Read-Host '輸入已解包 Arsenal 0.36.2 應用資料夾'
-$selectorZip = (Resolve-Path 'dist/Projectile-Collision-Filter-v0.3.0-preview.5-build25480438.zip').Path
+$selectorZip = (Resolve-Path 'dist/Projectile-Collision-Filter-v0.3.0-preview.6-build25480438.zip').Path
 $isolatedChecks = Join-Path (Get-Location) 'build/arsenal-validation'
 node tests/test_arsenal_selectable.cjs "$selectorZip" "$arsenalSource" "$isolatedChecks/enabled"
 node tests/test_arsenal_selectable.cjs "$selectorZip" "$arsenalSource" "$isolatedChecks/disabled" off

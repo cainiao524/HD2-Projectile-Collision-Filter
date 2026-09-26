@@ -12,9 +12,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 from resource_archive import make_lua_archive, lua_resources
+from verify_secondary_catalog import load_catalog, runtime_hashes
 
 BASE = json.loads((HERE.parent / 'p11_self_hit_dataonly' / 'profile.json').read_text(encoding='utf-8'))
-PISTOLS = {
+# Frozen legacy metadata is retained in the two unchanged broad-scope ZIPs.
+# The pistol scope below is generated from the separately reviewed catalog.
+LEGACY_PISTOLS = {
     'P-2 Peacemaker': '05e4e5c2db6e44a2',
     'P-4 Senator': '8d3d52a3b2f19402',
     'P-19 Redeemer': '3575aabc5f1f9326',
@@ -57,9 +60,17 @@ def profile(scope):
              projectile_filter_source_sha256=filters['table_source']['sha256'],
              resource='mods/weapon_self_hit/' + scope,
              manager_guid=str(uuid.uuid5(uuid.NAMESPACE_URL, 'P11-Enhanced/weapon-self-hit-candidate/' + scope)),
-             pistol_unit_hashes=list(PISTOLS.values()),
+             pistol_unit_hashes=list(LEGACY_PISTOLS.values()),
              pistol_mapping_source='Offline mod archive index, 2026-09-01; not current-build gameplay proof',
              gameplay_verified=False, self_damage_verified=False)
+    if scope == 'pistols':
+        catalog = load_catalog()
+        p.update(id='weapon-self-hit-candidate-0.1.3-25480438-pistols',
+                 version='0.1.3-candidate',
+                 pistol_unit_hashes=runtime_hashes(catalog),
+                 pistol_mapping_source='Pinned Filediver LoadoutEntry SidearmWeapon + shooting components; reference classification only',
+                 secondary_catalog_sha256=hashlib.sha256((ROOT/'maintenance/secondary-catalog-25480438.json').read_bytes()).hexdigest(),
+                 all_secondary_mechanisms_supported=False)
     return p
 
 
@@ -100,6 +111,10 @@ def build(scope):
                    'Expanded self-damage and coexistence unverified. Choose one of four variants. '
                    + ('Known shotgun/multishot types excluded before source lookup.' if p['exclude_shotguns'] else
                       'INCLUDES SHOTGUNS: additional per-pellet work can affect performance.'))
+    if scope == 'pistols':
+        title = 'Shootable Secondaries Native-Path Candidate'
+        description += (' Sidearm catalog includes plasma and grenade weapons. Beam and spray systems are unsupported; '
+                        'entity branches and gameplay remain unverified. This is not complete all-secondary support.')
     manifest = {'Version': 1, 'Guid': p['manager_guid'], 'Name': title,
                 'Description': description,
                 'Options': [{'Name': 'Enable ' + title,
@@ -116,7 +131,36 @@ def build(scope):
              'Source/profile.json': (json.dumps(p, ensure_ascii=False, indent=2) + '\n').encode(),
              'Source/projectile-exclusions.json': (ROOT/'maintenance/projectile-exclusions-25480438.json').read_bytes(),
              'Source/VALIDATION.md': (HERE / 'VALIDATION.md').read_bytes()}
-    target = ROOT / 'dist' / f'{stem}-0.1.2-build25480438-CANDIDATE.zip'
+    version = '0.1.3' if scope == 'pistols' else '0.1.2'
+    if scope == 'pistols':
+        files['Source/secondary-catalog.json'] = (ROOT/'maintenance/secondary-catalog-25480438.json').read_bytes()
+        files['Source/SECONDARIES.md'] = (ROOT/'docs/release/SECONDARIES.md').read_bytes()
+        files['Source/VALIDATION.md'] = (ROOT/'docs/release/VERIFICATION.md').read_bytes()
+        files['README-zh-TW.md'] = ('''# 副武器原生投射物候選 0.1.3
+
+這是本機開發候選，尚未完成全部副武器機制，也沒有新增玩法驗證。
+目標：遊戲 build 25480438；Bingus Shared Loader v17、API 1、internal 16。
+
+## 安裝
+
+1. 關閉遊戲。Arsenal 內停用／移除舊自命中方案，清除舊部署。
+2. 將本 ZIP 匯入 Arsenal，啟用並重新部署；需要相容的 Bingus Shared Loader。
+3. 本獨立包與四選一整合包是替代安裝方式，只啟用其中一個。
+4. 回退時關閉遊戲、停用本包、清除部署，再匯入原版本並重新部署。
+
+同包包含完全不變的 P-11 0.2.1。新增副武器的來源清單在建置時由固定參考資料產生，
+不新增遊戲內分類掃描。霰彈與多彈丸仍排除，Bushwhacker 也不在來源候選中。
+
+16 個來源 ID 是原生槽位候選，不是 16 把已驗證成功的武器。
+Dagger 光束、Crisper 噴射尚未支援；Warrant、P33、內部 Hornet 的 entity 後續鏈待驗證。
+榴彈本體碰撞與爆炸效果必須分開驗證。完整狀態見 Source/SECONDARIES.md；
+本次檢查記錄見 Source/VALIDATION.md。
+
+未知遊戲／loader 版本維持停用。離線收集與後續開發使用 Update Toolkit 1.3.1，
+其 Source/P11-Enhanced/ 內有完整可建置源碼和 AGENTS.md。
+本包不會自行部署或上傳；預覽發布不代表「全部可射擊副武器」功能已完成。
+''').encode('utf-8')
+    target = ROOT / 'dist' / f'{stem}-{version}-build25480438-CANDIDATE.zip'
     target.parent.mkdir(parents=True,exist_ok=True)
     with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as z:
         for name, data in sorted(files.items()):

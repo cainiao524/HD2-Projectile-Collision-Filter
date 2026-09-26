@@ -23,6 +23,7 @@ end''')
 results['core_assertions'] = rt.execute((HERE / 'test_core.lua').read_bytes())
 results['filtering_assertions'] = rt.execute((HERE / 'test_filtering.lua').read_bytes())
 results['shotgun_assertions'] = rt.execute((HERE / 'test_shotguns.lua').read_bytes())
+results['secondary_catalog_assertions'] = rt.execute((HERE / 'test_secondaries.lua').read_bytes())
 entry_rt = LuaRuntime(encoding=None)
 entry_rt.globals()[b'Entry'] = entry_rt.execute((HERE / 'entry.lua').read_bytes())
 # Build the exact Lua profile literal used by the bundle.
@@ -32,5 +33,6 @@ combined=LuaRuntime(encoding=None)
 combined.globals()[b'Entry']=combined.execute((HERE/'entry.lua').read_bytes())
 combined.globals()[b'P11Entry']=combined.execute((HERE.parent/'p11_self_hit_dataonly/entry.lua').read_bytes())
 results['combined_callback_assertions']=combined.execute((HERE/'test_combined.lua').read_bytes())
-assert len(profile('pistols')['pistol_unit_hashes']) == 8
+from verify_secondary_catalog import load_catalog, runtime_hashes
+assert profile('pistols')['pistol_unit_hashes'] == runtime_hashes(load_catalog())
 print(json.dumps({'results': results, 'native_execution': False, 'gameplay_verified': False}, indent=2))

@@ -1,4 +1,6 @@
-# Update Toolkit 1.3.0：一鍵離線檢測與維修交接
+# Update Toolkit 1.3.1：一鍵離線檢測與維修交接
+
+本頁描述 **preview.6 預覽版隨附的 Toolkit 1.3.1**；[主要下載](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6)提供六個 ZIP。preview.5／Toolkit 1.3.0 保留為歷史版本。新增收集項目用於副武器分類與機制分析，不代表全部自命中功能已完成。
 
 **完整解壓後雙擊 Collect-HD2-Update.cmd。** Windows x64 工具包已包含 P11-Update.exe，收集不需 Python。完整對應源碼和操作指南在 `Source/P11-Enhanced/`；工具包不是 Arsenal 模組。
 
@@ -24,6 +26,20 @@
 
 自動搜尋工具旁的 `Mods/`、Downloads 中符合名稱的最近最多 12 個 ZIP，以及 `reference-data/`、已設定目錄、Filediver Go 快取中的資料表／結構。工具包本身不附模組 ZIP；自動搜尋不到時可明確提供 `--package`。未知快取的 `matches_game_build` 保持 false。
 
+1.3.1 另外直接嘗試收集目標遊戲安裝 `data/game/` 的五份檔案：
+
+- `generated_entities.dl_bin`：實體與武器／裝備關聯。
+- `generated_entity_deltas.dl_bin`：實體差量資料。
+- `dl_library.dl_typelib`：型別／結構定義。
+- `generated_weapon_customization_settings.dl_bin`：武器自訂設定。
+- `generated_projectile_settings.dl_bin`：彈頭設定。
+
+報告以 `source_kind` 區分 `installed_game_data` 與 `local_cache`，保存 `source_relative_path`、觀察到的 `observed_steam_build_id`、雜湊和證據檔位置。**同時觀察到安裝檔與 build 仍不能證明表的版本對應；`matches_game_build` 保持 false。** 加密包裝的安裝檔也不能僅憑相近大小當作明文參考表。
+
+缺少任一安裝表會在 `gaps` 列出確切檔名與取得位置。`complete` 仍表示收集期間檔案穩定，可能為 true 但表分析仍有缺口；必須同時查看 gaps。舊快取不能填掉「目標安裝表缺少」的證據缺口。副武器分類、目前程式覆蓋與實際玩法分開記錄，見 [副武器狀態](SECONDARIES.md)。
+
+與上次收集比對時，資料表按來源種類與相對檔名分開追蹤，記錄前後雜湊及證據位置。實體／差量／型別／武器自訂變更對應三種擴展範圍；彈頭資料變更另外影響 P-11。多份快取不因同名而合併成同一個版本，上次收集仍不算已驗證基準。
+
 任兩個擴展資源並存會報互斥衝突；擴展已部署但沒有內建 P-11 也會提示。未選的方案 `not_deployed` 可以是正常情況，請與 Arsenal 所選範圍一起看。
 
 ## 報告與判讀順序
@@ -32,7 +48,7 @@
 |---|---|
 | 摘要.md | 中文完整性、功能、部署、loader 與缺口 |
 | 維修交接.md | 證據、候選、未決問題及下一步 |
-| report.json 的 collector | 本次收集器名稱與版本；1.3.0 不代表模組 runtime 升版 |
+| report.json 的 collector | 本次收集器名稱與版本；1.3.1 不代表模組 runtime 升版 |
 | complete／errors | 檔案是否穩定；不完整就先處理收集問題 |
 | build／deployed／feature_assessment | 遊戲指紋、有效資源、四個功能、loader 與衝突 |
 | profiles／schema_sources／gaps | 離線候選、資料表來源及無法確認的問題 |
@@ -74,4 +90,8 @@ $schemaDirectory = Read-Host '輸入參考表與結構所在資料夾'
 
 Extract and run Collect-HD2-Update.cmd after updates and deployment finish. The Windows x64 executable needs no Python. It collects stable offline identities, deployed resources, selected packages, parsed historical logs and available reference data, then writes a Chinese summary and repair handoff.
 
-The report distinguishes collection completeness, known identities, candidate evidence and missing information. It does not launch the game, read processes, deploy, upload or prove gameplay. Toolkit 1.3.0 includes matching source under Source/P11-Enhanced. Keep diagnostic binaries and private evidence out of public issues and releases.
+The report distinguishes collection completeness, known identities, candidate evidence and missing information. It does not launch the game, read processes, deploy, upload or prove gameplay. Toolkit 1.3.1 accompanies preview.6 and includes matching source under Source/P11-Enhanced. Keep diagnostic binaries and private evidence out of public issues and releases.
+
+Five exact files under the selected installation's data/game directory are collected automatically: generated_entities.dl_bin, generated_entity_deltas.dl_bin, dl_library.dl_typelib, generated_weapon_customization_settings.dl_bin and generated_projectile_settings.dl_bin. Installed files and cached references retain separate provenance, hashes and observed build context. Missing files produce explicit gaps; a complete collection can still lack analytical evidence. Changes are mapped to affected mod scopes without treating old reports as verified baselines.
+
+If automatic discovery fails, run `P11-Update.exe --game` with your installation directory; the PowerShell examples above prompt for the correct paths. Repeat `--package` or `--schema-dir` to provide additional local evidence. Read complete/errors first, then build, deployed, feature_assessment, schema_sources and gaps. Exit code 0 means stable collection, while 2 means incomplete collection or an error; neither means gameplay success.

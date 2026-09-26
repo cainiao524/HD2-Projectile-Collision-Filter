@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "One selectable self-hit mod, four standalone alternatives, and a source-inclusive offline maintenance toolkit; six public ZIP assets.",
+  "scope": "One selectable collision-filter mod and a source-inclusive offline maintenance toolkit; exactly two public ZIP assets.",
   "files": [
     ".gitignore",
     ".gitattributes",
@@ -74,7 +74,10 @@
     "docs/release/RAISE-WEAPON.zh-TW.md",
     "docs/release/RAISE-WEAPON.en.md",
     "docs/release/RAISE-WEAPON.bilingual.bbcode",
-    "docs/release/PAGE-PUBLISHING.md"
+    "docs/release/PAGE-PUBLISHING.md",
+    "maintenance/evidence/preview8-user-report-2026-09-26.json",
+    "maintenance/evidence/p11-cursor-0.2.3-user-report-2026-09-26.json",
+    "docs/release/RELEASE-v0.3.0-preview.8.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -85,6 +88,12 @@
     ],
     "mods/weapon_self_hit_candidate": [
       ".lua",
+      ".py",
+      ".md"
+    ],
+    "mods/projectile_collision_filter": [
+      ".lua",
+      ".json",
       ".py",
       ".md"
     ]
@@ -120,7 +129,10 @@
     "docs/release/MOD-PAGE.en.md": "docs/MOD-PAGE.en.md",
     "docs/release/RAISE-WEAPON.zh-TW.md": "docs/RAISE-WEAPON.zh-TW.md",
     "docs/release/RAISE-WEAPON.en.md": "docs/RAISE-WEAPON.en.md",
-    "docs/release/PAGE-PUBLISHING.md": "docs/PAGE-PUBLISHING.md"
+    "docs/release/PAGE-PUBLISHING.md": "docs/PAGE-PUBLISHING.md",
+    "docs/release/RELEASE-v0.3.0-preview.8.md": "releases/v0.3.0-preview.8.md",
+    "docs/release/MOD-PAGE.bilingual.bbcode": "docs/MOD-PAGE.bilingual.bbcode",
+    "docs/release/RAISE-WEAPON.bilingual.bbcode": "docs/RAISE-WEAPON.bilingual.bbcode"
   },
   "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

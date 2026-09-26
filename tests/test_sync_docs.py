@@ -118,6 +118,18 @@ class SyncDocsTests(unittest.TestCase):
                     sync_docs.sync_documents(self.root, apply=True)
                 self.assertFalse((self.root / 'build').exists())
 
+    def test_bbcode_export_preserves_bytes_and_rejects_format_changes(self):
+        self.write('docs/release/PAGE.bbcode', '[b]English / 中文[/b]\n'.encode('utf-8'))
+        self.mapping['docs/release/PAGE.bbcode'] = 'docs/PAGE.bbcode'
+        self.manifest()
+        sync_docs.sync_documents(self.root, apply=True)
+        self.assertEqual((self.root / 'docs/PAGE.bbcode').read_bytes(),
+                         (self.root / 'docs/release/PAGE.bbcode').read_bytes())
+        self.mapping['docs/release/PAGE.bbcode'] = 'docs/PAGE.md'
+        self.manifest()
+        with self.assertRaisesRegex(ValueError, 'preserve Markdown/BBCode'):
+            sync_docs.sync_documents(self.root, apply=True)
+
     def test_missing_source_prevents_partial_updates(self):
         (self.root / 'docs/release/GUIDE.md').unlink()
         with self.assertRaisesRegex(ValueError, 'Missing document source'):

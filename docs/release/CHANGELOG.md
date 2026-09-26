@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0-preview.8 — Unified cursor mod, bilingual configuration, two downloads
+
+- Publish the user-tested four-scope unified cursor package. Preserve all four accepted Lua/game-resource payloads while updating packaging and English-first Traditional Chinese configuration.
+- Keep one addon per selected scope, P-11 initially selected, first-three shotgun/multishot exclusion and a bilingual severe-performance warning on the inclusive fourth choice.
+- Record normal basic operation reported for all four choices. Do not promote that report to complete per-weapon/multiplayer/performance coverage; the earlier 70-to-130 FPS report belongs only to P-11 0.2.3.
+- Rename the repository to HD2-Projectile-Collision-Filter. Publish exactly two ZIPs: the selectable mod and Update Toolkit 1.3.2; retain historical assets and stop publishing four standalone alternatives.
+- Diagnose integrated scopes by exact Lua fingerprints; jointly require game, deployed-mod and loader identity plus conflict-free deployment for a confirmed baseline. Preserve historical identities and explicit gaps.
+- Include complete source under Source/HD2-Projectile-Collision-Filter, updated Agent/runbook/publishing guides, bilingual page copy and two replacement promotional covers. Animation and homing packages remain separate.
+
 ## v0.3.0-preview.6 — 副武器分類擴展預覽 / Expanded Secondary Catalog Prerelease
 
 - Target all shootable secondary-slot weapons while keeping shotgun/multishot exclusions. Pistol candidate 0.1.3 uses catalog-backed work; this does not establish support for all firing mechanisms.

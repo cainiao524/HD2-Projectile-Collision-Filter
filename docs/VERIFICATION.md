@@ -1,4 +1,33 @@
-# 自療驗證範圍
+# preview.8 驗證範圍與歷史證據
+
+## 當前玩法證據
+
+使用者於 2026-09-26 在整合包交付後確認此版本可用，並將四項正常回報作為 preview.8 發布基準。本次發布保留已測四份 Lua 和遊戲資源，僅更新雙語配置與隨附資料。
+
+| 項目 | 可支持的結論 |
+|---|---|
+| preview.8 四個選项 | 使用者基本使用成功回報；不是逐武器／完整情境清單 |
+| P-11 0.2.3 | 先前使用者確認自療正常及約 70 → 130 FPS；數字不移作 preview.8 宣傳增幅 |
+| 光束／噴射 | Dagger beam、Crisper spray 仍未支援 |
+| entity 後續鏈、爆炸／範圍效果 | 未由基本四選項回報完成驗證 |
+| 主客機、並行回收、每发首次碰撞時機、完整效能 | 尚未全面覆蓋 |
+| 包裝與模擬 | 只證明所列離線條件，不代替 native 碰撞或遊戲 FPS |
+
+舊封裝 profile 內的 unverified／gameplay false 欄位保留，以維持已測 runtime bytes。後續使用者證據另記 maintenance/evidence 與基準文件；這不表示 collector 曾執行當次玩法測試。
+
+## preview.8 已有離線基準
+
+原整合候選通過 1,283 個 Lua 斷言：核心 626、Windows writer 317、版本 76、entry 216、游標排程 48；四份完整 Lua bundle 通過編譯。另有 136 個完整 PE gate 合成斷言，以及既有離線資料對 15 錨點的四 profile 核對。詳見 [runtime 驗證記錄](../mods/projectile_collision_filter/VALIDATION.md)。
+
+Arsenal 0.36.2 隔離後端已檢查兩種匯入偏好下共 32 組方案切換、P-11 預選、父項／模組停用、重新啟用及清除；不操作真實 profile／遊戲，不等於 UI 長文或玩法測試。發布版必須再對最終 ZIP 進行資源指紋、雙語 metadata 與兩資產核驗。
+
+發佈整理新增的診斷、源碼、portable、文件和遠端核驗結果，以實際 release verification 報告為準，不預先填未執行項目。當前公開檢查命令見 [PORTING](PORTING.md) 和 [PUBLISH](PUBLISH.md)。
+
+## Historical evidence / 以下保留歷史版本紀錄
+
+以下 0.2.1、三／四包和 preview.6 的描述僅適用其當時產物，不代表 preview.8 仍使用原獨立 addon 或六項公開下載。
+
+### 0.2.1 自療驗證範圍
 
 2026-09-26：使用者確認自療 0.2.1 可用，對應 Steam build 25480438 / EXE 1.8.46015.0、loader v17 / API 1。
 部署 Lua 與交付來源一致。既有日誌另確認啟用、版本／錨點檢查及至少一次資料寫入讀回。

@@ -2,7 +2,7 @@
 
 ## 標題
 
-舉槍瞄準自己｜動作替換模組
+Raise Weapon: Aim at Yourself｜舉槍瞄準自己
 
 雙語標題：Raise Weapon: Aim at Yourself / 舉槍瞄準自己
 
@@ -12,7 +12,7 @@
 
 ## 正文
 
-![Raise Weapon: Aim at Yourself／舉槍瞄準自己封面](https://raw.githubusercontent.com/cainiao524/P11-Enhanced/v0.3.0-preview.6/docs/assets/raise-weapon-aim-at-yourself-cover.png)
+![Raise Weapon: Aim at Yourself／舉槍瞄準自己封面](https://raw.githubusercontent.com/cainiao524/HD2-Projectile-Collision-Filter/v0.3.0-preview.8/docs/assets/raise-weapon-aim-at-yourself-cover.png)
 
 ### 把「舉槍」換成瞄準自己的姿勢
 
@@ -44,7 +44,7 @@
 
 ### 搭配 P-11 自命中治療
 
-推薦另外下載 [Projectile Collision Filter（投射物碰撞過濾器）／P-11 自療](https://ayakamods.com/mods/p-11-self-hit-healing-p-11-%E6%B2%BB%E7%99%82%E6%89%8B%E6%A7%8D%E8%87%AA%E7%99%82.4166/)，選擇其中的「**僅治療手槍**」方案作為起點。
+推薦另外下載 [Projectile Collision Filter（投射物碰撞過濾器）／P-11 自療](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8)，選擇其中的「**P-11 Only / 僅治療手槍**」方案作為起點。
 
 兩個模組分別管理：本包負責表情姿勢，Projectile Collision Filter 負責讓符合條件的本機 P-11 飛鏢可與射手碰撞。治療仍依賴真正的飛鏢命中與遊戲原生邏輯，保留手動瞄準和射擊。自命中模組的 loader、遊戲版本與安裝要求請依它自己的頁面。
 
@@ -66,3 +66,5 @@
 目前沒有完整的全部武器姿勢、每個遊戲版本或聯機顯示測試，因此不保證所有武器都能得到相同姿勢，也不保證其他玩家一定能看到替換後的動作。使用者留言不作為這些情況已驗證的證據。
 
 本模組為社群作品，與 Arrowhead Game Studios 無隸屬關係。需要的是動作替換就使用本頁原包；需要 P-11 自療時，另外依相容性要求安裝搭配模組。
+
+新版投射物整合模組與更新工具見 [GitHub Release](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8)。封面採藍色碎片和持槍科幻角色構圖，槍口朝上且遠離頭部；是宣傳插畫，非遊戲內動作的精確示範。這次只更新介紹和封面，動作成品不變。

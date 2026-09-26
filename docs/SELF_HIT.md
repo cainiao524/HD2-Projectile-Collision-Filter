@@ -26,7 +26,7 @@ Experimental Infusion 需在遊戲中啟用，本模組不會替你啟用該增�
 ### 安裝與停用
 
 1. 完整退出遊戲，單獨安裝相容的 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。
-2. 將 `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` 匯入 Arsenal。
+2. 將 `Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip` 匯入 Arsenal，選擇 **P-11 Only / 僅治療手槍**。
 3. 停用舊自療 hook、重複版本及研究採集包，啟用本模組與 loader，依 loader 的優先順序說明部署後啟動遊戲。
 4. 停用時，先關閉遊戲，在 Arsenal 取消本模組並重新部署。
 
@@ -34,7 +34,7 @@ Experimental Infusion 需在遊戲中啟用，本模組不會替你啟用該增�
 
 | 項目 | 目前版本 |
 |---|---|
-| 模組 | **0.2.1** |
+| 模組 | **v0.3.0-preview.8 整合版** |
 | 遊戲 | Steam build **25480438** / EXE **1.8.46015.0** |
 | Loader | **Bingus Shared Loader v17 / API 1 / internal 16** |
 
@@ -42,8 +42,7 @@ Experimental Infusion 需在遊戲中啟用，本模組不會替你啟用該增�
 這些玩法說明以使用者回報為依據；完整主／客機、碰撞時機與並行情況尚未全數驗證。
 遇到未知遊戲版本時，模組會停止資料修改，新版需重新核對布局與實際治療。
 
-成品保留已測成功的原始 ZIP 位元組。包內的 `EXPERIMENTAL`／`unverified` 為封裝時狀態，
-後續確認另記於發布文件與版本基準。原始碼、可重現建置工具及 429 個 Lua 模擬斷言一併提供。
+目前整合版的四個方案已有使用者正常回報。本次发布保持該已測整合候選的四份 Lua／遊戲資源不變；包裝檔名與雙語配置可更新。嵌入候選狀態反映建立當時狀態，後續證據另記發布文件和 maintenance。
 
 ## English
 
@@ -71,7 +70,7 @@ Experimental Infusion must be activated in the game; this addon does not activat
 ### Installation and disabling
 
 1. Close the game completely and install a compatible [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) separately.
-2. Import `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` into Arsenal.
+2. Import `Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip` into Arsenal and select **P-11 Only / 僅治療手槍**.
 3. Disable old self-hit hooks, duplicate versions and research addons. Enable this addon and the loader, deploy according to the loader's priority instructions, then launch the game.
 4. To disable it, close the game, disable its Arsenal entry and redeploy.
 
@@ -79,7 +78,7 @@ Experimental Infusion must be activated in the game; this addon does not activat
 
 | Component | Current version |
 |---|---|
-| Mod | **0.2.1** |
+| Mod | **v0.3.0-preview.8 integrated** |
 | Game | Steam build **25480438** / EXE **1.8.46015.0** |
 | Loader | **Bingus Shared Loader v17 / API 1 / internal 16** |
 
@@ -87,10 +86,9 @@ On 2026-09-26, the user confirmed basic self-hit healing and supplied the Experi
 These gameplay descriptions are based on user reports; full host/client, collision-timing and concurrency coverage remains incomplete.
 Unknown game versions are rejected. New versions need layout checks and actual healing confirmation.
 
-The tested gameplay ZIP is preserved byte for byte. Its original `EXPERIMENTAL` / `unverified` labels reflect the packaging date;
-later reports are recorded in the release documentation and version baseline. Source code, reproducible build tools and 429 Lua mock assertions are included.
+All four current integrated choices have a user report of normal basic operation. This release preserves the tested integrated Lua/game-resource bytes while updating packaging and bilingual configuration. Embedded candidate labels reflect build-time state; later evidence is recorded separately in release documentation and maintenance data.
 
 ---
 
 Loader: CowboyBingus. Helldivers 2 and its original assets: Arrowhead Game Studios and their respective rights holders.
-P11-Enhanced is an independent community mod. Development and documentation were assisted by OpenAI tools.
+HD2-Projectile-Collision-Filter is an independent community mod. Development and documentation were assisted by OpenAI tools.

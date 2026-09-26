@@ -14,102 +14,199 @@
   },
   "locators": [
     {
-      "id": "self_hit_constructor_option_flag",
+      "id": "unified_constructor_option_flag",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "8b0842898ca640500e00740c41385d187506440fb7c3eb0641b820000000"
     },
     {
-      "id": "self_hit_constructor_flag_composition",
+      "id": "unified_constructor_flag_composition",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "498b46100f57c041b9000600000fb788f00000000fb7c10fb7d16683e0106683e22066c1e202660bd00fb7c16683e00c6603d2660bd00fb7c1664123c166c1e203660bd00fb7c16683e0026603d2660bd00fb7c166d1e86683ca016683e020664123cf4c6bff70660bc16603d266c1e802660bd066410bd066428994663c200000"
     },
     {
-      "id": "self_hit_collision_source_entity_gate",
+      "id": "unified_collision_source_entity_gate",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "433b9c874cb003000f84c1070000488b45a8"
     },
     {
-      "id": "self_hit_collision_source_unit_gate",
+      "id": "unified_collision_source_unit_gate",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "41f684473c200000200f84e30000008b559485d20f84d8000000488b05469cf701488b4818488b81200700008bcaffd084c00f84ba000000428b8c25dc060000"
     },
     {
-      "id": "self_hit_optional_auxiliary_initial_sentinel",
+      "id": "unified_optional_auxiliary_initial_sentinel",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "42c744a63cffffffff418bfc41399c378c3000000f8445010000498b4610"
     },
     {
-      "id": "self_hit_optional_auxiliary_definition_gate",
+      "id": "unified_optional_auxiliary_definition_gate",
       "affected_features": [
         "self_heal",
         "pistol_self_hit",
-        "native_weapon_self_hit",
-        "native_no_shotgun_self_hit"
+        "native_no_shotgun_self_hit",
+        "native_weapon_self_hit"
       ],
-      "purpose": "0.2.1 read-only runtime guard; disk matches are unverified porting candidates",
+      "purpose": "Historical read-only runtime guard; exact disk matches remain unverified porting candidates",
       "bytes_hex": "3998900000000f8435010000418b4e18e836fbc2"
     }
   ],
-  "id": "25480438-three-self-hit-scopes",
+  "id": "25480438-preview8-unified-four-scopes",
   "status": "unverified",
   "features": [
     {
       "id": "self_heal",
-      "source": "mods/p11_self_hit_dataonly/core.lua",
+      "source": "mods/projectile_collision_filter/core.lua",
       "status": "disabled",
       "user_confirmed_working": true,
-      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. All three expanded scopes remain candidates."
+      "reason": "User reports basic success of the four-choice preview.8 package. Offline comparisons never enable features or establish current gameplay, complete weapon coverage, host/client behavior or performance.",
+      "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json"
     },
     {
       "id": "pistol_self_hit",
-      "source": "mods/weapon_self_hit_candidate/core.lua",
+      "source": "mods/projectile_collision_filter/core.lua",
       "status": "disabled",
-      "user_confirmed_working": false,
-      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. All three expanded scopes remain candidates."
+      "user_confirmed_working": true,
+      "reason": "User reports basic success of the four-choice preview.8 package. Offline comparisons never enable features or establish current gameplay, complete weapon coverage, host/client behavior or performance.",
+      "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json"
     },
     {
       "id": "native_no_shotgun_self_hit",
-      "source": "mods/weapon_self_hit_candidate/core.lua",
+      "source": "mods/projectile_collision_filter/core.lua",
       "status": "disabled",
-      "user_confirmed_working": false,
-      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. All three expanded scopes remain candidates."
+      "user_confirmed_working": true,
+      "reason": "User reports basic success of the four-choice preview.8 package. Offline comparisons never enable features or establish current gameplay, complete weapon coverage, host/client behavior or performance.",
+      "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json"
     },
     {
       "id": "native_weapon_self_hit",
-      "source": "mods/weapon_self_hit_candidate/core.lua",
+      "source": "mods/projectile_collision_filter/core.lua",
       "status": "disabled",
-      "user_confirmed_working": false,
-      "reason": "Offline comparisons never enable gameplay; P-11 basic behavior only has a user report. All three expanded scopes remain candidates."
+      "user_confirmed_working": true,
+      "reason": "User reports basic success of the four-choice preview.8 package. Offline comparisons never enable features or establish current gameplay, complete weapon coverage, host/client behavior or performance.",
+      "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json"
     }
-  ]
+  ],
+  "runtime_anchors": [
+    {
+      "name": "gun_private_projectile_route",
+      "rva": 6380479,
+      "bytes_hex": "4885db0f843a090000",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "gun_fixed_exclude_owner_option",
+      "rva": 6383042,
+      "bytes_hex": "c6453801",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "gun_native_constructor_call",
+      "rva": 6383122,
+      "bytes_hex": "e81932d900",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "constructor_option_flag",
+      "rva": 20618163,
+      "bytes_hex": "8b0842898ca640500e00740c41385d187506440fb7c3eb0641b820000000",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "constructor_flag_composition",
+      "rva": 20618193,
+      "bytes_hex": "498b46100f57c041b9000600000fb788f00000000fb7c10fb7d16683e0106683e22066c1e202660bd00fb7c16683e00c6603d2660bd00fb7c1664123c166c1e203660bd00fb7c16683e0026603d2660bd00fb7c166d1e86683ca016683e020664123cf4c6bff70660bc16603d266c1e802660bd066410bd066428994663c200000",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "collision_source_entity_gate",
+      "rva": 20629135,
+      "bytes_hex": "433b9c874cb003000f84c1070000488b45a8",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "collision_source_unit_gate",
+      "rva": 20629153,
+      "bytes_hex": "41f684473c200000200f84e30000008b559485d20f84d8000000488b05469cf701488b4818488b81200700008bcaffd084c00f84ba000000428b8c25dc060000",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "stim_effect_definition_flag",
+      "rva": 20633866,
+      "bytes_hex": "f680fc00000001",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "reflection_owner_flag_clear",
+      "rva": 20637466,
+      "bytes_hex": "6641218c473c20000041",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "component196_native_constructor",
+      "rva": 6578780,
+      "bytes_hex": "e8cf35d600",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "optional_auxiliary_initial_sentinel",
+      "rva": 20619735,
+      "bytes_hex": "42c744a63cffffffff418bfc41399c378c3000000f8445010000498b4610",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "optional_auxiliary_definition_gate",
+      "rva": 20619765,
+      "bytes_hex": "3998900000000f8435010000418b4e18e836fbc2",
+      "offline_search_eligible": true
+    },
+    {
+      "name": "native_cursor_read",
+      "rva": 20617322,
+      "bytes_hex": "8b4130",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "native_cursor_slot_mask",
+      "rva": 20617371,
+      "bytes_hex": "4181e4ff070000",
+      "offline_search_eligible": false
+    },
+    {
+      "name": "native_cursor_write",
+      "rva": 20617460,
+      "bytes_hex": "895130",
+      "offline_search_eligible": false
+    }
+  ],
+  "runtime_anchor_note": "All 15 anchors are runtime guards. Only patterns at least 16 bytes are searched offline; the three short cursor instructions require surrounding-function/context review. Do not pad them with guessed bytes."
 }

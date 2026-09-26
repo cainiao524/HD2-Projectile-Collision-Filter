@@ -69,6 +69,19 @@ class CollectorTests(unittest.TestCase):
         self.assertNotIn('76561199999999999',json.dumps(result))
         self.assertNotIn('C:/PrivateFixture',json.dumps(result))
         self.assertFalse(result['log_reports'][0]['proves_current_build'])
+    def test_unified_logs_are_collected_as_sanitized_unverified_triage(self):
+        logs=self.root/'logs';logs.mkdir()
+        (logs/'ProjectileCollisionFilter.log').write_text('Projectile Collision Filter 0.2.0-candidate / scope=pistols / build 25480438\nCURSOR BUDGET: overruns=1; dropped=12; expired=3; bounded work can miss a projectile; not gameplay proof.\nFIRST DATA WRITE READ BACK: not proof of collision, healing or self-damage\n')
+        (logs/'ProjectileCollisionFilterConflict.log').write_text('STOPPED: Existing P-11 addon or different scope is already loaded; restart after selecting one package.\n')
+        result=self.collect(logs=logs)
+        self.assertEqual(len(result['log_reports']),2)
+        self.assertTrue(all(not r['proves_current_build'] for r in result['log_reports']))
+        triage=next(r['triage'] for r in result['log_reports'] if r['file']=='ProjectileCollisionFilter.log')
+        self.assertEqual(triage['observed_scopes'],['pistols'])
+        self.assertFalse(triage['scope_verified_by_log'])
+        self.assertTrue(any(i['code']=='cursor_budget_limited' for i in triage['issues']))
+        self.assertTrue(any(e['event']=='data_write_readback' and not e['proves_feature_compatibility'] for e in triage['events']))
+        self.assertFalse((self.root/'result/ProjectileCollisionFilter.log').exists())
     def test_unmarked_override_hides_older_addon(self):
         name='mods/stim_homing/acquisition_test'
         old=make_archive(name,'-- HD2-Addon: '+name+'\n-- StimHomingAcquisitionTest\n')

@@ -11,7 +11,9 @@
       "loader": {
         "public": "v17",
         "api": 1,
-        "internal": 16
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
       },
       "components": {
         "self_heal": {
@@ -58,6 +60,215 @@
           "version": "0.1.2-candidate",
           "user_confirmed_basic_behavior": false,
           "verification_scope": "Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation."
+        }
+      }
+    },
+    {
+      "id": "build25480438-p11-cursor-0.2.3",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
+      },
+      "components": {
+        "self_heal": {
+          "package": "P11-Self-Hit-DataOnly-0.2.3-CURSOR-CANDIDATE-build25480438.zip",
+          "package_sha256": "aad662fcdab09699adce96382204f9e5adb76eb72e823f02aeaff0a8ab54f1e7",
+          "lua_sha256": "0105b7351efcfb038b1724ae89c0e8bb5ff2d44623df618edb9ccb840e71182e",
+          "resource": "mods/p11/self_hit_dataonly",
+          "user_confirmed_basic_behavior": true,
+          "verification_scope": "2026-09-26 使用者確認 P-11 0.2.3 自療正常並回報約 70 → 130 FPS；未獨立核對部署，未控制場景或量測 frame time，不能外推新版或其他範圍。",
+          "version": "0.2.3-candidate",
+          "scope": "p11",
+          "evidence": "maintenance/evidence/p11-cursor-0.2.3-user-report-2026-09-26.json"
+        }
+      }
+    },
+    {
+      "id": "build25480438-preview8-unified-p11",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
+      },
+      "release": "v0.3.0-preview.8",
+      "unified_cursor": true,
+      "components": {
+        "self_heal": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "2164b3c4d2cd55bc0ea290ed71efdf9548db59247bdeaab34e96ddc321a70741",
+          "archive_sha256": "92a0008961aa0684e744794a10b5a51bd45bfea9f1318bb2901c231cd453cf8e",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "p11",
+          "version": "0.2.4-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        }
+      }
+    },
+    {
+      "id": "build25480438-preview8-unified-pistols",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
+      },
+      "release": "v0.3.0-preview.8",
+      "unified_cursor": true,
+      "components": {
+        "self_heal": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "bebe19a1c069416f96c9e597b6a4294b922bd06fabd824fe70c55c0bc842767c",
+          "archive_sha256": "412ab6871294142768cac29c33a6d1466a46260c3eb9ff705fca1a7643192809",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "pistols",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        },
+        "pistol_self_hit": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "bebe19a1c069416f96c9e597b6a4294b922bd06fabd824fe70c55c0bc842767c",
+          "archive_sha256": "412ab6871294142768cac29c33a6d1466a46260c3eb9ff705fca1a7643192809",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "pistols",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        }
+      }
+    },
+    {
+      "id": "build25480438-preview8-unified-native_no_shotguns",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
+      },
+      "release": "v0.3.0-preview.8",
+      "unified_cursor": true,
+      "components": {
+        "self_heal": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "c1f7aebdd12d690f53965874aa52ca027ead4e5ec05ee69da7c9e4a47d2e7a74",
+          "archive_sha256": "2cf678ac5daf1b8af55fad53cb862373f3e618c805e8707701369397f9122466",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "native_no_shotguns",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        },
+        "native_no_shotgun_self_hit": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "c1f7aebdd12d690f53965874aa52ca027ead4e5ec05ee69da7c9e4a47d2e7a74",
+          "archive_sha256": "2cf678ac5daf1b8af55fad53cb862373f3e618c805e8707701369397f9122466",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "native_no_shotguns",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        }
+      }
+    },
+    {
+      "id": "build25480438-preview8-unified-native_weapons",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16,
+        "lua_sha256": "8477ff12dbd15ed6ac8e5b25a82e687c6ab14bfa25493d15e5054111555eaeeb",
+        "resource_hash": "7251fdd9bb62480a"
+      },
+      "release": "v0.3.0-preview.8",
+      "unified_cursor": true,
+      "components": {
+        "self_heal": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "a3f7a01cf382fff63e8cbedb7d803029f5a34b3858278cfcac9c44fb345ee964",
+          "archive_sha256": "e28702004f4ebf8995a91ed9456a9ec9306afb48cccff5a6c3fdfd53e58996e4",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "native_weapons",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
+        },
+        "native_weapon_self_hit": {
+          "package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip",
+          "accepted_candidate_package": "Projectile-Collision-Filter-v0.3.0-preview.8-build25480438-CANDIDATE.zip",
+          "accepted_candidate_sha256": "5e82ee422e68aa0778ebda26203a239032f86c44b983222bcf0433e390404e17",
+          "lua_sha256": "a3f7a01cf382fff63e8cbedb7d803029f5a34b3858278cfcac9c44fb345ee964",
+          "archive_sha256": "e28702004f4ebf8995a91ed9456a9ec9306afb48cccff5a6c3fdfd53e58996e4",
+          "resource": "mods/p11/self_hit_dataonly",
+          "scope": "native_weapons",
+          "version": "0.2.0-candidate",
+          "user_confirmed_basic_behavior": true,
+          "evidence": "maintenance/evidence/preview8-user-report-2026-09-26.json",
+          "verification_scope": "2026-09-26 使用者回報 preview.8 四個選項基本功能正常；僅記錄該整合包的使用者回報，未獨立確認部署雜湊。不是全部武器、多人、切槍／死亡或性能的全面驗證；70 → 130 FPS 屬於先前 P-11 0.2.3。",
+          "comprehensive_gameplay_verified": false,
+          "performance_gameplay_verified": false
         }
       }
     }

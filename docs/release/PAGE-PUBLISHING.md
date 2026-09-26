@@ -1,84 +1,70 @@
-# 兩個模組頁面的發布資料 / Mod-page publishing kit
+# 兩個模組頁發布素材 / Mod-page publishing kit
 
-[繁體中文](#繁體中文) · [English](#english)
+[GitHub preview.8 Release](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8) · [倉庫](https://github.com/cainiao524/HD2-Projectile-Collision-Filter)。本批次交付 GitHub 和可貼用的 AyakaMods 素材，**不以本機文案存在代表兩個 AyakaMods 頁面已更新**。
 
-## 繁體中文
+以下檔案以專案根為準；Toolkit 中專案根為 `Source/HD2-Projectile-Collision-Filter/`。完整 BBCode 已包含英文在前、繁體中文在後的正文，不需再把兩份 Markdown 拼接。
 
-本批次的 GitHub 發布入口為 [Projectile Collision Filter v0.3.0-preview.6](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6)，維持預覽版。依使用者選擇，**兩個 AyakaMods 頁面目前尚未更新**；以下標題、摘要、正文與封面已備妥，供之後登入並確認發布時使用。
+## 1. Projectile Collision Filter
 
-所有路徑以專案根目錄為起點。在工具包內，專案根目錄是 `Source/P11-Enhanced/`。
+**目標頁面：** [P-11 Self-Hit Healing](https://ayakamods.com/mods/p-11-self-hit-healing-p-11-%E6%B2%BB%E7%99%82%E6%89%8B%E6%A7%8D%E8%87%AA%E7%99%82.4166/)
 
-### 1. 投射物碰撞過濾器
+**英文標題：** `Projectile Collision Filter — P-11 Self-Healing & Four Selectable Scopes`
 
-**目標頁面：** [P-11 Self-Hit Healing / P-11 治療手槍自療](https://ayakamods.com/mods/p-11-self-hit-healing-p-11-%E6%B2%BB%E7%99%82%E6%89%8B%E6%A7%8D%E8%87%AA%E7%99%82.4166/)
+**中文標題：** `Projectile Collision Filter｜投射物碰撞過濾器・P-11 自療與四種範圍`
 
-**雙語標題：** `Projectile Collision Filter / 投射物碰撞過濾器（預覽版）`
+**雙語短標題（標題欄較短時）：** `Projectile Collision Filter / 投射物碰撞過濾器`
 
-**中文摘要：** 讓自己的 P-11 飛鏢透過原生碰撞命中並治療自己。Arsenal 四選一；副武器與廣域範圍仍為候選，包含霰彈的第四項可能造成嚴重性能影響。附離線更新工具與源碼。
+**中文摘要：** 讓自己的 P-11 飛鏢透過原生碰撞命中並治療自己。Arsenal 雙語四選一，共用游標核心。附離線更新工具與完整源碼；包含霰彈的第四項可能造成嚴重性能影響。
 
-**英文摘要：** Let your P-11 darts heal you through native collision. Four Arsenal scopes; expanded scopes remain candidates. Including shotguns may cause severe performance impact. Offline update tools and source included.
+**English summary:** Let your P-11 darts heal you through native collision. Four bilingual Arsenal scopes share one cursor-based core. Offline update tools and complete source included. Including shotguns may cause severe performance impact.
 
-| 用途 | 專案相對路徑 |
+| 素材 | 可直接使用的檔案 |
 |---|---|
-| 封面 | [`docs/assets/projectile-collision-filter-cover.png`](assets/projectile-collision-filter-cover.png) |
-| 中文 Markdown | [`docs/release/MOD-PAGE.zh-TW.md`](MOD-PAGE.zh-TW.md) |
-| 英文 Markdown | [`docs/release/MOD-PAGE.en.md`](MOD-PAGE.en.md) |
-| 可貼入網站的完整雙語 BBCode 正文 | [`docs/release/MOD-PAGE.bilingual.bbcode`](release/MOD-PAGE.bilingual.bbcode) |
+| 新封面 PNG | [projectile-collision-filter-cover.png](assets/projectile-collision-filter-cover.png) |
+| 繁體中文 Markdown | [MOD-PAGE.zh-TW.md](MOD-PAGE.zh-TW.md) |
+| English Markdown | [MOD-PAGE.en.md](MOD-PAGE.en.md) |
+| 完整雙語 BBCode | [MOD-PAGE.bilingual.bbcode](MOD-PAGE.bilingual.bbcode) |
 
-四選一整合版、四個獨立版與維護工具包共六個下載檔，均由 GitHub Release 導航。正文保留 P-11 既有成功回報與其他範圍的證據限制；不要將「手槍全部」改寫成所有副武器機制均已完成。
+下載導航只有整合 Mod 和 Toolkit 兩個 ZIP。四種範圍在同一模組中選擇，不再列四個獨立下載；第四項的性能警告不得省略。四項使用者基本回報不代表所有副武器機制或性能已全面測試。
 
-### 2. 舉槍瞄準自己
+## 2. Raise Weapon: Aim at Yourself
 
 **目標頁面：** [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/)
 
-**雙語標題：** `Raise Weapon: Aim at Yourself / 舉槍瞄準自己`
+**英文標題：** `Raise Weapon: Aim at Yourself — Animation Mod`
+
+**中文標題：** `Raise Weapon: Aim at Yourself｜舉槍瞄準自己`
+
+**雙語短標題：** `Raise Weapon: Aim at Yourself / 舉槍瞄準自己`
 
 **中文摘要：** 將 Raise Weapon／舉槍表情替換為瞄準自己的持槍姿勢。動作包獨立使用；需要 P-11 自療時，另搭配 Projectile Collision Filter。衝刺、射擊與表情同時使用可能卡住。
 
-**英文摘要：** Replaces the Raise Weapon emote with a self-aim pose. Pair separately with Projectile Collision Filter for P-11 self-healing. Combining sprinting, shooting and the emote may cause a softlock.
+**English summary:** Replaces the Raise Weapon emote with a self-aim pose. Pair separately with Projectile Collision Filter for P-11 self-healing. Combining sprinting, shooting and the emote may cause a softlock.
 
-| 用途 | 專案相對路徑 |
+| 素材 | 可直接使用的檔案 |
 |---|---|
-| 封面 | [`docs/assets/raise-weapon-aim-at-yourself-cover.png`](assets/raise-weapon-aim-at-yourself-cover.png) |
-| 中文 Markdown | [`docs/release/RAISE-WEAPON.zh-TW.md`](RAISE-WEAPON.zh-TW.md) |
-| 英文 Markdown | [`docs/release/RAISE-WEAPON.en.md`](RAISE-WEAPON.en.md) |
-| 可貼入網站的完整雙語 BBCode 正文 | [`docs/release/RAISE-WEAPON.bilingual.bbcode`](release/RAISE-WEAPON.bilingual.bbcode) |
+| 新封面 PNG | [raise-weapon-aim-at-yourself-cover.png](assets/raise-weapon-aim-at-yourself-cover.png) |
+| 繁體中文 Markdown | [RAISE-WEAPON.zh-TW.md](RAISE-WEAPON.zh-TW.md) |
+| English Markdown | [RAISE-WEAPON.en.md](RAISE-WEAPON.en.md) |
+| 完整雙語 BBCode | [RAISE-WEAPON.bilingual.bbcode](RAISE-WEAPON.bilingual.bbcode) |
 
-本次只準備介紹與封面，保留原動作版本 `2026-09-18` 及原下載檔。封面採用參考 P3R 召喚姿勢的宣傳構圖，不代表動作包新增了 P3R 資源或功能。原有卡住問題仍存在：遇到時取消衝刺或切換武器。
+保留原動作版本 **2026-09-18** 和原下載附件。本次只整理文案與封面，不修改動作檔、不宣稱修復原有 sprint／shoot／emote 卡住問題；遇到時取消衝刺或切換武器。
 
-### 3. 之後更新 AyakaMods 的操作
+新封面以藍色碎片、角色豎持手槍呈現，槍口朝上且遠離頭部。它是宣傳構圖，並非 P3R 召喚姿勢或遊戲內自瞄準動作的精確重現；不表示新增 P3R 資源或功能。
 
-1. 登入有權編輯目標頁面的帳戶，開啟對應頁面的編輯介面。
-2. 將上面的雙語標題與摘要填入相應欄位。中英文完整介紹已包含在 BBCode 正文，不需把兩個 Markdown 檔再次拼接。
-3. 切到編輯器的 **BBCode／原始碼模式**，開啟對應 `.bbcode` 檔，完整複製內容並替換舊正文。不要把 Markdown 標題或表格直接貼入 BBCode 模式。
-4. 上傳對應 PNG 作為頁面封面。正文中的封面連結使用 GitHub 固定版本來源，與封面上傳分開處理。
-5. 預覽並核對中英標題、列表、圖片、六檔下載入口與搭配模組連結。動畫頁保留原版本／附件；此文案操作不會更新任何模組二進位檔。
-6. 確认有此次發布授權後儲存頁面，再重新開啟公開頁檢查顯示結果。目前只完成本機資料準備，不以檔案存在代替網站已更新。
+## 貼到 AyakaMods / Paste workflow
 
-**維護來源：** 修改 `docs/release/` 中的 Markdown 與 BBCode 原始檔；`docs/` 下的 Markdown 是匯出副本，不要單獨修改。修改正文時，同步調整對應的中文、英文與 BBCode，再執行 `python tools/sync_docs.py --apply`。圖片生成記錄見 [COVER-PROMPTS](COVER-PROMPTS.md)。
+1. 登入有權編輯相應頁面的帳戶，開啟該頁編輯。Sign in to an account with edit access.
+2. 填入選定的標題和摘要；若網站限制標題長度，使用上面的雙語短標題。Enter title and summary; use the supplied shorter bilingual title if needed.
+3. 切到 **BBCode／source 模式**，完整貼上相應 `.bbcode` 內容。不要把 Markdown 表格貼入 BBCode。Paste the matching complete BBCode file in source mode.
+4. 上傳該模組的新 PNG 作封面；正文固定版本圖片 URL 與頁面封面欄是兩個位置。Upload the matching PNG as the page cover.
+5. 預覽英文與繁中、列表、圖片、兩 ZIP 下載和搭配連結；動畫頁保留舊附件／版本。Preview both languages, cover, links and download counts; keep the animation package unchanged.
+6. 在實際進行已授權網站編輯時儲存，重新開公開頁核對。Save during the authorized website-editing task and reopen the public page to verify.
+
+可編輯來源是 `docs/release/` 的 Markdown／BBCode；根 README、`docs/` 及 `releases/` 是 document_exports 生成副本。原始檔修改後執行 `python tools/sync_docs.py --apply`，檢查差異並一起提交。封面來源見 [COVER-PROMPTS](COVER-PROMPTS.md)。
 
 ## English
 
-The GitHub release for this batch is [Projectile Collision Filter v0.3.0-preview.6](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6), a prerelease. **Both AyakaMods pages remain unchanged at the user's request.** The titles, summaries, descriptions and covers above are ready for a later authorized website update.
+This kit supplies both complete AyakaMods page bodies, titles, summaries and replacement covers. The GitHub prerelease has exactly two manually uploaded ZIPs: the selectable mod and the offline source-inclusive toolkit. Local copy does not mean either AyakaMods page has been edited.
 
-All paths are relative to the project root, which is `Source/P11-Enhanced/` inside the toolkit.
-
-| Page | Bilingual title | Cover | Ready-to-paste body |
-|---|---|---|---|
-| [Projectile Collision Filter / P-11](https://ayakamods.com/mods/p-11-self-hit-healing-p-11-%E6%B2%BB%E7%99%82%E6%89%8B%E6%A7%8D%E8%87%AA%E7%99%82.4166/) | `Projectile Collision Filter / 投射物碰撞過濾器（預覽版）` | [`docs/assets/projectile-collision-filter-cover.png`](assets/projectile-collision-filter-cover.png) | [`docs/release/MOD-PAGE.bilingual.bbcode`](release/MOD-PAGE.bilingual.bbcode) |
-| [Raise Weapon: Aim at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/) | `Raise Weapon: Aim at Yourself / 舉槍瞄準自己` | [`docs/assets/raise-weapon-aim-at-yourself-cover.png`](assets/raise-weapon-aim-at-yourself-cover.png) | [`docs/release/RAISE-WEAPON.bilingual.bbcode`](release/RAISE-WEAPON.bilingual.bbcode) |
-
-The Chinese and English summaries are provided above. Complete Markdown versions are [PCF Chinese](MOD-PAGE.zh-TW.md), [PCF English](MOD-PAGE.en.md), [animation Chinese](RAISE-WEAPON.zh-TW.md) and [animation English](RAISE-WEAPON.en.md); their editable sources are under `docs/release/`.
-
-To update the pages later:
-
-1. Sign in to an account that can edit each target page.
-2. Enter its bilingual title and summary in the relevant fields. Each BBCode file already contains both languages.
-3. Switch the description editor to **BBCode/source mode** and replace the old body with the complete matching `.bbcode` file. Do not paste Markdown tables or headings into that mode.
-4. Upload the matching PNG as the page cover. The cover link inside the description uses the fixed GitHub tag and is separate from this upload.
-5. Preview both languages, images, lists, the six-file download link and companion links. Keep the animation mod's existing `2026-09-18` version and attachment. This description update changes no mod binary.
-6. Save only when the website update is authorized, then reopen the public page and verify the result. Local files alone do not mean the website was updated.
-
-The animation cover references the P3R summoning pose for promotional composition; it does not claim that P3R assets or functionality were added to the animation package. The existing sprint/shoot/emote softlock remains documented; cancel sprinting or switch weapons if it occurs. The PCF copy retains the original P-11 success report and the unverified or unsupported parts of the expanded scopes.
-
-Edit the Markdown and BBCode sources under `docs/release/`, keep both languages and BBCode in sync, then run `python tools/sync_docs.py --apply`. Markdown files directly under `docs/` are generated copies. Image-generation records are in [COVER-PROMPTS](COVER-PROMPTS.md).
+The animation page keeps its existing 2026-09-18 download and documented softlock. Its new blue cover holds the pistol upright away from the helmet; it is promotional artwork rather than an exact rendering of the in-game pose. For maintenance, edit docs/release sources and regenerate docs copies using tools/sync_docs.py --apply.

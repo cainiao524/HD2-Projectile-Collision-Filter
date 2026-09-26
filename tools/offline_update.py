@@ -15,11 +15,11 @@ from compatibility_report import compare_manifest, load_manifest
 from log_parser import parse_log
 from resource_archive import inspect_file, resource_hash
 from offline_locator import scan
-from maintenance import TOOLKIT_VERSION, assess, load_metadata, write_handoff
+from maintenance import TOOLKIT_VERSION, assess, load_metadata, resource_identity, write_handoff
 
 ROOT=Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False) else Path(__file__).resolve().parents[1]
 PACKAGE_WORDS=re.compile(r'bingus.*loader|homing[ _-]?stim|p11.*(?:homing|self|enhanced)|stim.*self|weapon[ _-]self[ _-]hit|projectile[ _-]collision[ _-]filter',re.I)
-LOG_WORDS=re.compile(r'^(?:BingusSharedLoader|StimHoming.*|HealingPistolEnhanced|P11StimSelfHit|StimSelfHit.*|P11ReadOnlyCapture|P11OwnedProjectileObserver|WeaponSelfHitCandidate)\.log$',re.I)
+LOG_WORDS=re.compile(r'^(?:BingusSharedLoader|StimHoming.*|HealingPistolEnhanced|P11StimSelfHit|StimSelfHit.*|P11ReadOnlyCapture|P11OwnedProjectileObserver|WeaponSelfHitCandidate|ProjectileCollisionFilter(?:Conflict)?)\.log$',re.I)
 INSTALLED_SCHEMA_NAMES={'generated_entities.dl_bin','generated_entity_deltas.dl_bin',
     'dl_library.dl_typelib','generated_weapon_customization_settings.dl_bin',
     'generated_projectile_settings.dl_bin'}
@@ -90,7 +90,10 @@ def steam_state(game):
     result['update_in_progress']=result.get('StateFlags')!=4
     return result
 
-def classify_resource(body,declaration,resource_id=None):
+def classify_resource(body,declaration,resource_id=None,baselines=None):
+    if baselines is None: baselines,_=load_metadata(ROOT)
+    identity=resource_identity(hashlib.sha256(body).hexdigest(),declaration,baselines)
+    if identity: return identity['roles']
     if declaration == 'mods/p11/self_hit_dataonly': return ['p11_addon','self_hit']
     if declaration == 'mods/weapon_self_hit/pistols': return ['p11_addon','pistol_self_hit']
     if declaration == 'mods/weapon_self_hit/native_no_shotguns': return ['p11_addon','native_no_shotgun_self_hit']
@@ -111,6 +114,7 @@ def classify_resource(body,declaration,resource_id=None):
 
 def collect_deployed(game,folder,watched):
     records=[]; all_lua=[]; errors=[]
+    baselines,_=load_metadata(ROOT)
     pins_file=ROOT/'maintenance/loader-profiles.json'
     pins=json.loads(pins_file.read_bytes())['profiles'] if pins_file.is_file() else []
     archives=sorted((game/'data').glob('9ba626afa44a3aa3.patch_*'),key=lambda p:int(p.name.rsplit('_',1)[-1]) if p.name.rsplit('_',1)[-1].isdigit() else -1)
@@ -119,9 +123,13 @@ def collect_deployed(game,folder,watched):
         watched[path]=signature(path)
         try:
             for item in inspect_file(path):
-                body=item.pop('body'); roles=classify_resource(body,item['declaration'],item['resource_hash'])
+                body=item.pop('body'); roles=classify_resource(body,item['declaration'],item['resource_hash'],baselines)
                 row={**item,'archive':path.name,'patch_index':int(path.name.rsplit('_',1)[-1]),'sha256':hashlib.sha256(body).hexdigest(),'size_bytes':len(body),'roles':roles}
                 if roles:
+                    identity=resource_identity(row['sha256'],row['declaration'],baselines)
+                    if identity: row.update(identity)
+                    elif row['declaration']=='mods/p11/self_hit_dataonly':
+                        row.update(scope=None,version_evidence='unknown Lua fingerprint; shared resource does not establish scope')
                     text=body.decode('utf-8',errors='replace')
                     row['plaintext']=not body.startswith(b'\x1b')
                     if 'loader' in roles:
@@ -150,10 +158,20 @@ def collect_deployed(game,folder,watched):
     gameplay=[r for r in active if set(r['roles']) & {'homing','self_hit','integrated','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'}]
     duplicates=[role for role in ('self_hit','homing','integrated','pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit') if sum(role in r['roles'] for r in gameplay)>1]
     scope_conflict=sum(any(role in r['roles'] for r in gameplay) for role in ('pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'))>1
+    unified_present=any(r.get('unified_cursor') is True for r in active)
+    # The unified runtime rejects historical expanded markers even in P-11-only
+    # scope. These combinations need not have duplicate feature roles.
+    legacy_expanded=any(not r.get('unified_cursor') and set(r['roles']) &
+        {'pistol_self_hit','native_no_shotgun_self_hit','native_weapon_self_hit'} for r in active)
+    scope_conflict=scope_conflict or bool(unified_present and legacy_expanded)
+    # Research readers are not gameplay writers, but the addon deliberately
+    # rejects their markers. Do not let their exclusion from gameplay hide this.
+    research_conflict=unified_present and any('research_capture' in r['roles'] for r in active)
     combined_legacy=any('integrated' in r['roles'] for r in gameplay) and len(gameplay)>1
     return {'resources':records,'archive_errors':errors,'loader_observed':bool(loader),
-            'possible_gameplay_conflict':bool(duplicates or combined_legacy or scope_conflict),'duplicate_roles':duplicates,
+            'possible_gameplay_conflict':bool(duplicates or combined_legacy or scope_conflict or research_conflict),'duplicate_roles':duplicates,
             'mutually_exclusive_scopes_present':scope_conflict,
+            'unified_research_conflict':bool(research_conflict),
             'two_independent_addons_present':any('self_hit' in r['roles'] for r in gameplay) and any('homing' in r['roles'] for r in gameplay),
             'active_gameplay_resources':[r['resource_hash'] for r in gameplay],'scope':'deployed resources only; installed does not prove loaded or working'}
 
@@ -221,7 +239,7 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     for name in INSTALLED_SCHEMA_NAMES:
         watched[installed_schema_dir/name]=signature(installed_schema_dir/name)
     build=collect_build_info(game)
-    report={'schema_version':1,'collector':{'name':'P11-Enhanced Update Toolkit','version':TOOLKIT_VERSION},'collected_utc':datetime.now(timezone.utc).isoformat(),'build':build,'steam_state':state,'runtime_verified':False,'complete':False,'errors':errors,'packages':[],'schema_sources':[],'log_reports':[]}
+    report={'schema_version':1,'collector':{'name':'HD2-Projectile-Collision-Filter Update Toolkit','version':TOOLKIT_VERSION},'collected_utc':datetime.now(timezone.utc).isoformat(),'build':build,'steam_state':state,'runtime_verified':False,'complete':False,'errors':errors,'packages':[],'schema_sources':[],'log_reports':[]}
     for key,rel in [('executable','bin/helldivers2.exe'),('game_dll','data/game/game.dll')]:
         try:
             if not build['files'][key].get('sha256'): raise ValueError('required binary missing or unreadable')
@@ -297,7 +315,7 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     if initial_archive_names!=sorted(p.name for p in (game/'data').glob('9ba626afa44a3aa3.patch_*')):
         errors.append({'item':'deployed_archives','error':'deployment changed during collection'})
     if state.get('update_in_progress'): errors.append({'item':'steam','error':'Steam reports a non-idle installation/update state'})
-    report['gaps']=['Offline data and old logs do not verify current native hit/heal, host/client behavior, or candidate weapon coverage / coexistence. P-11 reports do not validate either broader candidate.']
+    report['gaps']=['Offline data and old logs do not verify current native hit/heal, host/client behavior, or candidate weapon coverage / coexistence. The four-scope preview.8 user report covers basic behavior only; it does not verify every weapon, scene, multiplayer case or performance.']
     if not report['deployed']['loader_observed']: report['gaps'].append('No identifiable active loader resource found; loader deployment needs inspection.')
     if not report['schema_sources']: report['gaps'].append('No local projectile schema/data cache was available.')
     collected_installed={item['file'] for item in report['schema_sources']
@@ -314,19 +332,21 @@ def snapshot(game,output,packages=(),schema_dirs=(),logs=None,previous=None,prof
     write_handoff(output,report,porting_map)
     # complete means stable collection only, never complete/working gameplay.
     write_json(output/'report.json',report)
-    summary=['# P11-Enhanced 離線更新診斷','',f"遊戲構建：{build['game']['steam_build_id'] or '未知'}",f"收集狀態：{'完成（檔案穩定）' if report['complete'] else '不完整，請查看錯誤'}",'','本報告沒有啟動遊戲、修改模組、讀取程序或上傳資料。','離線收集完成不代表本次自療、自命中或傷害已驗證。','',f"可辨識 loader：{'有' if report['deployed']['loader_observed'] else '未找到'}",f"可能有重複玩法模組：{'是，檢查重複來源' if report['deployed']['possible_gameplay_conflict'] else '未觀察到'}",'','## 功能結果']
+    summary=['# Projectile Collision Filter 離線更新診斷','',f"遊戲構建：{build['game']['steam_build_id'] or '未知'}",f"收集狀態：{'完成（檔案穩定）' if report['complete'] else '不完整，請查看錯誤'}",'','本報告沒有啟動遊戲、修改模組、讀取程序或上傳資料。','離線收集完成不代表本次自療、自命中或傷害已驗證。','',f"可辨識 loader：{'有' if report['deployed']['loader_observed'] else '未找到'}",f"可能有重複玩法模組：{'是，檢查重複來源' if report['deployed']['possible_gameplay_conflict'] else '未觀察到'}",'','## 功能結果']
     for f in report['feature_assessment']:
         summary += [f"- **{f['name']}：{f['label']}**",f"  - 部署：`{f['deployment']}`；loader：`{f['loader']}`。",f"  - 已有證據範圍：{f['recorded_scope']}"]
     summary += ['','`matches_package` 表示部署 Lua 與記錄相同；`not_deployed` 表示未發現；',
                 '`different_or_unidentified_source` 表示需檢查套件，`incompatible` 表示 loader API／版本不符合。',
-                '「符合基準」只比較遊戲身份與已有玩法回報，仍須同時查看部署與 loader 欄。','','## 定位候選']
+                '「符合基準」要求遊戲、部署 Lua 與相容 loader 同時符合且無衝突；它仍不證明本次玩法。未知 Lua 指紋不能由相同資源名推定範圍。','','## 定位候選']
     for item in report['profiles']:
         c=item['comparison']; summary.append(f"- {c['patch_id']}: {c['status']}")
         for candidate in item['offline_candidates']:
             summary.append(f"  - {candidate['id']}: {candidate['status']}；候選 {len(candidate['candidates'])} 個，不能據此啟用功能。")
-    summary+=['','## 接下來','- 0.2.1 已有基本自命中治療的使用者確認；未知遊戲 build 不沿用此確認。','- 在 Arsenal 的四選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。任兩個擴展方案同時部署時必須先排除衝突。','- 維修時使用本診斷 ZIP 與同版本工具包內的 Source/P11-Enhanced/；先讀該源碼的 AGENTS.md 與 docs/AGENT_GUIDE.md。路徑相對於工具包解壓根目錄，詳細要求見本診斷的「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 手槍白名單、武器機制覆蓋、主／客機、切槍、死亡及候選與 P-11 共存的玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
+    summary+=['','## 接下來','- preview.8 四項有使用者基本成功回報；0.2.1 與 0.2.3 證據分開保留。70 → 130 FPS 僅屬於 0.2.3；未知 build／模組指紋不沿用確認。','- 在 Arsenal 的四選一模組中選一個範圍，全部內建 P-11；停用舊獨立包。任兩個擴展方案同時部署時必須先排除衝突。','- 維修時使用本診斷 ZIP 與同版本工具包內的 Source/HD2-Projectile-Collision-Filter/；先讀該源碼的 AGENTS.md 與 docs/AGENT_GUIDE.md。路徑相對於工具包解壓根目錄，詳細要求見本診斷的「維修交接.md」。','- 找到候選位置也不會自動改雜湊、生成已驗證補丁或部署。','','## 仍缺少的證據','- 未知版本需要重新確認資料布局、所有權及碰撞時機。','- 完整副武器機制、全部武器覆蓋、主／客機、切槍、死亡及重負載游標碰撞時機的全面玩法證據。','- 舊日誌及本機資料快取的版本不能自動視為本次遊戲版本。','',f"與上次收集比較：{len(report['previous_collection_comparison']['changes'])} 項變更；上次收集不等於已驗證版本。",'','詳細檔案、來源雜湊、受影響功能與錯誤請查看 report.json。','請只在私人本機分析使用 binaries/packages，勿放入公開原始碼倉庫。']
     if report['deployed']['mutually_exclusive_scopes_present']:
-        summary += ['', '## 互斥版本衝突', '多個擴展候選同時存在，執行時會停止。關閉遊戲後在 Arsenal 四選一並重新部署。']
+        summary += ['', '## 互斥版本衝突', '多個範圍或整合核心與舊擴展 addon 同時存在，執行時會停止。關閉遊戲後停用舊自命中包，在 Arsenal 四選一並重新部署。']
+    if report['deployed']['unified_research_conflict']:
+        summary += ['', '## 舊研究 addon 衝突', '整合核心會拒絕 P11ReadOnlyCapture／P11OwnedProjectileObserver 標記。關閉遊戲後停用這些研究 addon 並重新部署；它們沒有寫入彈頭也不代表可與新核心共存。']
     if any(f['required_p11_missing'] for f in report['feature_assessment']):
         summary += ['', '## 缺少內建 P-11 自療資源', '已發現擴展候選，卻未辨識到 P-11 自療資源；可能是舊獨立候選包或部署不完整。新的四個方案均內建 P-11。關閉遊戲後在 Arsenal 停用舊版、選擇一個完整新包並重新部署。工具沒有自動修復或部署。']
     if errors: summary+=['','## 收集錯誤']+[f"- {e['item']}: {e['error']}" for e in errors]
@@ -339,7 +359,7 @@ def main():
     parser.add_argument('--package',action='append',default=[],type=Path);parser.add_argument('--schema-dir',action='append',default=[],type=Path)
     parser.add_argument('--no-auto-packages',action='store_true');parser.add_argument('--logs',type=Path)
     args=parser.parse_args()
-    print('P11-Enhanced：正在收集離線版本、模組及既有日誌，請等待。',flush=True)
+    print('Projectile Collision Filter：正在收集離線版本、模組及既有日誌，請等待。',flush=True)
     local={}; settings=ROOT/'local-settings.json'
     if settings.is_file(): local=json.loads(settings.read_text(encoding='utf-8-sig'))
     found=discover_games([args.game] if args.game else [local.get('game_root')])

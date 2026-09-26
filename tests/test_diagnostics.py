@@ -180,6 +180,25 @@ class CompatibilityTests(unittest.TestCase):
 
 
 class LogTests(unittest.TestCase):
+    def test_cursor_limits_are_warning_counters_not_shot_or_heal_proof(self):
+        result=parse_log('Projectile Collision Filter 0.2.0-candidate / scope=native_weapons / build 25480438\nCURSOR BUDGET: overruns=2; dropped=140; expired=9; bounded work can miss a projectile; not gameplay proof.')
+        issue=next(i for i in result['issues'] if i['code']=='cursor_budget_limited')
+        self.assertEqual(issue['severity'],'warning')
+        self.assertIn('mods/projectile_collision_filter/core.lua',issue['source_files'])
+        event=result['events'][0]
+        self.assertEqual((event['overruns'],event['dropped'],event['expired']),(2,140,9))
+        self.assertFalse(event['proves_feature_compatibility'])
+        self.assertEqual(result['observed_scopes'],['native_weapons'])
+        self.assertFalse(result['scope_verified_by_log'])
+
+    def test_unified_conflict_and_write_guards_point_to_shared_core(self):
+        result=parse_log('Projectile Collision Filter 0.2.4-candidate / scope=p11 / build 25480438\nSTOPPED: Existing P-11 addon or different scope is already loaded; restart after selecting one package.\nSTOPPED: write_readback_failed')
+        self.assertTrue(any(i['code']=='unified_scope_conflict' for i in result['issues']))
+        issue=next(i for i in result['issues'] if i['code']=='self_hit_data_guard')
+        self.assertIn('mods/projectile_collision_filter/data_windows.lua',issue['source_files'])
+        self.assertIn('native_no_shotgun_self_hit',issue['affected_features'])
+        self.assertFalse(result['runtime_verified'])
+
     def test_loading_is_not_feature_verification(self):
         result = parse_log("[Loader] Loaded addon StimHoming\nmodule hash mismatch\n")
         self.assertEqual(result["events"][0]["event"], "addon_loading")

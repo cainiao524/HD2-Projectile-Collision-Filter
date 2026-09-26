@@ -1,8 +1,8 @@
-# Update Toolkit 1.3.1：一鍵離線檢測與維修交接
+# Update Toolkit 1.3.2：一鍵離線檢測與維修交接
 
-本頁描述 **preview.6 預覽版隨附的 Toolkit 1.3.1**；[主要下載](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6)提供六個 ZIP。preview.5／Toolkit 1.3.0 保留為歷史版本。新增收集項目用於副武器分類與機制分析，不代表全部自命中功能已完成。
+本頁描述 **preview.8 預覽版隨附的 Toolkit 1.3.2**；[主要下載](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8)提供整合模組與工具包兩個 ZIP。preview.5／Toolkit 1.3.0 保留為歷史版本。新增收集項目用於副武器分類與機制分析，不代表全部自命中功能已完成。
 
-**完整解壓後雙擊 Collect-HD2-Update.cmd。** Windows x64 工具包已包含 P11-Update.exe，收集不需 Python。完整對應源碼和操作指南在 `Source/P11-Enhanced/`；工具包不是 Arsenal 模組。
+**完整解壓後雙擊 Collect-HD2-Update.cmd。** Windows x64 工具包已包含 P11-Update.exe，收集不需 Python。完整對應源碼和操作指南在 `Source/HD2-Projectile-Collision-Filter/`；工具包不是 Arsenal 模組。
 
 ## 一次收集操作
 
@@ -19,14 +19,14 @@
 |---|---|
 | EXE／DLL 版本、SHA-256、PE 結構與本機副本 | 辨識版本、比較離線布局；檔案加密時可能仍不足以定位 |
 | Steam 更新狀態、部署 archive 和有效資源覆蓋順序 | 判斷是否更新中及磁碟上最後覆蓋的資源來源；不能證明執行時已載入，收藏 ZIP 也不代表已部署 |
-| 四種功能身份、loader 版本／API | 區分 P-11 舊確認基準、擴展候選、缺內建 P-11 與互斥衝突 |
+| 四種功能身份、loader 版本／API | 依精確 Lua 指紋識別新四個 scope、歷史 0.2.1／0.2.3 與舊擴展；檢查遊戲、loader 指紋和互斥衝突 |
 | 相關既有日誌的結構化事件 | 僅作歷史事件依據；原始私人文字不複製進報告 |
 | 本機模組 ZIP、彈頭資料與結構定義 | 保留來源與指紋，不把旧快取自動視為目前 build |
 | 上次收集與既有基準差異 | 將變更對應到功能；上次收集本身不是已驗證版本 |
 
 自動搜尋工具旁的 `Mods/`、Downloads 中符合名稱的最近最多 12 個 ZIP，以及 `reference-data/`、已設定目錄、Filediver Go 快取中的資料表／結構。工具包本身不附模組 ZIP；自動搜尋不到時可明確提供 `--package`。未知快取的 `matches_game_build` 保持 false。
 
-1.3.1 另外直接嘗試收集目標遊戲安裝 `data/game/` 的五份檔案：
+工具會直接嘗試收集目標遊戲安裝 `data/game/` 的五份檔案：
 
 - `generated_entities.dl_bin`：實體與武器／裝備關聯。
 - `generated_entity_deltas.dl_bin`：實體差量資料。
@@ -40,7 +40,11 @@
 
 與上次收集比對時，資料表按來源種類與相對檔名分開追蹤，記錄前後雜湊及證據位置。實體／差量／型別／武器自訂變更對應三種擴展範圍；彈頭資料變更另外影響 P-11。多份快取不因同名而合併成同一個版本，上次收集仍不算已驗證基準。
 
-任兩個擴展資源並存會報互斥衝突；擴展已部署但沒有內建 P-11 也會提示。未選的方案 `not_deployed` 可以是正常情況，請與 Arsenal 所選範圍一起看。
+preview.8 的四項共用一個資源名稱，必須由四份精確 Lua SHA-256 判定實際 scope；不能看見舊 P-11 資源名就只報 self_heal。選定範圍同時包含 P-11，未選方案 `not_deployed` 可以正常。仍檢查舊擴展並存、重複部署和未知覆蓋；未知 Lua 不猜 scope。
+
+符合已確認基準需要同時滿足遊戲指紋、部署 Lua 指紋、已知 loader Lua／資源指紋、API／內部版本和無衝突。缺部署、未知來源、loader 缺少／不相容／`source_unidentified` 或衝突會保留 `assessment_blockers`，結果為離線資料不足；只匹配遊戲 hash 不會沿用舊 P-11 成功結論。baseline 欄可保留已識別的版本參照，不表示当前玩法已成功。
+
+`ProjectileCollisionFilter.log` 的啟用、版本拒絕、衝突、寫入讀回和 `CURSOR BUDGET` 是既有歷史事件。drop／expire 計數是排程提示略過／過期，不是實測漏掉多少發。原始私人日誌不公開，解析器不從日誌執行指令。
 
 ## 報告與判讀順序
 
@@ -48,14 +52,14 @@
 |---|---|
 | 摘要.md | 中文完整性、功能、部署、loader 與缺口 |
 | 維修交接.md | 證據、候選、未決問題及下一步 |
-| report.json 的 collector | 本次收集器名稱與版本；1.3.1 不代表模組 runtime 升版 |
+| report.json 的 collector | 本次收集器名稱與版本；1.3.2 不代表模組 runtime 升版 |
 | complete／errors | 檔案是否穩定；不完整就先處理收集問題 |
 | build／deployed／feature_assessment | 遊戲指紋、有效資源、四個功能、loader 與衝突 |
 | profiles／schema_sources／gaps | 離線候選、資料表來源及無法確認的問題 |
 | porting-map.json | 舊布局和不得省略的核對要求 |
 | binaries／packages／deployed／schemas | 私人離線分析副本，不能當公開發布資產 |
 
-四個功能結果會區分：符合既有已確認基準、符合尚未驗證候選、需要移植且找到候選、離線資料不足、收集不完整。符合基準仍需檢查部署和 loader；長指令模式只產生候選，不會啟用功能。
+維修交接列出版本、完整性、所選範圍、受影響功能、證據、候選、缺失資料、下一步和驗證狀態，並指向隨附 Source 的 AGENTS 入口。四個功能結果會區分：符合既有已確認基準、符合尚未驗證候選、需要移植且找到候選、離線資料不足、收集不完整。符合基準仍需檢查部署和 loader；長指令模式只產生候選，不會啟用功能。15 個 runtime 錨點（含 3 個游標錨點）在 porting-map 中列明；不足 16 位元組的短錨點不作單獨磁碟搜尋模式。
 
 工具不啟動遊戲、不讀執行中程序、不修改或部署模組、不上傳。EXE／DLL／部署檔案在收集期間改動、缺失或 Steam 仍在更新時，結果標為不完整。**收集完整只代表取得穩定檔案，不代表新版自療或自傷已成功。**
 
@@ -78,7 +82,7 @@ $schemaDirectory = Read-Host '輸入參考表與結構所在資料夾'
 
 `--package`／`--schema-dir` 可重複提供。`--no-auto-packages` 停止搜尋 Downloads，但仍可使用明確提供的包與工具旁 Mods。`--output` 可指定遊戲資料夾外的輸出位置，`--logs` 可指定既有日誌目錄。
 
-只使用公開源碼時，在源碼根目錄執行 `python tools/offline_update.py`，參數相同，需 Python 3.10+。若從工具包內 Source 執行，預設輸出位於 `Source/P11-Enhanced/diagnostics/`，在該源碼專案內；一般收集建議使用外層 portable 入口。
+只使用公開源碼時，在源碼根目錄執行 `python tools/offline_update.py`，參數相同，需 Python 3.10+。若從工具包內 Source 執行，預設輸出位於 `Source/HD2-Projectile-Collision-Filter/diagnostics/`，在該源碼專案內；一般收集建議使用外層 portable 入口。
 
 ## 下一步
 
@@ -90,7 +94,7 @@ $schemaDirectory = Read-Host '輸入參考表與結構所在資料夾'
 
 Extract and run Collect-HD2-Update.cmd after updates and deployment finish. The Windows x64 executable needs no Python. It collects stable offline identities, deployed resources, selected packages, parsed historical logs and available reference data, then writes a Chinese summary and repair handoff.
 
-The report distinguishes collection completeness, known identities, candidate evidence and missing information. It does not launch the game, read processes, deploy, upload or prove gameplay. Toolkit 1.3.1 accompanies preview.6 and includes matching source under Source/P11-Enhanced. Keep diagnostic binaries and private evidence out of public issues and releases.
+The report distinguishes collection completeness, known identities, candidate evidence and missing information. It does not launch the game, read processes, deploy, upload or prove gameplay. Toolkit 1.3.2 accompanies preview.8 and includes matching source under Source/HD2-Projectile-Collision-Filter. Exact deployed Lua fingerprints distinguish all four integrated scopes. Confirmed-baseline status also requires the exact known loader source and no conflicts; matching game hashes alone is insufficient. Budget drop/expire events are historical scheduler counters, not measured missed shots. Keep diagnostic binaries and private evidence out of public issues and releases.
 
 Five exact files under the selected installation's data/game directory are collected automatically: generated_entities.dl_bin, generated_entity_deltas.dl_bin, dl_library.dl_typelib, generated_weapon_customization_settings.dl_bin and generated_projectile_settings.dl_bin. Installed files and cached references retain separate provenance, hashes and observed build context. Missing files produce explicit gaps; a complete collection can still lack analytical evidence. Changes are mapped to affected mod scopes without treating old reports as verified baselines.
 

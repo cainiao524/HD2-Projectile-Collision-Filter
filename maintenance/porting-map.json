@@ -3,6 +3,173 @@
   "reference_build": "25480438",
   "scope": "Historical locations for offline porting; never automatic authorization to write on another build.",
   "self_hit": {
+    "core": "mods/projectile_collision_filter/core.lua",
+    "writer": "mods/projectile_collision_filter/data_windows.lua",
+    "version_gate": "mods/projectile_collision_filter/version.lua",
+    "startup": "mods/projectile_collision_filter/entry.lua",
+    "profile": "mods/projectile_collision_filter/build.py:profile(scope)",
+    "module_globals": {
+      "player_manager": "0x3326468",
+      "entity_manager": "0x346BF98",
+      "weapon_manager": "0x33266D8",
+      "attachment_manager": "0x3326DC0",
+      "native_projectile_system": "0x347CEA8",
+      "projectile_definitions": "0x37C7670"
+    },
+    "native_slot": {
+      "count": 2048,
+      "type_array": "0xE5040",
+      "type_stride": 4,
+      "flags_array": "0x203C",
+      "flags_stride": 2,
+      "source_array": "0x3B040",
+      "source_stride": 36,
+      "source_unit_offset": 8,
+      "source_entity_offset": 12,
+      "aux_array": "0x3C",
+      "aux_stride": 4,
+      "aux_is_generation": false,
+      "projectile_type": 318,
+      "occupied_mask": "0x2",
+      "clear_only_mask": "0x20",
+      "cursor_offset": "0x30",
+      "cursor_semantics": "Allocation probe cursor, not a shot counter; uint32 modular delta, slot mask 0x7ff. Occupied-slot probes may also increment it."
+    },
+    "required_checks": [
+      "Both disk hashes and PE virtual sections covering every used RVA",
+      "All 15 anchors (12 base plus 3 cursor); a short runtime anchor is not a safe offline locator",
+      "P-11 dedicated identity, avatar and stim definition; broad scope classification, local owner, active weapon and attachment owner",
+      "Fresh reads every update, per-write dependency revalidation, original flags and readback",
+      "MEM_PRIVATE PAGE_READWRITE only; clear only runtime bit 0x20 with a two-byte write",
+      "User-reported basic behavior and offline/mock evidence do not prove all weapons, host/client, timing, or performance"
+    ],
+    "porting_note": "Version a new runtime for an actual port. Preserve the accepted preview.8 four Lua/resource byte sequences and historical successful packages. Updating a profile/hash alone is insufficient.",
+    "cursor_limits": {
+      "pending": 256,
+      "inspections_per_update": 128,
+      "retry_updates": 8,
+      "minimum_inspections": 2,
+      "writes_per_update": 64,
+      "logical_reads_per_update": 12000,
+      "logical_bytes_per_update": 262144,
+      "overrun_delta": 2048,
+      "note": "Keep only bounded slot hints across updates, never cached identity/write authorization. Deferred hints go first, P-11 candidates write first. Drops/expiry can miss projectiles; counters are not shot/hit counts. Preserve budgets and all guards."
+    },
+    "runtime_anchors": [
+      {
+        "name": "gun_private_projectile_route",
+        "rva": 6380479,
+        "bytes_hex": "4885db0f843a090000"
+      },
+      {
+        "name": "gun_fixed_exclude_owner_option",
+        "rva": 6383042,
+        "bytes_hex": "c6453801"
+      },
+      {
+        "name": "gun_native_constructor_call",
+        "rva": 6383122,
+        "bytes_hex": "e81932d900"
+      },
+      {
+        "name": "constructor_option_flag",
+        "rva": 20618163,
+        "bytes_hex": "8b0842898ca640500e00740c41385d187506440fb7c3eb0641b820000000"
+      },
+      {
+        "name": "constructor_flag_composition",
+        "rva": 20618193,
+        "bytes_hex": "498b46100f57c041b9000600000fb788f00000000fb7c10fb7d16683e0106683e22066c1e202660bd00fb7c16683e00c6603d2660bd00fb7c1664123c166c1e203660bd00fb7c16683e0026603d2660bd00fb7c166d1e86683ca016683e020664123cf4c6bff70660bc16603d266c1e802660bd066410bd066428994663c200000"
+      },
+      {
+        "name": "collision_source_entity_gate",
+        "rva": 20629135,
+        "bytes_hex": "433b9c874cb003000f84c1070000488b45a8"
+      },
+      {
+        "name": "collision_source_unit_gate",
+        "rva": 20629153,
+        "bytes_hex": "41f684473c200000200f84e30000008b559485d20f84d8000000488b05469cf701488b4818488b81200700008bcaffd084c00f84ba000000428b8c25dc060000"
+      },
+      {
+        "name": "stim_effect_definition_flag",
+        "rva": 20633866,
+        "bytes_hex": "f680fc00000001"
+      },
+      {
+        "name": "reflection_owner_flag_clear",
+        "rva": 20637466,
+        "bytes_hex": "6641218c473c20000041"
+      },
+      {
+        "name": "component196_native_constructor",
+        "rva": 6578780,
+        "bytes_hex": "e8cf35d600"
+      },
+      {
+        "name": "optional_auxiliary_initial_sentinel",
+        "rva": 20619735,
+        "bytes_hex": "42c744a63cffffffff418bfc41399c378c3000000f8445010000498b4610"
+      },
+      {
+        "name": "optional_auxiliary_definition_gate",
+        "rva": 20619765,
+        "bytes_hex": "3998900000000f8435010000418b4e18e836fbc2"
+      },
+      {
+        "name": "native_cursor_read",
+        "rva": 20617322,
+        "bytes_hex": "8b4130"
+      },
+      {
+        "name": "native_cursor_slot_mask",
+        "rva": 20617371,
+        "bytes_hex": "4181e4ff070000"
+      },
+      {
+        "name": "native_cursor_write",
+        "rva": 20617460,
+        "bytes_hex": "895130"
+      }
+    ]
+  },
+  "weapon_candidates": {
+    "source": "mods/projectile_collision_filter",
+    "core": "mods/projectile_collision_filter/core.lua",
+    "profiles": "mods/projectile_collision_filter/build.py:profile(scope)",
+    "scopes": [
+      "pistols",
+      "native_no_shotguns",
+      "native_weapons"
+    ],
+    "shared_native_layout": "self_hit.native_slot; one addon has a dedicated P-11 branch plus selected broad classification. Filtered scopes retain types 1..350 outside the pinned exclusions; inclusive retains 1..4096.",
+    "required_checks": [
+      "Retain all local avatar/source/weapon registry/attachment owner, original flag, version and write/readback guards",
+      "Use the shared cursor core with a dedicated P-11 identity branch. Do not add the historical second P-11 addon or widen P-11 identity checks.",
+      "Re-derive SidearmWeapon loadout entries from pinned entity/schema/delta inputs; EquipmentType is not the loadout slot.",
+      "Retain all cursor limits and fresh write-time guards; offline candidate locations never authorize writes.",
+      "Re-derive shotgun families, every multi-projectile row and unknown-type policy from versioned evidence.",
+      "Four-scope user basic-success report does not prove all native/entity/beam/spray mechanisms, multiplayer cases or performance."
+    ],
+    "packaging": "Four mutually exclusive Arsenal scopes, each deploys one unified addon under mods/p11/self_hit_dataonly. Exact Lua hashes distinguish the scopes. First three exclude shotguns; fourth explicitly warns about severe performance impact.",
+    "projectile_filter": "maintenance/projectile-exclusions-25480438.json; pinned offline table, not current gameplay proof",
+    "secondary_catalog": "maintenance/secondary-catalog-25480438.json",
+    "secondary_catalog_verifier": "tools/verify_secondary_catalog.py",
+    "secondary_catalog_inputs": [
+      "generated_entities.dl_bin",
+      "dl_library.dl_typelib",
+      "generated_entity_deltas.dl_bin",
+      "generated_weapon_customization_settings.dl_bin"
+    ],
+    "secondary_mechanism_gaps": [
+      "The compiled resource lookup covers native-slot candidates only; a complete reference loadout catalog does not prove complete gameplay support or current-build correspondence.",
+      "Dagger beam and Crisper spray require their own evidenced ownership, collision-exclusion and timing model; the existing native-slot writer does not implement these mechanisms.",
+      "Warrant, P33 and the internal Hornet resource use projectile entities; downstream native slot production and collision timing remain unverified.",
+      "Base projectile type zero must be resolved through weapon customizations before claiming the fired type. Actual slot types still pass the existing shotgun/multishot filter.",
+      "The captured installed tables have unrecognized/packed headers; pinned plaintext reference inputs cannot be silently treated as those installed files."
+    ]
+  },
+  "historical_self_hit": {
     "core": "mods/p11_self_hit_dataonly/core.lua",
     "writer": "mods/p11_self_hit_dataonly/data_windows.lua",
     "version_gate": "mods/p11_self_hit_dataonly/version.lua",
@@ -43,7 +210,7 @@
     ],
     "porting_note": "Several RVAs also occur in core.lua/data_windows.lua/build.py/version.lua. A new profile alone is insufficient. Preserve the tested 0.2.1 package and version any future implementation."
   },
-  "weapon_candidates": {
+  "historical_weapon_candidates": {
     "source": "mods/weapon_self_hit_candidate",
     "core": "mods/weapon_self_hit_candidate/core.lua",
     "profiles": "mods/weapon_self_hit_candidate/build.py:profile(scope)",
@@ -67,7 +234,12 @@
     "projectile_filter": "maintenance/projectile-exclusions-25480438.json; pinned offline table, not current gameplay proof",
     "secondary_catalog": "maintenance/secondary-catalog-25480438.json",
     "secondary_catalog_verifier": "tools/verify_secondary_catalog.py",
-    "secondary_catalog_inputs": ["generated_entities.dl_bin", "dl_library.dl_typelib", "generated_entity_deltas.dl_bin", "generated_weapon_customization_settings.dl_bin"],
+    "secondary_catalog_inputs": [
+      "generated_entities.dl_bin",
+      "dl_library.dl_typelib",
+      "generated_entity_deltas.dl_bin",
+      "generated_weapon_customization_settings.dl_bin"
+    ],
     "secondary_mechanism_gaps": [
       "The compiled resource lookup covers native-slot candidates only; a complete reference loadout catalog does not prove complete gameplay support or current-build correspondence.",
       "Dagger beam and Crisper spray require their own evidenced ownership, collision-exclusion and timing model; the existing native-slot writer does not implement these mechanisms.",
@@ -75,5 +247,11 @@
       "Base projectile type zero must be resolved through weapon customizations before claiming the fired type. Actual slot types still pass the existing shotgun/multishot filter.",
       "The captured installed tables have unrecognized/packed headers; pinned plaintext reference inputs cannot be silently treated as those installed files."
     ]
-  }
+  },
+  "diagnostic_scope_identity": "Exact Lua SHA-256 plus resource declaration resolves scope; baseline requires exact build and deployed source, with compatible loader and no conflicts. Unknown source is unresolved.",
+  "source_entry": "Source/HD2-Projectile-Collision-Filter/AGENTS.md",
+  "logs": [
+    "ProjectileCollisionFilter.log",
+    "ProjectileCollisionFilterConflict.log"
+  ]
 }

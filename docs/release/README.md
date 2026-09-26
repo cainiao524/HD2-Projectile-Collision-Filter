@@ -1,109 +1,76 @@
-# Projectile Collision Filter｜P-11 自療・四選一投射物自命中（預覽版）
+# Projectile Collision Filter｜投射物碰撞過濾器・P-11 自療與四種範圍
 
-![Projectile Collision Filter（投射物碰撞過濾器）封面](docs/assets/projectile-collision-filter-cover.png)
+![Projectile Collision Filter / 投射物碰撞過濾器](docs/assets/projectile-collision-filter-cover.png)
 
-[English](README.en.md) · [下載 v0.3.0-preview.6](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6) · [安裝與切換](docs/SELECTABLE.md) · [支援範圍](docs/SECONDARIES.md)
+[English](README.en.md) · [下載 v0.3.0-preview.8](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8) · [安裝與切換](docs/SELECTABLE.md) · [副武器支援範圍](docs/SECONDARIES.md)
 
-讓自己射出的 P-11 治療飛鏢能夠擊中自己，由遊戲原生碰撞與治療邏輯處理效果。你仍然手動瞄準、手動射擊；同一個 Arsenal 模組可選擇只處理治療手槍，或擴展到其他武器投射物。
+讓自己射出的 P-11 治療飛鏢能命中自己，由遊戲原生碰撞與治療處理效果。你仍然手動瞄準和射擊；同一個 Arsenal 模組可四選一，擴展到其他支援的武器投射物。傷害型武器也會保留原生傷害效果，可能造成自傷。
 
-**P-11 原版已有基本自療的使用者成功回報；擴展範圍仍為候選。** 所有方案包含同一份 P-11 0.2.1。其他武器沿用各自原生效果，傷害型武器可能造成自傷。前三項排除霰彈與多彈丸；第四項包含它們，**可能造成嚴重性能影響**。
+**preview.8 四個選項已有使用者「可用／正常」回報，版本仍為預覽版。** 這是整體基本使用回報，沒有逐武器、完整主客機或統一 FPS 測量紀錄；不代表所有傷害機制已支援。發布整理保持使用者測試包的四份 Lua 和遊戲資源不變。
 
-## 四選一，預設從 P-11 開始
+## Arsenal 雙語四選一
 
-| Arsenal 選項 | 生效範圍 |
+配置頁為英文在前、中文在後，選擇欄 **Effect Scope / 生效範圍**。首次預選 P-11，模組總開關仍由 Arsenal 管理。
+
+| Arsenal label / 配置選項 | Scope / 範圍 |
 |---|---|
-| **僅治療手槍** | 僅 P-11；推薦，首次預選。 |
-| **手槍全部** | P-11 加副武器原生投射物候選，包含電漿／榴彈類型的資料識別；排除霰彈與多彈丸。不是全部副武器機制已完成。 |
-| **全部武器不包括霰彈槍** | P-11 加支援的本機原生武器投射物；排除霰彈與多彈丸。 |
-| **全部武器包括霰彈槍** | 包含霰彈與多彈丸的廣域原生投射物候選；**可能造成嚴重性能影響**。 |
+| **P-11 Only / 僅治療手槍** | P-11 healing darts only; recommended and initially selected. / 僅治療飛鏢，推薦且首次預選。 |
+| **All Sidearms / 手槍全部** | P-11 and supported sidearm projectiles; excludes shotguns and multi-projectile types. / P-11 與支援的副武器投射物，排除霰彈與多彈丸。 |
+| **All Weapons (No Shotguns) / 全部武器不包括霰彈槍** | P-11 and supported weapon projectiles; excludes shotguns and multi-projectile types. / P-11 與支援的武器投射物，排除霰彈與多彈丸。 |
+| **All Weapons (Including Shotguns) / 全部武器包括霰彈槍** | Includes shotgun/multi-projectile types. **WARNING: May cause severe performance impact.** / 包含霰彈與多彈丸；**警告：可能造成嚴重性能影響。** |
 
-## 下載：一個整合版、四個獨立版、一個工具包
+## 只需選擇兩個下載之一
 
-**一般玩家推薦整合版。** 四個獨立版提供固定範圍；與整合版互為替代，**只啟用一個自命中模組包**。工具包另行解壓，不匯入 Arsenal。
-
-| 下載檔 | 選擇方式 |
+| 下載檔 | 用途 |
 |---|---|
-| `Projectile-Collision-Filter-v0.3.0-preview.6-build25480438.zip` | **推薦**：整合版，在 Arsenal 內四選一 |
-| `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` | 固定僅治療手槍；保留原始 P-11 成功包 |
-| `weapon_self_hit_pistols-0.1.3-build25480438-CANDIDATE.zip` | 固定手槍範圍；0.1.3 副武器候選，排除霰彈 |
-| `weapon_self_hit_native_no_shotguns-0.1.2-build25480438-CANDIDATE.zip` | 固定支援的原生武器投射物範圍，排除霰彈 |
-| `weapon_self_hit_native-0.1.2-build25480438-CANDIDATE.zip` | 包含霰彈的廣域候選；**可能造成嚴重性能影響** |
-| `P11-Enhanced-Update-Toolkit-1.3.1-win-x64.zip` | Windows x64 離線收集、完整源碼與維護指南 |
+| [Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/download/v0.3.0-preview.8/Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip) | **玩家下載這個**：匯入 Arsenal，在同一個模組內四選一。 |
+| [HD2-Projectile-Collision-Filter-Update-Toolkit-1.3.2-win-x64.zip](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/download/v0.3.0-preview.8/HD2-Projectile-Collision-Filter-Update-Toolkit-1.3.2-win-x64.zip) | 遊戲更新後收集離線資料；附完整源碼、建置及維護指南。另行解壓，不匯入 Arsenal。 |
 
-六個 ZIP 的 SHA-256 見 [Release 正文](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.6)。GitHub 自動的 Source code 連結另供下載源碼，不是可直接安裝的模組。歷史版本保留供回退。
+本版只有兩個手動 ZIP；不再額外發布四個獨立包。SHA-256 見 [Release 正文](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8)。GitHub 自動 Source code 下載是源碼，不能直接匯入 Arsenal。舊 Release 的標籤與資產保留供回退。
 
-## 本版支援到哪裡
+## 安裝、升級與切換
 
-「手槍全部」的目標是全部可射擊副武器，目前收錄 **16 個來源識別候選：13 個原生路徑、3 個 entity 分支**，另保留 P-11。這是參考資料與識別範圍，**不代表 16 把武器都已能對自己生效**。
+1. 完整關閉遊戲，等更新完成，另外安裝相容的 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。
+2. 在 Arsenal 停用舊四選一包、P-11 0.2.3 測試包及其他自命中獨立包，清除舊部署。**一次只啟用一個自命中模組。**
+3. 匯入上面的整合 ZIP；沿用既有 GUID，遇到身份重複提示就替換舊項目。
+4. 在 **Effect Scope / 生效範圍** 選一項，確認總開關啟用，再重新部署和啟動遊戲。
+5. 切換、停用或回退都先關閉遊戲，再清除舊部署並重新部署。
 
-- **Dagger 光束、Crisper 噴射：目前未支援。**
-- **Warrant、P33、Hornet 的 entity 後續碰撞／效果：尚未驗證。** Hornet 是內部資源名稱，正式名稱與可取得狀態未確認。
-- 電漿與榴彈仍屬候選；榴彈本體碰撞不等於爆炸或範圍效果已驗證。
-- 「全部武器」只指目前支援的原生投射物路徑；不保證所有射線、光束、噴射、近戰、爆炸或 entity 機制。
-- 第 2、3 項也保守略過參考表外類型及其他多彈丸機制。仍有槽位掃描，不承諾零開銷或零卡頓。
+目標為 **Steam build 25480438 / EXE 1.8.46015.0 / Bingus Shared Loader v17、API 1、internal 16**。未知遊戲／loader 版本停止修改；不要只替換雜湊強行啟用。
 
-[完整副武器清單與證據](docs/SECONDARIES.md) · [原理與範圍](docs/VARIANTS.md) · [性能說明](docs/PERFORMANCE.md)
+## 原理、性能與支援限制
 
-## 環境要求
+四種選項共用一個核心，每次選擇只部署一個 addon。它跟隨投射物分配游標，處理近期候選和有限重查，取代舊版反覆遍歷全部 2,048 槽的方式。只有通过本機所有權、武器／彈種身份、原旗標及有效資料頁檢查的投射物，才清除來源碰撞排除位 `0x20`；寫前重檢、寫後讀回，實際效果由遊戲處理。
 
-| 項目 | 本版目標 |
-|---|---|
-| 遊戲 | Steam build **25480438** |
-| 遊戲 EXE | **1.8.46015.0** |
-| Loader | **Bingus Shared Loader v17 / API 1 / internal 16** |
-| 模組管理 | Arsenal；已使用 0.36.2 隔離後端檢查 |
-| 收集工具 | Windows x64；可攜 EXE 不需另裝 Python |
+沒有 native hook、執行碼修補或直接寫入生命、體力、彈藥、傷害值。仍有逐候選工作量；大量投射物、待辦超限、延後生成或碰撞時機可能造成略過。不能保證零開銷或每一發都生效。
 
-## 安裝、切換與升級
+先前使用者回報 **P-11 0.2.3 約 70 → 130 FPS 且自療正常**；這屬於該次舊候選測試，並非 preview.8 四種範圍的固定提升。
 
-1. 關閉遊戲，確認更新完成，另外安裝相容的 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。
-2. 在 Arsenal 停用舊版與其他重複自命中模組。**五個自命中 ZIP 只啟用一個。**
-3. 匯入整合版 ZIP，在「**生效範圍**」選一項；首次預選「僅治療手槍」。確認模組總開關已啟用。
-4. 清除舊部署並重新部署，再啟動遊戲。切換、停用或回退也先關閉遊戲，再重新部署。
-5. 整合版沿用原 GUID。遇到重複身份提示，使用 Arsenal 的替換功能，或停用／移除舊項目後匯入；不要同時保留兩份啟用。
+- **All Sidearms / 手槍全部** 以副武器槽位參考清單識別來源，不再只限歷史八個 ID；分類完整性和實際機制支援仍分開記錄。
+- Dagger 光束、Crisper 噴射尚未支援；Warrant、P33、內部 Hornet 的 entity 後續碰撞／效果未完成驗證。
+- 電漿、榴彈的本體命中不等於後續爆炸、範圍效果均已驗證。「全部武器」指支援的原生投射物路徑。
+- 第 2、3 項保守排除霰彈／多彈丸和參考表外類型；第 4 項**可能造成嚴重性能影響**。
 
-未知版本會停止修改；不要只替換雜湊強行啟用。
+[原理與四種範圍](docs/VARIANTS.md) · [性能說明](docs/PERFORMANCE.md) · [驗證記錄](docs/VERIFICATION.md)
 
-## 推薦搭配與隊友追蹤
+## 搭配動作與隊友追蹤
 
-**推薦 P-11 搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/)**，從原作者頁面另外下載，操作與適用版本以該頁為準。也可嘗試使用者回報的第一人稱朝自己腳部射擊方式；仍需實際飛鏢命中角色。
+推薦 P-11 搭配 [Raise Weapon: Aim at Yourself / 舉槍瞄準自己](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/)，另行下載並依原頁裝備 Raise Weapon 表情。使用者也曾回報第一人稱朝自己腳部射擊的用法；仍需真正飛鏢命中角色。
 
-隊友鎖定／追蹤保持原作者模組獨立管理，功能未改動，也未附帶在本包內。這個自命中包不替你自動瞄準或開火。
+動作包只改姿勢，投射物包處理自命中。隊友鎖定／追蹤保留原作者版本、獨立管理，本包不包含、不替你自動瞄準或開火。[P-11 用法](docs/SELF_HIT.md)
 
-[P-11 用法與既有回報](docs/SELF_HIT.md)
+## 更新後一次收集與開發導航
 
-## 更新後收集資料，附完整源碼
+完整解壓 **Toolkit 1.3.2**，雙擊 `Collect-HD2-Update.cmd`；Windows x64 收集入口不需另裝 Python。查看 `diagnostics/latest.json` 指向的中文摘要與維修交接。工具收集可取得的磁碟版本、部署資源、相關既有日誌及資料表；不啟動遊戲、不讀取執行中程序、不部署、不上傳，也不承諾每次更新自動修復。
 
-遊戲或 loader 更新後，完整解壓 **Update Toolkit 1.3.1**，雙擊 `Collect-HD2-Update.cmd`。工具會收集版本、部署資料、既有相關日誌，以及目標安裝中的五份實體／結構／武器／彈頭資料表，記錄來源、雜湊和缺口。查看 `diagnostics` 中的中文摘要與維修交接。
-
-工具不啟動遊戲、不讀執行中程序、不修改或部署模組、不上傳。它一次收齊可取得的離線資料，**不承諾每次更新都能自動修復**；收集完整或指紋吻合不等於玩法已驗證。
-
-完整對應源碼已解壓在 `Source/P11-Enhanced/`。開發者與 AI／Agents 從 `AGENTS.md` 開始，依指南完成判讀、修補、測試、重建及發布；重建模組需 Python 3.10+，一般玩家收集資料不需要。
+完整對應源碼已在 `Source/HD2-Projectile-Collision-Filter/`，不用再解壓內層源碼 ZIP。
 
 | 我要做的事 | 入口 |
 |---|---|
 | 安裝、切換、停用、回退 | [玩家操作指南](docs/SELECTABLE.md) |
-| 遊戲更新後一次收集 | [離線更新工具](docs/UPDATE_TOOL.md) |
-| 交給開發者或 AI／Agent | [AGENTS.md](AGENTS.md) → [逐步接手指南](docs/AGENT_GUIDE.md) |
-| 修補與重建 | [建置與移植](docs/PORTING.md) · [工作交接模板](docs/HANDOFF_TEMPLATE.md) |
+| 遊戲更新後一次收集資料 | [離線更新工具](docs/UPDATE_TOOL.md) |
+| 開發、判讀、修補、交接 | [AGENTS.md](AGENTS.md) → [逐步接手指南](docs/AGENT_GUIDE.md) → [建置與移植](docs/PORTING.md) |
 | 驗證與發布 | [驗證記錄](docs/VERIFICATION.md) · [發布指南](docs/PUBLISH.md) |
-| 複製自命中模組網站介紹 | [中文發布文案](docs/MOD-PAGE.zh-TW.md) · [English release copy](docs/MOD-PAGE.en.md) |
-| 複製動作模組網站介紹 | [舉槍瞄準自己](docs/RAISE-WEAPON.zh-TW.md) · [English animation copy](docs/RAISE-WEAPON.en.md) |
-| 網站標題、摘要、封面與貼上操作 | [兩個模組頁面發布資料](docs/PAGE-PUBLISHING.md) |
+| 兩個 AyakaMods 頁面標題、介紹、BBCode、封面 | [發布素材導航](docs/PAGE-PUBLISHING.md) |
 
-詳細維護文件及診斷摘要目前以中文為主；本首頁、Release 介紹與模組網站文案提供完整中英對照。
-
-## preview.6 更新內容
-
-- **副武器候選 0.1.3**：以固定資料中的副武器裝備槽位補齊參考清單，替換舊八項識別範圍；16 個來源候選分成原生與 entity 機制，逐項標示限制。
-- **保留成功 P-11**：原 0.2.1 ZIP／Lua 不變；兩個廣域 0.1.2 包也保留。原生資料修改與身份、所有權及寫入檢查未為擴大清單而放寬。
-- **Toolkit 1.3.1**：直接收集五份安裝資料表，區分安裝來源與快取，補齊缺檔與版本對應缺口。
-- **交付與文件**：一個四選一整合版、四個獨立版、一個含完整源碼的工具包，附雙語介紹、操作導航及 AI／Agent 接手指南。
-
-## 驗證與實現方式
-
-本候選通過 **120 項 Python 檢查、429 項 P-11 Lua 模擬斷言、3,322 項擴展 Lua 模擬斷言**，並完成固定參考資料重驗與 Arsenal 隔離後端檢查。這些是離線、封裝和合成資料測試，**不是新增的遊戲自命中實測或 FPS 測量**。P-11 的基本成功來自既有使用者回報；新增副武器、主客機、碰撞時機、完整共存與效能仍不能視為已全面驗證。
-
-實作只改變經身份與所有權檢查的本機投射物來源碰撞排除，命中後由遊戲處理原生效果。沒有 native hook、執行碼修補或直接寫入生命／體力／彈藥／傷害數值。
-
-GitHub 專案仍名為 **P11-Enhanced**。本模組與 Arrowhead Game Studios 無隸屬關係，程式與文件使用 OpenAI 工具協助製作。整體授權尚未選定；[來源與依賴](docs/THIRD_PARTY.md) · [授權聲明](LICENSE-NOTICE.md)。
+本倉庫已使用名稱 **HD2-Projectile-Collision-Filter**；舊版本保留歷史名稱。維護指南以中文為主，配置頁、首頁與發布文案提供雙語。社群作品，與 Arrowhead Game Studios 無隸屬關係；開發及文件由 OpenAI 工具協助製作。[來源與依賴](docs/THIRD_PARTY.md) · [授權聲明](LICENSE-NOTICE.md)

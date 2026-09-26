@@ -1,4 +1,4 @@
-"""Verify the six public ZIPs, explicitly publish a prerelease, or verify GitHub.
+"""Verify the two public ZIPs, explicitly publish a prerelease, or verify GitHub.
 
 This tool never collects game data, stages commits, pushes Git, or deploys mods.
 Only the ``publish`` command changes GitHub; it never edits existing releases.
@@ -18,24 +18,23 @@ import tempfile
 import zipfile
 import zlib
 
-from build_selectable_mod import ARCHIVE, CHOICES, GUID as SELECTABLE_GUID, NAME as SELECTABLE_NAME, VERSION
-from build_self_hit_release import EXPECTED as SELF_HASH, NAME as SELF_NAME
-from build_variants_release import TOOLKIT_NAME, TOOLS, source_files
+from build_variants_release import TOOLKIT_NAME, TOOLS, source_files, MOD_BUILDER, VERSION, SELECTABLE_NAME, CHOICES, ARCHIVE
+SELECTABLE_GUID = MOD_BUILDER.GUID
 from resource_archive import lua_resources
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_REPO = 'cainiao524/P11-Enhanced'
-P11_BODY_HASH = 'b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a'
+DEFAULT_REPO = 'cainiao524/HD2-Projectile-Collision-Filter'
+ACCEPTED_PAYLOADS = MOD_BUILDER.ACCEPTED_PAYLOADS
 TEXT_SUFFIXES = {'.md', '.py', '.lua', '.json', '.cmd', '.txt', '.cjs', '.bbcode'}
-SOURCE_PREFIX = 'Source/P11-Enhanced/'
+SOURCE_PREFIX = 'Source/HD2-Projectile-Collision-Filter/'
 SHA_MARKER = '<!-- p11-release-sha256 -->'
 KNOWN_PUBLIC_IMAGES = {
     'docs/assets/projectile-collision-filter-cover.png': {
-        'sha256': '43a3bcfbf4cb9a0cf1225cbc12baa361da946a8115cfcc8d3b8da69cc92d856d',
+        'sha256': '1301416ebaefb64ecfa7f93ef62447d390a5a1ebb4603f8a1b9c1e0cd404b771',
         'width': 1672, 'height': 941,
     },
     'docs/assets/raise-weapon-aim-at-yourself-cover.png': {
-        'sha256': 'c44209c93781f28a207637bde79b4c2dc5b5e5081c0e7553029c0fe9463963e5',
+        'sha256': 'eca99e4dfbf6207b46a0fa622eb08b98fd94648beee2ee8cfa7af0a3c7f033da',
         'width': 1672, 'height': 941,
     },
 }
@@ -121,10 +120,8 @@ def check_source(files):
 
 
 def asset_roles():
-    # Names come from reviewed build code, never from an arbitrary manifest list.
-    return {SELECTABLE_NAME: 'selectable', SELF_NAME: 'self_heal',
-            CHOICES[1][1]: 'pistols', CHOICES[2][1]: 'native_no_shotguns',
-            CHOICES[3][1]: 'native_weapons', TOOLKIT_NAME: 'toolkit'}
+    # Fixed names from reviewed build code; never upload arbitrary manifest entries.
+    return {SELECTABLE_NAME: 'selectable', TOOLKIT_NAME: 'toolkit'}
 
 
 def read_zip(data, label):
@@ -146,44 +143,46 @@ def read_zip(data, label):
 
 
 def check_mod(entries, role):
+    require(role == 'selectable', 'Only the integrated mod is public in this release')
     require('manifest.json' in entries, 'Mod has no Arsenal manifest')
     manifest = json.loads(entries['manifest.json'])
-    require(manifest.get('Version') == 1, 'Unsupported Arsenal manifest version')
-    if role == 'selectable':
-        require(manifest.get('Guid') == SELECTABLE_GUID, 'Selectable mod identity changed')
-        options = manifest.get('Options', [])
-        require(len(options) == 1 and not options[0].get('Include'), 'Selectable parent is not exclusive')
-        require(options[0].get('Name') == '生效範圍', 'Selectable parent label differs')
-        wanted = [{'Name': label, 'Description': description, 'Include': ['Variants/' + folder]}
-                  for folder, _, label, description in CHOICES]
-        require(options[0].get('SubOptions') == wanted, 'Selectable choices, order, or descriptions differ')
-    for name, data in entries.items():
-        path = safe_name(name)
-        if name.startswith(('Addon/', 'Variants/')):
-            valid_prefixes = ['Addon'] if role != 'selectable' else ['Variants/' + c[0] for c in CHOICES]
-            allowed = {prefix + '/' + ARCHIVE + suffix for prefix in valid_prefixes
-                       for suffix in ('', '.stream', '.gpu_resources')}
-            require(name in allowed, 'Unexpected binary payload: ' + name)
-            if name.endswith(('.stream', '.gpu_resources')):
-                require(not data, 'Unexpected nonempty resource sidecar: ' + name)
-        else:
-            require(path.suffix in {'.md', '.lua', '.json'}, 'Unexpected mod file: ' + name)
-            check_public_text(name, data)
-    scopes = [('Addon', role)] if role != 'selectable' else [
-        ('Variants/' + folder, subrole) for (folder, *_), subrole in zip(
-            CHOICES, ('self_heal', 'pistols', 'native_no_shotguns', 'native_weapons'))]
-    for prefix, scope in scopes:
+    require(manifest == MOD_BUILDER.selector_manifest(),
+            'Bilingual selectable manifest, identity, exclusive choices or order differs')
+    expected_entries = {'manifest.json', 'README.md', 'Source/payloads.json'}
+    expected_payloads = {}
+    for scope, folder, _, _, _ in CHOICES:
+        prefix = 'Variants/' + folder
         archive = entries.get(prefix + '/' + ARCHIVE)
         require(archive is not None, 'Missing selected mod archive: ' + prefix)
         resources = list(lua_resources(io.BytesIO(archive), len(archive)))
-        bodies = {r['declaration']: r['body'] for r in resources}
-        expected = {'mods/p11/self_hit_dataonly'}
-        if scope != 'self_heal':
-            expected.add('mods/weapon_self_hit/' + scope)
-        require(set(bodies) == expected and len(resources) == len(expected),
+        require(len(resources) == 1 and resources[0]['declaration'] == MOD_BUILDER.RESOURCE,
                 'Unexpected resource identity in: ' + prefix)
-        require(sha(bodies['mods/p11/self_hit_dataonly']) == P11_BODY_HASH,
-                'P-11 runtime changed: ' + prefix)
+        body = resources[0]['body']
+        require(sha(body) == ACCEPTED_PAYLOADS[scope]['lua_sha256'],
+                'Accepted unified runtime changed: ' + scope)
+        require(sha(archive) == ACCEPTED_PAYLOADS[scope]['archive_sha256'],
+                'Accepted game archive changed: ' + scope)
+        for suffix in ('', '.stream', '.gpu_resources'):
+            name = prefix + '/' + ARCHIVE + suffix
+            expected_entries.add(name)
+            require(name in entries, 'Missing resource payload: ' + name)
+            if suffix:
+                require(entries[name] == b'', 'Unexpected nonempty resource sidecar: ' + name)
+        source, profile = MOD_BUILDER.bundle(scope)
+        require(source == body, 'Published runtime differs from buildable source: ' + scope)
+        for name, data in MOD_BUILDER.runtime_files(source, profile).items():
+            target = 'Source/' + folder + '/' + name.removeprefix('Source/')
+            expected_entries.add(target)
+            require(entries.get(target) == data, 'Mod source/document differs: ' + target)
+        expected_payloads[folder] = {'scope': scope, **ACCEPTED_PAYLOADS[scope]}
+    require(json.loads(entries['Source/payloads.json']) == expected_payloads, 'Payload provenance differs')
+    require(set(entries) == expected_entries, 'Unexpected mod file set')
+    require(entries['README.md'] == MOD_BUILDER.canonical_public_bytes('README.md', (MOD_BUILDER.HERE / 'README.md').read_bytes()), 'Mod README differs')
+    for name, data in entries.items():
+        safe_name(name)
+        if not name.startswith('Variants/'):
+            require(PurePosixPath(name).suffix in {'.md', '.lua', '.json', '.py'}, 'Unexpected mod file: ' + name)
+            check_public_text(name, data)
 
 
 def check_toolkit(entries, files, report):
@@ -202,11 +201,11 @@ def check_toolkit(entries, files, report):
     for target, source in [('Collect-HD2-Update.cmd', 'Collect-HD2-Update.cmd'),
                            ('README.md', 'docs/COLLECTION.md'), ('LICENSE-NOTICE.md', 'LICENSE-NOTICE.md')]:
         require(entries[target] == files[source], 'Toolkit document/entry differs: ' + target)
-    require(b'Source/P11-Enhanced/AGENTS.md' in entries['AGENTS.md'], 'Toolkit Agent entry is missing')
+    require(b'Source/HD2-Projectile-Collision-Filter/AGENTS.md' in entries['AGENTS.md'], 'Toolkit Agent entry is missing')
     mod_sums = ''.join(report['assets'][name]['sha256'] + '  ' + name + '\n'
                        for name in sorted(asset_roles()) if name != TOOLKIT_NAME)
     require(entries['MOD-SHA256SUMS.txt'].decode('ascii') == mod_sums,
-            'Toolkit mod checksums differ from the five release mod files')
+            'Toolkit mod checksums differ from the integrated release mod')
     for name in roots - {'P11-Update.exe'}:
         check_public_text(name, entries[name])
 
@@ -214,14 +213,14 @@ def check_toolkit(entries, files, report):
 def verify_release(release_dir):
     release_dir = Path(release_dir).resolve()
     report = json.loads((release_dir / 'PUBLIC-ASSETS.json').read_bytes())
-    require(report.get('project') == 'P11-Enhanced' and report.get('release') == VERSION,
+    require(report.get('project') == 'HD2-Projectile-Collision-Filter' and report.get('release') == VERSION,
             'Release manifest is not for the current build code')
     require(report.get('prerelease') is True, 'This release must remain a prerelease')
     names = report.get('public_assets', [])
     roles = asset_roles()
-    require(len(roles) == 6 and isinstance(names, list) and len(names) == 6
+    require(len(roles) == 2 and isinstance(names, list) and len(names) == 2
             and set(names) == set(roles) and set(report.get('assets', {})) == set(roles),
-            'Release must contain exactly the six approved ZIP assets')
+            'Release must contain exactly the two approved ZIP assets')
     files = source_files()
     check_source(files)
     require(report.get('source_manifest') == {name: sha(data) for name, data in files.items()},
@@ -238,11 +237,6 @@ def verify_release(release_dir):
         contents[name] = read_zip(data, name)
         if roles[name] != 'toolkit':
             check_mod(contents[name], roles[name])
-    require(report['assets'][SELF_NAME]['sha256'] == SELF_HASH, 'Original P-11 ZIP changed')
-    for folder, name, *_ in CHOICES:
-        for suffix in ('', '.stream', '.gpu_resources'):
-            require(contents[SELECTABLE_NAME][f'Variants/{folder}/{ARCHIVE}{suffix}']
-                    == contents[name][f'Addon/{ARCHIVE}{suffix}'], 'Selectable payload differs: ' + folder)
     check_toolkit(contents[TOOLKIT_NAME], files, report)
     return report
 
@@ -333,20 +327,20 @@ def verify_remote(release_dir, repo, target):
     require(commit.get('sha') == target, 'Remote release tag points to a different commit')
     items = release.get('assets', [])
     assets = {item['name']: item for item in items}
-    require(len(items) == 6 and set(assets) == set(report['public_assets']), 'Remote asset set differs')
+    require(len(items) == 2 and set(assets) == set(report['public_assets']), 'Remote asset set differs')
     for name, metadata in report['assets'].items():
         item = assets[name]
         require(item.get('state') == 'uploaded' and item.get('size') == metadata['bytes'],
                 'Remote asset is incomplete or size differs: ' + name)
         if item.get('digest'):
             require(item['digest'] == 'sha256:' + metadata['sha256'], 'Remote asset SHA-256 differs: ' + name)
-        else:
-            require(isinstance(item.get('id'), int), 'Remote asset ID missing: ' + name)
-            data = run('gh', 'api', '-H', 'Accept: application/octet-stream',
-                       f'repos/{repo}/releases/assets/{item["id"]}')
-            require(sha(data) == metadata['sha256'], 'Downloaded asset SHA-256 differs: ' + name)
+        require(isinstance(item.get('id'), int), 'Remote asset ID missing: ' + name)
+        data = run('gh', 'api', '-H', 'Accept: application/octet-stream',
+                   f'repos/{repo}/releases/assets/{item["id"]}')
+        require(len(data) == metadata['bytes'] and sha(data) == metadata['sha256'],
+                'Downloaded asset size or SHA-256 differs: ' + name)
     return {'operation': 'verify-remote', 'release': report['release'], 'target': target,
-            'release_url': release['html_url'], 'assets': 6, 'sha256_verified': True,
+            'release_url': release['html_url'], 'assets': 2, 'sha256_verified': True,
             'new_gameplay_verified': False}
 
 
@@ -366,7 +360,7 @@ def main(argv=None):
     try:
         if args.command == 'verify':
             report = verify_release(args.release_dir)
-            result = {'operation': 'verify', 'release': report['release'], 'assets': 6,
+            result = {'operation': 'verify', 'release': report['release'], 'assets': 2,
                       'source_files': len(report['source_manifest']), 'sha256_verified': True,
                       'new_gameplay_verified': False}
         elif args.command == 'publish':

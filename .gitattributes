@@ -1,8 +1,9 @@
-* text=auto
+* text=auto eol=lf
 *.lua text eol=lf
 *.py text eol=lf
 *.json text eol=lf
 *.md text eol=lf
+*.bbcode text eol=lf
 *.cmd text eol=crlf
 *.zip binary
 *.exe binary

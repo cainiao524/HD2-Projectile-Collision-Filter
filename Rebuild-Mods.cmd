@@ -17,6 +17,6 @@ if not errorlevel 1 (
 )
 set "build_exit=%errorlevel%"
 echo.
-echo Result: %build_exit%. Mod ZIPs are in dist. Rebuilding does not port an unknown game version.
+echo Result: %build_exit%. The integrated mod ZIP is in dist. Rebuilding does not port an unknown game version.
 pause
 exit /b %build_exit%

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-09-26",
+  "evidence_type": "user_report",
+  "user_statement": "現在它的原理是什麽，幀數從70提到130了，有效",
+  "context": "Reply to delivery of the local P-11 0.2.3 cursor candidate. The installed package was not independently inspected.",
+  "candidate_delivered": {
+    "package": "P11-Self-Hit-DataOnly-0.2.3-CURSOR-CANDIDATE-build25480438.zip",
+    "sha256": "aad662fcdab09699adce96382204f9e5adb76eb72e823f02aeaff0a8ab54f1e7",
+    "lua_sha256": "0105b7351efcfb038b1724ae89c0e8bb5ff2d44623df618edb9ccb840e71182e"
+  },
+  "reported_fps": {
+    "before": 70,
+    "after": 130,
+    "performance_improvement_reported": true
+  },
+  "follow_up_confirmation": {
+    "question": "剛才測試 0.2.3、FPS 從 70 提升到 130 時，P-11 飛鏢命中自己後的治療也仍然正常嗎？",
+    "answer": "自療也正常",
+    "p11_self_healing_user_confirmed": true
+  },
+  "not_separately_specified": [
+    "Exact baseline package and enabled concurrent mods",
+    "Hardware, scene, graphics settings, duration and frame-time measurements"
+  ],
+  "scope": "User confirms both normal P-11 self-healing and a 70-to-130 FPS improvement with the delivered cursor candidate. This does not establish performance or gameplay for the other three scopes or all conditions.",
+  "published_release_or_delivered_zip_modified": false
+}

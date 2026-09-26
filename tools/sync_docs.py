@@ -57,9 +57,10 @@ def read_plan(root):
         raise ValueError('Document export destinations cannot overwrite export sources')
     plan = []
     for source, target in sorted(mapping.items()):
-        if any(PurePosixPath(name).suffix.lower() != '.md' or '.git' in PurePosixPath(name).parts
-               for name in (source, target)):
-            raise ValueError('Document exports must be Markdown files outside Git metadata')
+        if (any(PurePosixPath(name).suffix.lower() not in ('.md', '.bbcode') or '.git' in PurePosixPath(name).parts
+                for name in (source, target))
+                or PurePosixPath(source).suffix.lower() != PurePosixPath(target).suffix.lower()):
+            raise ValueError('Document exports must preserve Markdown/BBCode extensions outside Git metadata')
         source_path = bounded_path(root, source)
         target_path = bounded_path(root, target)
         if not source_path.is_file():

@@ -10,9 +10,11 @@
 - 新 build／EXE／DLL 指紋：
 - loader 公開版本／內部版本／API：
 - Toolkit 版本：
-- 發布狀態：公開預覽版／正式版／本機未發布候選（本模板隨 preview.6 預覽版提供；依實際遠端狀態填寫）：
+- 發布狀態：公開預覽版／正式版／本機未發布候選（本模板隨 preview.8 預覽版提供；依實際遠端狀態填寫）：
 - 功能狀態：已記錄證據範圍／尚未支援機制／未驗證候選（不能由發布狀態推定已完成）：
 - 診斷收集時間／report.json 的 complete：
+- 新整合 scope／Lua SHA-256／loader 源碼指紋：
+- assessment_blockers 與 baseline 參照（不能當作當次玩法）：
 - 工作授權範圍（本機修改／建置／部署／公開發布）：
 
 ## 收集與判讀
@@ -25,7 +27,7 @@
 | 包含霰彈 native_weapon_self_hit | | | | |
 
 - 收集 errors／缺檔／中途更新：
-- 多個擴展衝突或缺少 P-11：
+- 未知 scope 指紋、loader source_unidentified、重複資源或舊擴展衝突：
 - 彈頭表、結構來源、版本對應與 SHA-256：
 - 目標安裝五份實體／結構／武器／彈頭表的來源、缺檔及加密狀態：
 - 副武器槽位 catalog 來源提交、SHA-256、完整性與未知條目（不能使用 EquipmentType 代替）：
@@ -49,12 +51,12 @@
 
 | 檢查 | 執行命令／環境 | 結果與證據 | 未執行原因 |
 |---|---|---|---|
-| P-11 Lua | | | |
-| 擴展 Lua | | | |
+| 共用 runtime／P-11 分支 Lua | | | |
+| 游標／排程／分類 Lua | | | |
 | Python | | | |
-| 五包與原始 P-11 指紋 | | | |
+| 四個 scope 已測 Lua／遊戲資源指紋 | | | |
 | Arsenal 隔離後端 | | | |
-| 六項發布資產 verify | | | |
+| 兩項發布資產 verify | | | |
 | 無 Python 的 portable 入口 | | | |
 | 遠端 verify-remote | | | |
 | 實際玩法 | | | |

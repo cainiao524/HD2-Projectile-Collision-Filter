@@ -12,7 +12,7 @@ Replaces the Raise Weapon emote with a self-aim pose. Animation only; pair separ
 
 ## Body
 
-![Raise Weapon: Aim at Yourself cover](https://raw.githubusercontent.com/cainiao524/P11-Enhanced/v0.3.0-preview.6/docs/assets/raise-weapon-aim-at-yourself-cover.png)
+![Raise Weapon: Aim at Yourself cover](https://raw.githubusercontent.com/cainiao524/HD2-Projectile-Collision-Filter/v0.3.0-preview.8/docs/assets/raise-weapon-aim-at-yourself-cover.png)
 
 ### Turn Raise Weapon into a self-aim pose
 
@@ -66,3 +66,5 @@ This update changes the cover and operating instructions. The animation package 
 There is no complete test matrix for every weapon pose, game version or multiplayer display. The same pose is not guaranteed for every weapon, nor is visibility of the replaced animation to other players. User comments are not treated as verification of those cases.
 
 This is a community mod, unaffiliated with Arrowhead Game Studios. Use the original package on this page for the animation replacement; install the companion separately, following its compatibility requirements, when you want P-11 self-healing.
+
+The current projectile mod and offline toolkit are on [GitHub Release](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8). The new cover uses blue fragments and a sci-fi character with the pistol held upright away from the helmet. It is promotional artwork, not a precise depiction of the in-game pose. This update changes copy and artwork only, not the animation package.

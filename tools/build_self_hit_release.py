@@ -17,6 +17,25 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
+# Match .gitattributes without requiring Git in the portable source toolkit.
+# Historical -text inputs are deliberately exempt: they preserve old ZIP bytes.
+VERBATIM_PUBLIC_FILES = frozenset({
+    'mods/p11_self_hit_dataonly/README-zh-TW.md',
+    'mods/p11_self_hit_dataonly/VALIDATION.md',
+    'mods/p11_self_hit_dataonly/profile.json',
+    'mods/weapon_self_hit_candidate/README-zh-TW.md',
+    'mods/weapon_self_hit_candidate/VALIDATION.md',
+})
+
+
+def canonical_public_bytes(name, data):
+    """Canonical checkout bytes for public source/package copies, not runtime data."""
+    if name in VERBATIM_PUBLIC_FILES or Path(name).suffix.lower() in ('.png', '.zip', '.exe'):
+        return data
+    normalized = data.replace(b'\r\n', b'\n')
+    return normalized.replace(b'\n', b'\r\n') if Path(name).suffix.lower() == '.cmd' else normalized
+
+
 def zip_files(path, files):
     with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as archive:
         for name, data in sorted(files.items()):

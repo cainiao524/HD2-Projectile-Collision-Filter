@@ -9,6 +9,7 @@
 
 - 只處理通過本機玩家、P-11 武器及單發飛鏢身份檢查的投射物。
 - 保留原本彈藥、射速、治療量與效果；由真實碰撞觸發原生治療。
+- 當 **Experimental Infusion（實驗性融合／實驗性注射劑）** 增益已啟用時，自命中治療可觸發其效果。
 - 標準 Bingus Shared Loader API 1 addon，使用獨立 Lua 資源。
 - 在 Arsenal 啟用／停用，變更後按管理器流程重新部署。
 
@@ -37,14 +38,18 @@
 1. 完整退出遊戲，單獨安裝相容的 [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader)。
 2. 將自療 ZIP 匯入 Arsenal，停用舊自療 hook、重複版本及研究採集包。
 3. 啟用自療與 loader，按照 loader 的優先順序說明部署後啟動遊戲。
-4. 用真正射出的 P-11 飛鏢命中自己的角色，觸發原生治療。
+4. 裝備 P-11，依照下方方式讓真正射出的飛鏢命中自己的角色，觸發原生治療。
 
 停用時關閉遊戲，在 Arsenal 取消自療項目並重新部署。本模組不會自動把飛鏢轉向自己。
 
-## 推薦搭配
+## 使用方法與推薦搭配
 
 **推薦搭配 [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/) 一起使用 P-11 自療功能。**
 此模組為額外選配，請從原作者頁面另行下載；安裝、操作及適用版本以該頁說明為準。
+
+也可以直接切換至**第一人稱，朝自己的腳射擊**。飛鏢實際命中角色後，才會觸發原生治療。
+若要使用 Experimental Infusion 的附加效果，請先在遊戲中啟用該增益；本模組本身不會替你啟用增益。
+Experimental Infusion 與第一人稱射腳的說明來自使用者補充回報，詳見[驗證範圍](docs/VERIFICATION.md)。
 
 ## 原始碼與更新
 

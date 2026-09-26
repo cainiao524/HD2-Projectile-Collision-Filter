@@ -9,6 +9,8 @@ This standalone addon makes a narrow data change. It installs no native hook, pa
 
 Eligible darts must pass local-player, P-11 weapon and projectile identity checks. Ammo, fire rate, healing amount and effects retain their native behavior. The addon uses Bingus Shared Loader API 1 and is enabled or disabled through Arsenal.
 
+With the **Experimental Infusion** booster active, self-hit healing can trigger its effects.
+
 **Version 0.2.1 was confirmed working by the user on Steam build 25480438 / EXE 1.8.46015.0, with Shared Loader v17 / API 1 / internal 16.** Logs corroborate activation and data-write readback; actual healing is confirmed by the user's report. Full host/client, collision-timing and concurrency coverage remains incomplete.
 
 ## Downloads
@@ -25,10 +27,16 @@ Close the game. Install [Bingus Shared Loader](https://github.com/CowboyBingus/B
 
 Healing requires a real P-11 dart to hit your character. This addon does not steer darts toward yourself.
 
-## Recommended companion
+## How to use and recommended companion
 
 **We recommend pairing P-11 self-hit healing with [Raise Weapon Aims at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/).**
 This optional mod is available separately from its author's page. Follow that page for installation, controls and supported versions.
+
+Alternatively, switch to **first-person view and shoot your own foot** with the P-11. The dart must actually hit your character to trigger native healing.
+To receive Experimental Infusion's additional effects, activate the booster in the game first; this addon does not activate it for you.
+Experimental Infusion and the first-person foot-shot method are user-reported behavior; see the [validation scope](docs/VERIFICATION.md).
+
+The complete [mod-page description is available in Chinese and English](docs/SELF_HIT.md).
 
 ## Source and maintenance
 

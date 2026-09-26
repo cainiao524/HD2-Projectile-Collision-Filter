@@ -20,6 +20,13 @@
           "lua_sha256": "b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a",
           "resource": "mods/p11/self_hit_dataonly",
           "user_confirmed_basic_behavior": true,
+          "additional_user_reports": {
+            "date": "2026-09-26",
+            "experimental_infusion": "With the booster active, self-hit healing can trigger its effects.",
+            "usage": "Switch to first-person view and shoot your own foot, or use the recommended Raise Weapon Aims at Yourself companion.",
+            "evidence": "User-supplied behavior and usage notes; no new independent gameplay validation.",
+            "companion_url": "https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/"
+          },
           "verification_scope": "2026-09-26: user confirmed basic self-hit healing on build 25480438. Full host/client, timing and slot-concurrency coverage remains incomplete."
         }
       }

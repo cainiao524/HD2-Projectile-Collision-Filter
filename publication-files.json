@@ -21,7 +21,8 @@
     "docs/release/LICENSE-NOTICE.md",
     "docs/release/CHANGELOG.md",
     "docs/release/RELEASE-v0.2.1.md",
-    "docs/release/PUBLISH.md"
+    "docs/release/PUBLISH.md",
+    "docs/release/COVER-BRIEF.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -41,7 +42,8 @@
     "docs/release/LICENSE-NOTICE.md": "LICENSE-NOTICE.md",
     "docs/release/CHANGELOG.md": "CHANGELOG.md",
     "docs/release/RELEASE-v0.2.1.md": "releases/v0.2.1.md",
-    "docs/release/PUBLISH.md": "docs/PUBLISH.md"
+    "docs/release/PUBLISH.md": "docs/PUBLISH.md",
+    "docs/release/COVER-BRIEF.md": "docs/COVER-BRIEF.md"
   },
   "note": "Only the standalone self-hit implementation, build tools, mock tests and release documentation. Local diagnostics and earlier collection work are not publication inputs."
 }

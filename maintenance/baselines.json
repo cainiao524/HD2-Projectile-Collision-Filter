@@ -31,8 +31,8 @@
         },
         "pistol_self_hit": {
           "package": "weapon_self_hit_pistols-0.1.3-build25480438-CANDIDATE.zip",
-          "package_sha256": "963b1926c3f77d2a663ffbc9fb776ab90d30c3c13ca980c2bbb40fa1ce252f6f",
-          "lua_sha256": "01fc0442eac440dd7b089aa389c8611898d34d66286a7885a0cefa2cb190a1fb",
+          "package_sha256": "7c97632e2484e2e0a6c6247bbb9a7889872a154af95a81a2d619c81792f3d60a",
+          "lua_sha256": "98b6230739223c242bef1b1a78aa9e2bc6527d2a8601325af55572226366bf2f",
           "resource": "mods/weapon_self_hit/pistols",
           "scope": "pistols",
           "version": "0.1.3-candidate",

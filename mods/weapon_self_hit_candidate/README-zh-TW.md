@@ -1,11 +1,11 @@
-# 全武器自傷／手槍系列：獨立候選版 0.1.0
+# 全武器自傷／手槍系列：獨立候選版 0.1.1
 
 本機提供兩個 Arsenal ZIP，**二選一啟用**：
 
 | 套件 | 候選處理範圍 |
 | --- | --- |
-| `weapon_self_hit_pistols-0.1.0-build25480438-CANDIDATE.zip` | P-2 Peacemaker、P-4 Senator、P-19 Redeemer、P-69 Veto、P-92 Warrant、P-113 Verdict、P/40-K Bolt Pistol、M6C SOCOM Pistol 的已定位物件資源；僅處理這些武器產生且通過身份檢查的原生投射物 |
-| `weapon_self_hit_native-0.1.0-build25480438-CANDIDATE.zip` | 本機角色持有、武器登記表與附件所有者均匹配的原生投射物；**不代表所有武器類型均受支援** |
+| `weapon_self_hit_pistols-0.1.1-build25480438-CANDIDATE.zip` | P-2 Peacemaker、P-4 Senator、P-19 Redeemer、P-69 Veto、P-92 Warrant、P-113 Verdict、P/40-K Bolt Pistol、M6C SOCOM Pistol 的已定位物件資源；僅處理這些武器產生且通過身份檢查的原生投射物 |
+| `weapon_self_hit_native-0.1.1-build25480438-CANDIDATE.zip` | 本機角色持有、武器登記表與附件所有者均匹配的原生投射物；**不代表所有武器類型均受支援** |
 
 這兩個 ZIP 是**未經遊戲內驗證的候選模組**。離線測試只確認它們在模擬資料中篩選、清除 `0x20` 位元並拒絕錯誤身份。**未驗證任何其他武器確實能打中自己或造成自傷**。不同武器可能使用射線、光束、近戰、爆炸或 entity 投射物，並不經過這套 2048 槽的原生投射物系統；即使改到槽位，Lua 更新時序也可能太晚。
 
@@ -31,3 +31,11 @@
 三個版本擇一安裝。兩個擴展包各自包含兩個獨立 Lua 資源，同一 Arsenal 開關控制。P-11 Lua SHA256 固定為 b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a；新包的遊戲內共存仍未驗證。
 
 Both expanded ZIPs include the exact P-11 0.2.1 Lua as a separate resource alongside the candidate. No separate P-11 install is needed. Choose one of the three variants in Arsenal. Expanded gameplay and combined coexistence remain unverified; preserved bytes and mock callback tests are not native gameplay proof.
+
+## 0.1.1 篩選修正 / Filtering update
+
+同一次更新內按来源武器 ID 共用查詢結果。手槍模式先判斷武器範圍，再查附件與彈種定義；同一不合格武器的其餘彈丸只需確認來源便略過。合格來源共用武器及定義的發現結果，但每顆寫入仍重新讀回所有依賴欄位、自己的來源與槽位，拒絕回收重用或所有者變動。快取不跨更新保存。槽位類型與旗標改用直接位元組解碼，減少反覆建立 FFI 值。
+
+依然遍歷 2,048 個原生槽位；沒有增加未驗證的手槍彈種表。零開銷、FPS 提升或實際卡頓消失尚未驗證。P-11 0.2.1 與資料 writer 保持原始位元組。
+
+0.1.1 reuses weapon/definition discovery only within one update. Every write still rechecks the complete dependency chain and its own source/slot; cached discovery never authorizes a write on its own. Rejected weapons skip attachment/definition lookup. The fixed slot scan remains; no zero-overhead or in-game FPS claim is made.

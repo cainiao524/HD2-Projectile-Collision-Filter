@@ -44,8 +44,8 @@ def lua(v):
 def profile(scope):
     assert scope in SCOPES
     p = dict(BASE)
-    p.update(id='weapon-self-hit-candidate-0.1.0-25480438-' + scope,
-             version='0.1.0-candidate', scope=scope,
+    p.update(id='weapon-self-hit-candidate-0.1.1-25480438-' + scope,
+             version='0.1.1-candidate', scope=scope,
              resource='mods/weapon_self_hit/' + scope,
              manager_guid=str(uuid.uuid5(uuid.NAMESPACE_URL, 'P11-Enhanced/weapon-self-hit-candidate/' + scope)),
              pistol_unit_hashes=list(PISTOLS.values()),
@@ -104,7 +104,7 @@ def build(scope):
              'Source/p11_profile.json': (json.dumps(p11_profile,ensure_ascii=False,indent=2)+'\n').encode(),
              'Source/profile.json': (json.dumps(p, ensure_ascii=False, indent=2) + '\n').encode(),
              'Source/VALIDATION.md': (HERE / 'VALIDATION.md').read_bytes()}
-    target = ROOT / 'dist' / f'{stem}-0.1.0-build25480438-CANDIDATE.zip'
+    target = ROOT / 'dist' / f'{stem}-0.1.1-build25480438-CANDIDATE.zip'
     target.parent.mkdir(parents=True,exist_ok=True)
     with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as z:
         for name, data in sorted(files.items()):

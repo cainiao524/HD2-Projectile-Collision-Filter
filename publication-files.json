@@ -42,7 +42,9 @@
     "docs/release/VARIANTS.md",
     "docs/release/COLLECTION.md",
     "docs/release/UPDATE_TOOL.md",
-    "docs/release/RELEASE-v0.3.0-preview.1.md"
+    "docs/release/RELEASE-v0.3.0-preview.1.md",
+    "docs/release/PERFORMANCE.md",
+    "docs/release/RELEASE-v0.3.0-preview.2.md"
   ],
   "folders": {
     "mods/p11_self_hit_dataonly": [
@@ -72,7 +74,9 @@
     "docs/release/VARIANTS.md": "docs/VARIANTS.md",
     "docs/release/COLLECTION.md": "docs/COLLECTION.md",
     "docs/release/UPDATE_TOOL.md": "docs/UPDATE_TOOL.md",
-    "docs/release/RELEASE-v0.3.0-preview.1.md": "releases/v0.3.0-preview.1.md"
+    "docs/release/RELEASE-v0.3.0-preview.1.md": "releases/v0.3.0-preview.1.md",
+    "docs/release/PERFORMANCE.md": "docs/PERFORMANCE.md",
+    "docs/release/RELEASE-v0.3.0-preview.2.md": "releases/v0.3.0-preview.2.md"
   },
   "note": "Explicit public source allowlist. Public assets are separately listed by dist/release/PUBLIC-ASSETS.json."
 }

@@ -14,6 +14,7 @@ for scope in SCOPES:
 for name, file in [('Core', 'core.lua'), ('Fixture', 'test_fixture.lua')]:
     rt.globals()[name.encode()] = rt.execute((HERE / file).read_bytes())
 results['core_assertions'] = rt.execute((HERE / 'test_core.lua').read_bytes())
+results['filtering_assertions'] = rt.execute((HERE / 'test_filtering.lua').read_bytes())
 entry_rt = LuaRuntime(encoding=None)
 entry_rt.globals()[b'Entry'] = entry_rt.execute((HERE / 'entry.lua').read_bytes())
 # Build the exact Lua profile literal used by the bundle.

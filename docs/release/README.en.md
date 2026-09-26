@@ -2,7 +2,7 @@
 
 Data-only addons allowing eligible local projectiles to collide with their source. Native game logic handles healing or damage. No native hooks, executable patches, direct health/stamina writes, ammo or damage changes.
 
-[繁體中文](README.md) · [Downloads](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.1) · [P-11 details](docs/SELF_HIT.md) · [Variants](docs/VARIANTS.md)
+[繁體中文](README.md) · [Downloads](https://github.com/cainiao524/P11-Enhanced/releases/tag/v0.3.0-preview.2) · [P-11 details](docs/SELF_HIT.md) · [Variants](docs/VARIANTS.md)
 
 ## Choose one ZIP
 
@@ -11,12 +11,16 @@ Data-only addons allowing eligible local projectiles to collide with their sourc
 | ZIP | Scope | Evidence |
 |---|---|---|
 | `P11-Self-Hit-DataOnly-0.2.1-build25480438.zip` | P-11 only | Original tested package; basic healing confirmed by user |
-| `weapon_self_hit_pistols-0.1.0-build25480438-CANDIDATE.zip` | P-11 + native projectiles from eight candidate pistol resource IDs | Expanded gameplay and combined coexistence unverified |
-| `weapon_self_hit_native-0.1.0-build25480438-CANDIDATE.zip` | P-11 + broad local weapon-owned native projectiles | Expanded gameplay and combined coexistence unverified |
+| `weapon_self_hit_pistols-0.1.1-build25480438-CANDIDATE.zip` | P-11 + native projectiles from eight candidate pistol resource IDs | Expanded gameplay and combined coexistence unverified |
+| `weapon_self_hit_native-0.1.1-build25480438-CANDIDATE.zip` | P-11 + broad local weapon-owned native projectiles | Expanded gameplay and combined coexistence unverified |
 
 “All weapons” means a broad candidate within the identified native projectile subsystem, not proven hitscan, beams, melee, explosion or entity-projectile coverage. Pistol IDs are from an older offline resource index, not eight gameplay-tested weapons.
 
 Target: **build 25480438 / EXE 1.8.46015.0 / Bingus Shared Loader v17 / API 1 / internal 16**. Unknown builds stop writes. This collection is a **prerelease**: byte-identical P-11 inclusion is not proof of every combined runtime scenario.
+
+## 0.1.1 filtering fix
+
+Expanded scopes reuse weapon/definition discovery within one update and reject non-pistols earlier, while retaining every per-projectile pre-write guard. In a synthetic 32-pellet scenario, pistol rejection reads fall from 427 to 50 and broad-scope reads from 1,515 to 985. These are logical read counts, not FPS gains or proof that stutter is fixed. The fixed slot scan remains and original P-11 0.2.1 is unchanged. [Details](docs/PERFORMANCE.md).
 
 ## Install
 

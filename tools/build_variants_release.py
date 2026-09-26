@@ -14,7 +14,7 @@ from build_self_hit_release import NAME as SELF_NAME, EXPECTED as SELF_HASH, exp
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist/release'
-VERSION = 'v0.3.0-preview.1'
+VERSION = 'v0.3.0-preview.2'
 TOOLS = ('collect_build_info.py', 'compatibility_report.py', 'resource_archive.py',
          'offline_locator.py', 'offline_update.py', 'log_parser.py', 'maintenance.py', 'portable_entry.py')
 
@@ -47,7 +47,7 @@ def build_mods():
         result=builder.build(scope);p=Path(result['path']);source,profile=builder.bundle(scope)
         packages[p.name]=p.read_bytes()
         components[feature]={'package':p.name,'package_sha256':sha(p.read_bytes()),'lua_sha256':sha(source),
-            'resource':profile['resource'],'scope':scope,'user_confirmed_basic_behavior':False,
+            'resource':profile['resource'],'scope':scope,'version':profile['version'],'user_confirmed_basic_behavior':False,
             'verification_scope':'Offline source/guard and Lua mock checks only; native self-hit or damage, current pistol IDs and broad mechanism coverage have no gameplay confirmation.'}
     baseline_path.write_bytes(json_bytes(baselines))
     return packages
@@ -94,7 +94,7 @@ def collection_files(tool_files,packages,source_name,source_data):
     files.update({'Mods/'+n:d for n,d in packages.items()})
     files['Source/'+source_name]=source_data
     files['README.md']=(ROOT/'docs/release/COLLECTION.md').read_bytes()
-    for n in ('UPDATE_TOOL','VARIANTS','VERIFICATION','SELF_HIT','PORTING','THIRD_PARTY'):
+    for n in ('UPDATE_TOOL','VARIANTS','VERIFICATION','SELF_HIT','PORTING','THIRD_PARTY','PERFORMANCE'):
         files['docs/'+n+'.md']=(ROOT/'docs/release'/f'{n}.md').read_bytes()
     files['MOD-SHA256SUMS.txt']=''.join(sha(d)+'  Mods/'+n+'\n' for n,d in sorted(packages.items())).encode('ascii')
     return files
@@ -115,7 +115,7 @@ def build(reuse=False):
     for n,d in files.items():
         if n.startswith(('maintenance/','patches/')):toolkit[n]=d
     toolkit.update(runtime_licenses())
-    tool_name='P11-Enhanced-Update-Toolkit-1.1.0-win-x64.zip'
+    tool_name='P11-Enhanced-Update-Toolkit-1.1.1-win-x64.zip'
     collection_name='P11-Enhanced-Three-Variants-'+VERSION+'.zip'
     zip_files(DIST/tool_name,toolkit)
     zip_files(DIST/collection_name,collection_files(toolkit,packages,source_name,(DIST/source_name).read_bytes()))

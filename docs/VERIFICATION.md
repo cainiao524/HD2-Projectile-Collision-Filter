@@ -41,3 +41,9 @@ Every variant includes the exact P-11 Lua; packaging checks and mocked callback 
 2026-09-26：53 項 Python 測試通過；P-11 429 個 Lua mock 斷言、候選核心／入口 24 個，以及新包回呼组合 84 個斷言通過。三包皆從乾淨 Source ZIP 重建成相同位元組，P-11 原 ZIP 和三包內 P-11 Lua 指紋不變。
 
 兩個多資源 archive 與 loader 作者本機封裝器輸出逐位元組相符。Windows portable 在 PATH 不含 Python 時啟動成功，並對 build 25480438 的本機磁碟資料完成離線收集。沒有啟動遊戲或新增玩法驗證。公開資產排除本機診斷、遊戲二進位檔和私人日誌。
+
+## 0.1.1 擴展篩選修正
+
+候選 Lua 共 153 個斷言：核心 17、篩選／重用 45、入口 7、P-11 回呼组合 84。P-11 原 429 個斷言及成功 ZIP/Lua 不變。新增測試逐一改動快取所依賴的 23 個共同欄位，後續彈丸均拒絕使用舊依據寫入；另測試槽位與來源改變、不同來源武器共用彈種、跨更新重新分類。
+
+benchmark_reads.py 僅記錄合成資料下的邏輯讀取量，不是 Windows API 實測或遊戲 FPS。未新增遊戲內測試；效能改善幅度、卡頓是否消失與擴展玩法仍待確認。

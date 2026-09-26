@@ -28,7 +28,7 @@ return function(Core,Version,MakeImage,MakeData,Profile,env)
         assert(not rawget(env,other),'Enable only one weapon self-hit candidate scope')
     end
     local ok,err=pcall(function()
-        note('Weapon Self-Hit '..Profile.scope..' DATA-ONLY CANDIDATE / build 25480438')
+        note('Weapon Self-Hit '..Profile.scope..' '..tostring(Profile.version or 'candidate')..' DATA-ONLY CANDIDATE / build 25480438')
         note('Only local owner-checked native projectile flag 0x20; P-11 excluded. No native hook. Self-damage is NOT verified.')
         assert(loader.api==Profile.loader.api and type(loader.version)=='number'
             and loader.version>=Profile.loader.internal_min and loader.version<=Profile.loader.internal_max,'Unsupported loader')

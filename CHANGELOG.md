@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0-preview.2 — Candidate 0.1.1 filtering
+
+- Reject non-pistol weapons before attachment/definition lookup; reuse source-weapon and definition discovery within one update.
+- Keep the full dependency chain fresh at each write, plus each projectile source, type, auxiliary reference and original flags. No cross-update pointer cache.
+- Decode slot types/flags directly from bytes. Preserve the original P-11 0.2.1 addon in all three packages.
+- Add 45 cache invalidation/filtering mock assertions and a reproducible synthetic read-count comparison. No in-game performance claim.
+- Update package fingerprints in the shared maintenance toolkit; its runtime is unchanged.
+
+
 ## v0.3.0-preview.1 — Three variants
 
 - Three Arsenal packages, each containing the identical original P-11 0.2.1 Lua. Expanded packages add pistol/native-projectile candidate logic as a separate resource, with a single manager option.

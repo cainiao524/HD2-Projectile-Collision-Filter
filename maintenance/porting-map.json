@@ -58,7 +58,8 @@
       "Revalidate all eight pistol resource IDs against current build evidence",
       "Do not claim hitscan, beams, melee, explosion or entity-projectile coverage",
       "Clear only runtime flag 0x20 in non-executable private memory; no native hooks",
-      "Both scopes are unverified in gameplay; mock success is not native collision proof"
+      "Both scopes are unverified in gameplay; mock success is not native collision proof",
+      "0.1.1 caches discovery only within one tick. Each write must revalidate every cached dependency plus its own source and slot; never persist authorization across updates."
     ],
     "packaging": "All three variants include byte-identical P-11 0.2.1 Lua. Expanded packages contain two separate resources controlled by one Arsenal option; install one variant."
   }

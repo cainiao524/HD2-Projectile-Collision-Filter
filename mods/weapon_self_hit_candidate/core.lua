@@ -9,7 +9,15 @@ local function value(s,at,kind)
     assert(type(s)=='string' and #s>=(at or 0)+n,'short_read')
     ffi.copy(v,s:sub((at or 0)+1,(at or 0)+n),n); return tonumber(v[0])
 end
-local function u(s,at) return value(s,at,'uint32_t') end
+local function u(s,at)
+    at=at or 0
+    local a,b,c,d=s:byte(at+1,at+4)
+    assert(d,'short_read'); return a+b*256+c*65536+d*16777216
+end
+local function short(s,at)
+    local a,b=s:byte(at+1,at+2)
+    assert(b,'short_read'); return a+b*256
+end
 function M.tick(api,profile)
     assert(profile and (profile.scope=='pistols' or profile.scope=='native_weapons'),'invalid_scope')
     local allowed={}
@@ -63,43 +71,85 @@ function M.tick(api,profile)
     local avatar,unit=entity(em+0xf32f18+24*index,AVATAR,nil,net)
     assert(avatar~=0xffffffff and unit~=0 and unit~=0xffffffff,'avatar_identity')
     local system=pointer(base+0x347cea8)
-    local types=read(system+0xe5040,4096)..read(system+0xe6040,4096)
     local flags=read(system+0x203c,4096)
+    -- Flags are only eligibility hints, not ownership. Read type pages lazily
+    -- after finding an occupied slot with source exclusion still enabled.
+    local types={}
+    local function slot_type(slot)
+        local page=math.floor(slot/1024)
+        if not types[page] then types[page]=read(system+0xe5040+page*4096,4096) end
+        return u(types[page],(slot%1024)*4)
+    end
     local common=#guards
+    -- These snapshots exist only for this tick. Reuse discovery work, never
+    -- authorization: every accepted slot still supplies all original pointer,
+    -- registry, weapon and owner guards to the writer for fresh readback.
+    local weapons,definitions={},{}
+    local function cached(cache,key,inspect)
+        local saved=cache[key]
+        if saved then
+            if saved.accepted then
+                for _,g in ipairs(saved.guards) do guards[#guards+1]=g end
+            end
+            return saved.accepted
+        end
+        local first=#guards+1
+        local accepted=inspect()
+        local dependencies={}
+        if accepted then
+            for i=first,#guards do dependencies[#dependencies+1]=guards[i] end
+        end
+        cache[key]={accepted=accepted,guards=dependencies}
+        return accepted
+    end
+    local function weapon_allowed(weapon_id)
+        return cached(weapons,weapon_id,function()
+            local wm=pointer(base+0x33266d8)
+            local wi=map(wm+0x50,weapon_id,8192)
+            if not wi then return false end
+            local cap=u(read(wm+0x2c,4,true))
+            local counts=read(wm+0x38,8,true)
+            local count,committed=u(counts),u(counts,4)
+            assert(count<=cap and cap<=4096 and committed<=count and wi<committed,'weapon_bounds')
+            local weapon=pointer(pointer(wm+0x68)+wi*8)
+            local identity=read(weapon,24,true)
+            local resource=identity:sub(1,8)
+            assert(u(identity,8)==weapon_id and bit.band(u(identity,20),3)==1,'weapon_identity')
+            -- Reject unrelated weapons before attachment or definition lookup.
+            if resource==P11 or (profile.scope=='pistols' and not allowed[resource]) then return false end
+            local am=pointer(base+0x3326dc0)
+            local ai=map(am+0x20,weapon_id,32768)
+            if not ai then return false end
+            assert(ai<16384,'weapon_bounds')
+            return u(read(pointer(am+0x40)+48*ai+4,4,true))==avatar
+        end)
+    end
+    local function definition_matches(typ)
+        return cached(definitions,typ,function()
+            return u(read(pointer(base+0x37c7670+typ*8),4,true))==typ
+        end)
+    end
     for slot=0,2047 do
-        local expected=value(flags,slot*2,'uint16_t')
-        local typ=u(types,slot*4)
-        if typ>0 and typ<=4096 and typ~=318 and bit.band(expected,0x22)==0x22 then
+        local expected=short(flags,slot*2)
+        if bit.band(expected,0x22)==0x22 then
+          local typ=slot_type(slot)
+          if typ>0 and typ<=4096 and typ~=318 then
             -- Never retain an address/identity from the previous Lua update.
             for i=#guards,common+1,-1 do guards[i]=nil end
             local source=read(system+0x3b040+36*slot+8,8,true)
             if u(source)==unit then
                 local weapon_id=u(source,4)
-                local wm,am=pointer(base+0x33266d8),pointer(base+0x3326dc0)
-                local wi=map(wm+0x50,weapon_id,8192)
-                local ai=map(am+0x20,weapon_id,32768)
-                if wi and ai then
-                    local cap=u(read(wm+0x2c,4,true)); local count=u(read(wm+0x38,4,true))
-                    local committed=u(read(wm+0x3c,4,true))
-                    assert(count<=cap and cap<=4096 and committed<=count and wi<committed and ai<16384,'weapon_bounds')
-                    local weapon=pointer(pointer(wm+0x68)+wi*8)
-                    local weapon_bytes=read(weapon,24,true)
-                    local resource=weapon_bytes:sub(1,8)
-                    assert(u(weapon_bytes,8)==weapon_id and bit.band(u(weapon_bytes,20),3)==1,'weapon_identity')
-                    -- P-11 remains exclusively owned by the proven 0.2.1 addon.
-                    if resource~=P11 and (profile.scope=='native_weapons' or allowed[resource])
-                        and u(read(pointer(base+0x37c7670+typ*8),4,true))==typ
-                        and u(read(pointer(am+0x40)+48*ai+4,4,true))==avatar then
-                        assert(u(read(system+0xe5040+4*slot,4,true))==typ,'slot_reused')
-                        read(system+0x3c+4*slot,4,true) -- FFFFFFFF is valid; not a generation ID.
-                        assert(#guards<=300,'guard_budget')
-                        attempts=attempts+1; assert(attempts<=64,'candidate_budget')
-                        local ok,reason=api.clear_exclusion(system,slot,expected,guards)
-                        if ok then changes=changes+1
-                        elseif reason~='changed' then error({fatal=true,reason=reason or 'write_failed'},0) end
-                    end
+                if weapon_allowed(weapon_id) and definition_matches(typ) then
+                    assert(u(read(system+0xe5040+4*slot,4,true))==typ,'slot_reused')
+                    read(system+0x3c+4*slot,4,true) -- FFFFFFFF is valid; not a generation ID.
+                    assert(#guards<=300,'guard_budget')
+                    attempts=attempts+1; assert(attempts<=64,'candidate_budget')
+                    local ok,reason=api.clear_exclusion(system,slot,expected,guards)
+                    if ok then changes=changes+1
+                    elseif reason~='changed' then error({fatal=true,reason=reason or 'write_failed'},0) end
                 end
             end
+          end
         end
     end
     return changes,'ready'

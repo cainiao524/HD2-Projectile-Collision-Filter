@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "25480438-self-hit-0.2.1",
+  "status": "unverified",
+  "target": {
+    "steam_build_id": "25480438",
+    "executable_version": "1.8.46015.0",
+    "game_dll_sha256": "2E2C3B7C2500646DADD5F2B4C6E0504DBB7E7896139F64CDDC0D1813C718F51E",
+    "executable_sha256": "F5FEE03DCFDB2E553A4752C283590950AC13316B376D8196AA556FF0400D5F06"
+  },
+  "loader": {
+    "public_release": "v17",
+    "internal_min": 16,
+    "api": 1
+  },
+  "features": [
+    {
+      "id": "self_heal",
+      "source": "mods/p11_self_hit_dataonly/core.lua",
+      "status": "disabled",
+      "user_confirmed_working": true,
+      "reason": "Basic behavior confirmed; offline identity never auto-enables gameplay."
+    }
+  ]
+}

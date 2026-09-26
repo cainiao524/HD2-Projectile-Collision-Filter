@@ -1,0 +1,15 @@
+dist/
+diagnostics/
+research/code_capture/captures/
+research/p11_observer/captures/
+research/p11_observer_v1_1/captures/
+__pycache__/
+*.pyc
+local-settings.json
+.build-venv/
+build/
+publication/
+local-history/
+*.spec
+*.log
+*.bin

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "baselines": [
+    {
+      "id": "0.2.1-build25480438-basic-self-hit",
+      "target": {
+        "steam_build_id": "25480438",
+        "game_dll_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+        "executable_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06"
+      },
+      "loader": {
+        "public": "v17",
+        "api": 1,
+        "internal": 16
+      },
+      "components": {
+        "self_heal": {
+          "package": "P11-Self-Hit-DataOnly-0.2.1-build25480438.zip",
+          "package_sha256": "73c8c1e85b9732b85e0324b45b19d2c8b6c104abcd394c0f82ac49b67f9da8c2",
+          "lua_sha256": "b81d634f7fa631340d2d3a29c1b608ccdec3ee8b1d7417cb53d13e155d97483a",
+          "resource": "mods/p11/self_hit_dataonly",
+          "user_confirmed_basic_behavior": true,
+          "verification_scope": "2026-09-26: user confirmed basic self-hit healing on build 25480438. Full host/client, timing and slot-concurrency coverage remains incomplete."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "scope": "standalone self-hit release only",
+  "files": [
+    ".gitignore",
+    ".gitattributes",
+    "publication-files.json",
+    "requirements-dev.txt",
+    "maintenance/baselines.json",
+    "maintenance/porting-map.json",
+    "patches/25480438/manifest.json",
+    "tools/resource_archive.py",
+    "tools/build_self_hit_release.py",
+    "tools/build_release.py",
+    "docs/release/README.md",
+    "docs/release/README.en.md",
+    "docs/release/SELF_HIT.md",
+    "docs/release/PORTING.md",
+    "docs/release/VERIFICATION.md",
+    "docs/release/THIRD_PARTY.md",
+    "docs/release/LICENSE-NOTICE.md",
+    "docs/release/CHANGELOG.md",
+    "docs/release/RELEASE-v0.2.1.md",
+    "docs/release/PUBLISH.md"
+  ],
+  "folders": {
+    "mods/p11_self_hit_dataonly": [
+      ".lua",
+      ".json",
+      ".py",
+      ".md"
+    ]
+  },
+  "document_exports": {
+    "docs/release/README.md": "README.md",
+    "docs/release/README.en.md": "README.en.md",
+    "docs/release/SELF_HIT.md": "docs/SELF_HIT.md",
+    "docs/release/PORTING.md": "docs/PORTING.md",
+    "docs/release/VERIFICATION.md": "docs/VERIFICATION.md",
+    "docs/release/THIRD_PARTY.md": "docs/THIRD_PARTY.md",
+    "docs/release/LICENSE-NOTICE.md": "LICENSE-NOTICE.md",
+    "docs/release/CHANGELOG.md": "CHANGELOG.md",
+    "docs/release/RELEASE-v0.2.1.md": "releases/v0.2.1.md",
+    "docs/release/PUBLISH.md": "docs/PUBLISH.md"
+  },
+  "note": "Only the standalone self-hit implementation, build tools, mock tests and release documentation. Local diagnostics and earlier collection work are not publication inputs."
+}

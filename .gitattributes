@@ -1,0 +1,12 @@
+* text=auto
+*.lua text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.cmd text eol=crlf
+*.zip binary
+*.exe binary
+# These three files are embedded verbatim in the already-tested 0.2.1 ZIP.
+mods/p11_self_hit_dataonly/README-zh-TW.md -text
+mods/p11_self_hit_dataonly/VALIDATION.md -text
+mods/p11_self_hit_dataonly/profile.json -text

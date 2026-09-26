@@ -1,0 +1,208 @@
+{
+  "build_id": 25480438,
+  "game_sha256": "2e2c3b7c2500646dadd5f2b4c6e0504dbb7e7896139f64cddc0d1813c718f51e",
+  "exe_sha256": "f5fee03dcfdb2e553a4752c283590950ac13316b376d8196aa556ff0400d5f06",
+  "image_size": 74727424,
+  "timestamp": 1790161983,
+  "pe_offset": 272,
+  "optional_size": 240,
+  "section_count": 16,
+  "sections": [
+    {
+      "rva": 4096,
+      "virtual_size": 34667155,
+      "characteristics": 1610612768,
+      "raw_offset": 1536,
+      "raw_size": 8718336
+    },
+    {
+      "rva": 34672640,
+      "virtual_size": 5417484,
+      "characteristics": 1073741888,
+      "raw_offset": 8719872,
+      "raw_size": 825856
+    },
+    {
+      "rva": 40091648,
+      "virtual_size": 18462204,
+      "characteristics": 3221225536,
+      "raw_offset": 9545728,
+      "raw_size": 138240
+    },
+    {
+      "rva": 58556416,
+      "virtual_size": 1832304,
+      "characteristics": 1073741888,
+      "raw_offset": 9683968,
+      "raw_size": 550912
+    },
+    {
+      "rva": 60391424,
+      "virtual_size": 8968,
+      "characteristics": 1073741888,
+      "raw_offset": 10234880,
+      "raw_size": 2048
+    },
+    {
+      "rva": 60403712,
+      "virtual_size": 1160,
+      "characteristics": 1073741888,
+      "raw_offset": 10236928,
+      "raw_size": 512
+    },
+    {
+      "rva": 60407808,
+      "virtual_size": 222660,
+      "characteristics": 1073741888,
+      "raw_offset": 10237440,
+      "raw_size": 10752
+    },
+    {
+      "rva": 60633088,
+      "virtual_size": 4096,
+      "characteristics": 1073741888,
+      "raw_offset": 10248192,
+      "raw_size": 1536
+    },
+    {
+      "rva": 60637184,
+      "virtual_size": 4096,
+      "characteristics": 1073741888,
+      "raw_offset": 10249728,
+      "raw_size": 512
+    },
+    {
+      "rva": 60641280,
+      "virtual_size": 81920,
+      "characteristics": 3221225536,
+      "raw_offset": 10250240,
+      "raw_size": 81920
+    },
+    {
+      "rva": 60723200,
+      "virtual_size": 4096,
+      "characteristics": 3221225536,
+      "raw_offset": 10332160,
+      "raw_size": 512
+    },
+    {
+      "rva": 60727296,
+      "virtual_size": 8192,
+      "characteristics": 3221225472,
+      "raw_offset": 10332672,
+      "raw_size": 4608
+    },
+    {
+      "rva": 60735488,
+      "virtual_size": 4096,
+      "characteristics": 1073741888,
+      "raw_offset": 10337280,
+      "raw_size": 1536
+    },
+    {
+      "rva": 60739584,
+      "virtual_size": 8806400,
+      "characteristics": 3758096480,
+      "raw_offset": 10338816,
+      "raw_size": 0
+    },
+    {
+      "rva": 69545984,
+      "virtual_size": 4773888,
+      "characteristics": 1610612832,
+      "raw_offset": 10338816,
+      "raw_size": 4773888
+    },
+    {
+      "rva": 74321920,
+      "virtual_size": 405504,
+      "characteristics": 1073741824,
+      "raw_offset": 15112704,
+      "raw_size": 399376
+    }
+  ],
+  "loader": {
+    "api": 1,
+    "internal_min": 16,
+    "internal_max": 16,
+    "public_release_recommended": "v17"
+  },
+  "code_anchors": [
+    {
+      "name": "gun_private_projectile_route",
+      "rva": 6380479,
+      "bytes_hex": "4885db0f843a090000"
+    },
+    {
+      "name": "gun_fixed_exclude_owner_option",
+      "rva": 6383042,
+      "bytes_hex": "c6453801"
+    },
+    {
+      "name": "gun_native_constructor_call",
+      "rva": 6383122,
+      "bytes_hex": "e81932d900"
+    },
+    {
+      "name": "constructor_option_flag",
+      "rva": 20618163,
+      "bytes_hex": "8b0842898ca640500e00740c41385d187506440fb7c3eb0641b820000000"
+    },
+    {
+      "name": "constructor_flag_composition",
+      "rva": 20618193,
+      "bytes_hex": "498b46100f57c041b9000600000fb788f00000000fb7c10fb7d16683e0106683e22066c1e202660bd00fb7c16683e00c6603d2660bd00fb7c1664123c166c1e203660bd00fb7c16683e0026603d2660bd00fb7c166d1e86683ca016683e020664123cf4c6bff70660bc16603d266c1e802660bd066410bd066428994663c200000"
+    },
+    {
+      "name": "collision_source_entity_gate",
+      "rva": 20629135,
+      "bytes_hex": "433b9c874cb003000f84c1070000488b45a8"
+    },
+    {
+      "name": "collision_source_unit_gate",
+      "rva": 20629153,
+      "bytes_hex": "41f684473c200000200f84e30000008b559485d20f84d8000000488b05469cf701488b4818488b81200700008bcaffd084c00f84ba000000428b8c25dc060000"
+    },
+    {
+      "name": "stim_effect_definition_flag",
+      "rva": 20633866,
+      "bytes_hex": "f680fc00000001"
+    },
+    {
+      "name": "reflection_owner_flag_clear",
+      "rva": 20637466,
+      "bytes_hex": "6641218c473c20000041"
+    },
+    {
+      "name": "component196_native_constructor",
+      "rva": 6578780,
+      "bytes_hex": "e8cf35d600"
+    },
+    {
+      "name": "optional_auxiliary_initial_sentinel",
+      "rva": 20619735,
+      "bytes_hex": "42c744a63cffffffff418bfc41399c378c3000000f8445010000498b4610"
+    },
+    {
+      "name": "optional_auxiliary_definition_gate",
+      "rva": 20619765,
+      "bytes_hex": "3998900000000f8435010000418b4e18e836fbc2"
+    }
+  ],
+  "id": "p11-self-hit-dataonly-0.2.1-25480438",
+  "schema_version": 1,
+  "version": "0.2.1-experimental",
+  "resource": "mods/p11/self_hit_dataonly",
+  "manager_guid": "f93d74eb-c625-4668-ab19-d2003287876c",
+  "gameplay_verified": false,
+  "pre_collision_timing_verified": false,
+  "generation_identity_verified": false,
+  "loaded_section_indices": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "startup_retry_updates": 120,
+  "startup_timeout_updates": 600
+}

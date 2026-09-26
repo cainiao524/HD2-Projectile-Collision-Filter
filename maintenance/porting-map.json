@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "reference_build": "25480438",
+  "scope": "Historical locations for offline porting; never automatic authorization to write on another build.",
+  "self_hit": {
+    "core": "mods/p11_self_hit_dataonly/core.lua",
+    "writer": "mods/p11_self_hit_dataonly/data_windows.lua",
+    "version_gate": "mods/p11_self_hit_dataonly/version.lua",
+    "startup": "mods/p11_self_hit_dataonly/entry.lua",
+    "profile": "mods/p11_self_hit_dataonly/profile.json",
+    "module_globals": {
+      "player_manager": "0x3326468",
+      "entity_manager": "0x346BF98",
+      "weapon_manager": "0x33266D8",
+      "attachment_manager": "0x3326DC0",
+      "native_projectile_system": "0x347CEA8",
+      "projectile_definitions": "0x37C7670"
+    },
+    "native_slot": {
+      "count": 2048,
+      "type_array": "0xE5040",
+      "type_stride": 4,
+      "flags_array": "0x203C",
+      "flags_stride": 2,
+      "source_array": "0x3B040",
+      "source_stride": 36,
+      "source_unit_offset": 8,
+      "source_entity_offset": 12,
+      "aux_array": "0x3C",
+      "aux_stride": 4,
+      "aux_is_generation": false,
+      "projectile_type": 318,
+      "occupied_mask": "0x2",
+      "clear_only_mask": "0x20"
+    },
+    "required_checks": [
+      "Both disk hashes and PE virtual sections covering all used RVAs",
+      "All 12 instruction anchors in profile; offline exact matches are candidates only",
+      "P-11, avatar and stim identities, local owner, active weapon and attachment owner",
+      "Fresh pointer/slot/owner reads per update, rechecks before two-byte write and readback",
+      "MEM_PRIVATE PAGE_READWRITE only; never executable memory",
+      "Native collision/healing and host/client/coexistence validation recorded separately"
+    ],
+    "porting_note": "Several RVAs also occur in core.lua/data_windows.lua/build.py/version.lua. A new profile alone is insufficient. Preserve the tested 0.2.1 package and version any future implementation."
+  }
+}

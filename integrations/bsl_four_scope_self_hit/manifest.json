@@ -1,0 +1,42 @@
+{
+  "Version": 1,
+  "Guid": "f344360d-eb4a-4baa-b631-8e6982ecd9fb",
+  "Name": "Projectile Collision Filter BSL Four Scope",
+  "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+  "Options": [
+    {
+      "Name": "Effect Scope / 生效范围",
+      "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+      "SubOptions": [
+        {
+          "Name": "P-11 Only / 仅治疗手枪",
+          "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+          "Include": [
+            "Variants/P11"
+          ]
+        },
+        {
+          "Name": "All Sidearms / 全部手枪",
+          "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+          "Include": [
+            "Variants/Pistols"
+          ]
+        },
+        {
+          "Name": "Native Weapons No Shotguns / 原生武器排除霰弹",
+          "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+          "Include": [
+            "Variants/NativeNoShotguns"
+          ]
+        },
+        {
+          "Name": "Native Weapons Including Shotguns / 原生武器包含霰弹",
+          "Description": "BSL Lua-only four-scope candidate for build 25480438. No game.dll code patch or native hook; cursor delta/type prefilter, local-owner guards, and bounded per-update budgets. Choose exactly one scope. Shotgun scope is bounded but may defer bursts; gameplay/performance remain unverified. / 纯 BSL Lua 四范围候选，不修改 game.dll、不安装 native hook；使用 cursor 增量、type 预筛选、本机 owner 校验和有界更新预算。四选一；含霰弹范围有界但可能延迟 burst，玩法与性能仍未验证。",
+          "Include": [
+            "Variants/NativeWeapons"
+          ]
+        }
+      ]
+    }
+  ]
+}

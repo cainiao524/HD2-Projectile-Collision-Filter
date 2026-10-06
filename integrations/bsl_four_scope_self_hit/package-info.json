@@ -1,0 +1,55 @@
+{
+  "version": "0.3.2-bsl-four",
+  "guid": "f344360d-eb4a-4baa-b631-8e6982ecd9fb",
+  "resource": "mods/pcf/bsl_four_scope_self_hit",
+  "archive": "9ba626afa44a3aa3.patch_0",
+  "build_id": 25480438,
+  "loader": {
+    "api": 1,
+    "internal_min": 16,
+    "internal_max": 17,
+    "public_release_recommended": "v18"
+  },
+  "variants": {
+    "p11": {
+      "folder": "Variants/P11",
+      "profile": "Source/profiles/p11.json",
+      "bundle": "Source/bundles/p11.lua",
+      "profile_sha256": "ab6cb423cf5f427708f7659f4a16f6e7d3d487757916aede0dcc4b8cb1733c17",
+      "bundle_sha256": "6fff0f30c5739dd177f5200d821057115e924ae809f8a47656f3c2c5ba67f66f",
+      "archive_sha256": "4297e20dcf3239df4e29be7318278222dc2d5a0cf5c072528cc49fc1272f19cc"
+    },
+    "pistols": {
+      "folder": "Variants/Pistols",
+      "profile": "Source/profiles/pistols.json",
+      "bundle": "Source/bundles/pistols.lua",
+      "profile_sha256": "5c19b36b99ea55609f2d059b4e0e30e7ef5d88e7a7ee1ac468b6a250598a5631",
+      "bundle_sha256": "0821c380aa5139a54ce45ffb2a2e903f919091c9c7f3050d292a81c8b524381c",
+      "archive_sha256": "62b9360c97ce0713db6f502448fa0236563d1b10f9288cf9156047c1bf8ea2db"
+    },
+    "native_no_shotguns": {
+      "folder": "Variants/NativeNoShotguns",
+      "profile": "Source/profiles/native_no_shotguns.json",
+      "bundle": "Source/bundles/native_no_shotguns.lua",
+      "profile_sha256": "7306c79a56d2a6efeb66833bd9f33fdd93f32f3eee50f0c31d788c55f912daa9",
+      "bundle_sha256": "dc3c9f94a4c123ac68b9c4cd9075718583d32d3b7e86bee97cff2fc18d35adb2",
+      "archive_sha256": "13b73dd1cd5a3d19c8e32b83376b924137201d3751e571e0ac8a9c5409e65ef0"
+    },
+    "native_weapons": {
+      "folder": "Variants/NativeWeapons",
+      "profile": "Source/profiles/native_weapons.json",
+      "bundle": "Source/bundles/native_weapons.lua",
+      "profile_sha256": "84e6af454af10571fa6fe22b711933740e2bb9417554db5ddc8849d11a3768ea",
+      "bundle_sha256": "07b575a44446418264206b62a2002db3bd1d9b97bdd577672ca2fa62faad40ce",
+      "archive_sha256": "a24835421a823ac902148d25d7847d0e513dcf86a85377d5a53c76ab9c0642e8"
+    }
+  },
+  "native_patch": false,
+  "native_hook": false,
+  "update_hook": true,
+  "per_projectile_processing": true,
+  "performance_policy": "scope-specific bounded cursor/type-prefilter; no zero-overhead guarantee",
+  "gameplay_verified": false,
+  "performance_gameplay_verified": false,
+  "luajit_compile_runtime": "LuaJIT 2.1"
+}

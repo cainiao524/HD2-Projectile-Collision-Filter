@@ -1,0 +1,16 @@
+{
+  "version": "0.3.2-bsl-four",
+  "guid": "f344360d-eb4a-4baa-b631-8e6982ecd9fb",
+  "resource": "mods/pcf/bsl_four_scope_self_hit",
+  "name": "Projectile Collision Filter BSL Four Scope / 四范围 BSL 自命中候选",
+  "zip_name": "Projectile-Collision-Filter-BSL-Four-0.3.2-bsl-four-build25480438.zip",
+  "scopes": {
+    "p11": "P11",
+    "pistols": "Pistols",
+    "native_no_shotguns": "NativeNoShotguns",
+    "native_weapons": "NativeWeapons"
+  },
+  "log": "PCFFourScopeScript.log",
+  "baseline_zip_sha256": "0e536c29908001513115dafdabe366f45d126b6bbf09e39377c045ee1d024783",
+  "parent_zip_sha256": "653c2bc1b5a6264a3d09f847adf11337c79289acd46f497881a6641baacafdf8"
+}

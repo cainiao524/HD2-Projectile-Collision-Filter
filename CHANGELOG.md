@@ -1,5 +1,10 @@
 # Changelog
 
+## Integrated BSL four-scope candidate
+
+- Added `integrations/bsl_four_scope_self_hit/`, importing the standalone `0.3.2-bsl-four` BSL Lua candidate with its four scope bundles, profiles, runtime source, build script, and package smoke test.
+- The candidate remains a separate integration tree so the published preview.8 runtime and release assets stay unchanged. Build it from that directory with `python -B build.py`; the generated package targets game build `25480438` and remains gameplay-unverified.
+
 ## v0.3.0-preview.8 — Unified cursor mod, bilingual configuration, two downloads
 
 - Publish the user-tested four-scope unified cursor package. Preserve all four accepted Lua/game-resource payloads while updating packaging and English-first Traditional Chinese configuration.

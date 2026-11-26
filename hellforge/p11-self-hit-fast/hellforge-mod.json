@@ -1,0 +1,13 @@
+{
+  "format": 1,
+  "id": "local.p11-self-hit-fast",
+  "name": "Projectile Self Hit / 子彈能擊中自己",
+  "version": "1.0.0",
+  "description": "潛兵武器的射彈不帶「排除擁有者」旗標，可以擊中自己（P-11 可自我治療）。範圍在遊戲內 ESC > MODS（Mod Options Menu，需同時啟用選項包「Projectile Self Hit Options」）選，按 APPLY 立即生效；沒有選單時改 mod 資料夾的 self-hit.ini：1 僅治療手槍／2 手槍全部／3 全部武器不包括霰彈槍／4 全部武器包括霰彈槍。原地改 game.dll+0x13a9bbd 跳到查表 stub，沒有 hook、沒有每發處理。與其他自命中 mod 擇一啟用。",
+  "gameplay": true,
+  "coop": "per-player",
+  "code": {
+    "dll": "p11_self_hit_fast.dll",
+    "sdk": 13
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "Version": 1,
+  "Guid": "5e1f7a2c-3b9d-4c6e-8a01-7d2f4b9c0e35",
+  "Name": "Projectile Self Hit Options / 子彈能擊中自己 選單",
+  "Description": "Puts the scope of local.p11-self-hit-fast in game under ESC > MODS (Mod Options Menu). Needs Bingus Shared Loader, Mod Options Menu and the code mod enabled. Applies at once on APPLY.\n把 local.p11-self-hit-fast 的生效範圍放進遊戲內 ESC > MODS（Mod Options Menu）。需要 Bingus Shared Loader、Mod Options Menu 與本體 code mod 都啟用。按 APPLY 立即生效。",
+  "Options": [
+    {
+      "Name": "Projectile Self Hit Options / 子彈能擊中自己 選單",
+      "Description": "Mod Options Menu addon (mods/local/p11_self_hit_options).",
+      "Include": [
+        "Addon"
+      ]
+    }
+  ]
+}

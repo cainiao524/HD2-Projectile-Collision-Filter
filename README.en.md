@@ -1,77 +1,70 @@
-# Projectile Collision Filter — P-11 Self-Healing & Four Selectable Scopes
+# Projectile Self Hit — HellForge v1
 
 ![Projectile Collision Filter / 投射物碰撞過濾器](docs/assets/projectile-collision-filter-cover.png)
 
-[繁體中文](README.md) · [Download v0.3.0-preview.8](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8) · [Install and switch](docs/SELECTABLE.md) · [Secondary coverage](docs/SECONDARIES.md)
+[繁體中文](README.md) · [Download v1.0.0](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v1.0.0) · [How it works](docs/HOW-IT-WORKS.md) · [Changelog](CHANGELOG.md) · [Archived versions](archive/README.md)
 
-Let darts fired from your P-11 hit your own character and trigger native healing. Aim and fire manually; choose one of four scopes inside a single Arsenal mod. Other eligible weapons retain their native effects, including possible self-damage.
+Lets your Helldiver's own projectiles hit you. It started as **P-11 Stim Pistol self-healing** and now offers four scopes up to every Helldiver weapon. The game's own collision and hit logic does the rest: this mod writes no health and simulates no healing. It only makes the chosen projectile types spawn without the "exclude owner" flag.
 
-**The user reports normal basic operation with all four preview.8 choices. This remains a prerelease.** The report is not a weapon-by-weapon test matrix, a full host/client test, or an FPS benchmark. Release packaging preserves the four Lua payloads and game resources from that tested package byte for byte.
+**This is the HellForge edition.** The old Arsenal/BSL edition (v0.3.0-preview.8 and earlier) cleared the flag shot by shot after each projectile spawned, which dropped frames with shotguns and heavy fire. v1 decides at the source of the flag: each projectile costs one table lookup, whatever the scope or pellet count.
 
-## Bilingual Arsenal configuration
+## Two downloads
 
-Labels and descriptions use English first, followed by Traditional Chinese. Select one option under **Effect Scope / 生效範圍**. P-11 is initially selected; Arsenal controls the overall enable switch.
-
-| Arsenal label / 配置選項 | Scope / 範圍 |
+| File | What it is |
 |---|---|
-| **P-11 Only / 僅治療手槍** | P-11 healing darts only; recommended and initially selected. / 僅治療飛鏢，推薦且首次預選。 |
-| **All Sidearms / 手槍全部** | P-11 and supported sidearm projectiles; excludes shotguns and multi-projectile types. / P-11 與支援的副武器投射物，排除霰彈與多彈丸。 |
-| **All Weapons (No Shotguns) / 全部武器不包括霰彈槍** | P-11 and supported weapon projectiles; excludes shotguns and multi-projectile types. / P-11 與支援的武器投射物，排除霰彈與多彈丸。 |
-| **All Weapons (Including Shotguns) / 全部武器包括霰彈槍** | Includes shotgun/multi-projectile types. **WARNING: May cause severe performance impact.** / 包含霰彈與多彈丸；**警告：可能造成嚴重性能影響。** |
+| `Projectile-Self-Hit-HellForge-v1.0.0-build25480438.zip` | **The mod (required)**: HellForge code mod `local.p11-self-hit-fast`, as sources; HellForge builds it. |
+| `Projectile-Self-Hit-Options-MOM-v1.0.0.zip` | **In-game menu (optional)**: pick the scope under ESC > MODS (Mod Options Menu); APPLY takes effect at once. |
 
-## Two release downloads
+SHA-256 sums are in the [release notes](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v1.0.0). GitHub's automatic Source code archives are the whole repository, not an install package.
 
-| Download | Use |
+## Scopes (pick one)
+
+| Choice | Covers |
 |---|---|
-| [Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/download/v0.3.0-preview.8/Projectile-Collision-Filter-v0.3.0-preview.8-build25480438.zip) | **For players:** import into Arsenal and choose one scope. |
-| [HD2-Projectile-Collision-Filter-Update-Toolkit-1.3.2-win-x64.zip](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/download/v0.3.0-preview.8/HD2-Projectile-Collision-Filter-Update-Toolkit-1.3.2-win-x64.zip) | Offline diagnostics after updates, complete matching source and maintenance/build guides. Extract separately; do not import into Arsenal. |
+| **P-11 Only / 僅治療手槍** | The P-11 stim dart only. Recommended, default. |
+| **All Sidearms / 手槍全部** | P-11 and sidearm projectiles; no shotguns or multi-pellet rounds. |
+| **All Weapons (No Shotguns) / 全部武器不包括霰彈槍** | Primary, support and sidearm projectiles; no shotguns or multi-pellet rounds. |
+| **All Weapons (Including Shotguns) / 全部武器包括霰彈槍** | Everything, shotguns included. Pellets can hit you at the muzzle; the mod itself costs nothing more. |
 
-Only two ZIPs are manually attached. The four standalone alternatives are no longer published for this release. SHA-256 values appear in the [release body](https://github.com/cainiao524/HD2-Projectile-Collision-Filter/releases/tag/v0.3.0-preview.8); GitHub's automatic Source code links are not installable mods. Historical tags and assets remain available for rollback.
+Damaging weapons that hit you deal their native damage: you can hurt yourself.
 
-## Install, upgrade and switch
+## Install
 
-1. Close the game, let updates finish, and install a compatible [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) separately.
-2. Disable old selector packages, P-11 0.2.3 tests and other standalone self-hit mods in Arsenal, then purge the old deployment. **Enable only one self-hit mod at a time.**
-3. Import the selectable ZIP above. Its GUID is preserved; replace the previous entry if Arsenal detects the same identity.
-4. Choose one **Effect Scope / 生效範圍**, enable the mod, redeploy, then launch the game.
-5. Close the game and redeploy when changing scopes, disabling or rolling back too.
+1. Close the game. On HellForge's Mods page, drop `Projectile-Self-Hit-HellForge-v1.0.0-build25480438.zip` into the mods folder (or unpack it there) and switch on **Projectile Self Hit / 子彈能擊中自己**.
+2. **Run one self-hit mod at a time**: switch off `cainiao524.p11-self-hit` (0.5.x), the BSL four-scope build and the Arsenal Projectile Collision Filter.
+3. For the in-game menu, also install [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) and [Mod Options Menu](https://github.com/CowboyBingus/ModOptionsMenu), then add and enable `Projectile-Self-Hit-Options-MOM-v1.0.0.zip`. In game: **ESC > MODS > PROJECTILE SELF HIT**, choose **Effect Scope / 生效範圍**, press APPLY (Tab).
+4. Without the menu: edit `self-hit.ini` in the mod's folder (created on first run), `scope=1` to `4`; a saved change applies within about 2 seconds. With the menu, the file follows the menu.
 
-Requires **Steam build 25480438 / EXE 1.8.46015.0 / Bingus Shared Loader v17, API 1, internal 16**. Unknown game/loader versions stop writes. Replacing hashes alone is not a port.
+Targets **Steam build 25480438** (the build HellForge supports). On another build, or when the bytes at the patch site are not the expected vanilla code, the mod changes nothing and says why in `mod-local.p11-self-hit-fast.log`.
 
-## How it works and what is supported
+## How it works (short)
 
-All four choices use one shared core and one deployed addon. It follows the native projectile allocation cursor, checks recent candidates and performs bounded retries instead of repeatedly traversing all 2,048 slots. Eligible projectiles must pass local ownership, source weapon, projectile identity, original-value and valid data-page checks. The guarded writer clears only source-collision exclusion bit `0x20`, checks dependencies again and reads the result back. Native collision and effects handle actual hits.
+The projectile constructor (`game.dll+0x13a9830`) composes a flags word for every projectile; bit `0x20` is "exclude owner", and the hit test (`+0x13ac6a1`) skips the shooter while it is set. v1 replaces the 20 bytes that choose that bit (`+0x13a9bbd`) with an absolute jump to a small stub of its own: it looks the projectile type up in a 1024-byte table, leaves `0x20` off for listed types, runs the vanilla choice for the rest, and jumps back.
 
-There is no native hook, executable patch or direct health, stamina, ammunition or damage-value write. Candidate processing still costs time; heavy traffic, queue limits, delayed initialization and collision timing can cause skipped projectiles. Zero overhead and success on every shot are not promised.
+- No hook, no per-frame scan of the projectile pool, no heap writes; changing the scope only rebuilds the table.
+- The table comes from the projectile types the weapons' records name (primary/support/sidearm catalogue from the HellForge SDK); shotguns are recognised by name and by pellets per shot.
+- The menu pack is a tiny BSL Lua addon: it registers one option with Mod Options Menu and hands the applied value to the loaded DLL (`p11_self_hit_set_scope`). It touches no projectile and no game memory.
 
-The earlier user report of **approximately 70 → 130 FPS with normal healing concerns P-11 0.2.3**, not a fixed performance gain for all four preview.8 choices.
+Addresses, assembly and checks: [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
-- **All Sidearms** uses pinned secondary-slot reference data rather than the historical eight-ID list. Classification and working mechanism coverage remain separate claims.
-- Dagger beam and Crisper spray are unsupported. Warrant, P33 and internal Hornet entity follow-up collision/effect paths remain unverified.
-- Plasma/grenade-body hits do not establish every explosion or area effect. “All Weapons” covers supported native projectile paths.
-- Choices 2 and 3 conservatively skip shotgun/multishot and out-of-reference types. Choice 4 **may cause severe performance impact**.
+## Known limits
 
-[Scopes and implementation](docs/VARIANTS.md) · [Performance notes](docs/PERFORMANCE.md) · [Verification](docs/VERIFICATION.md)
+- The rule is per **projectile type**: a sentry, vehicle or enemy that fires the same type as a chosen weapon also stops excluding its own shooter (not checked one by one).
+- Multiplayer: each machine patches only its own simulation. Teammates without the mod are unaffected; their projectiles of a chosen type, simulated on your machine, also spawn without owner exclusion, and how that plays out is not fully verified.
+- Projectile weapons only; beams, sprays and arcs are outside every scope.
+- The author has tested it in game; there is no full per-weapon or host/client test matrix yet.
 
-## Companion animation and teammate homing
+## Pairs well with
 
-For P-11, pair separately with [Raise Weapon: Aim at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/), following its page to equip the Raise Weapon emote. A user also reported first-person foot shots; an actual dart hit on the character is still required.
+[Raise Weapon: Aim at Yourself](https://ayakamods.com/mods/raise-weapon-aims-at-yourself.3946/) for the P-11 (separate download), or shoot at your own feet in first person.
 
-The animation mod changes the pose. This mod changes eligible self-collision. Teammate homing remains a separate, unchanged original mod and is not bundled. This package does not aim or fire automatically. [P-11 usage](docs/SELF_HIT.md)
+## Building from source
 
-## Update diagnostics and development
+- The mod: copy `hellforge/p11-self-hit-fast` into HellForge's `mods` folder and press **Build now**, or run `HellForge.Cli build-mod --mod <that folder>` (game closed).
+- The menu pack: `python -I tools/build_options_pack.py` rebuilds `hellforge/p11-self-hit-options` from `hellforge/options-addon/p11_self_hit_options.lua`.
+- Release ZIPs: `python -I tools/package_release.py` → `dist/` (reproducible, with SHA256SUMS).
+- Menu integration test (no game): `luajit tests/test_options_addon.lua <p11_self_hit_fast.dll> hellforge/options-addon/p11_self_hit_options.lua`.
 
-Fully extract **Toolkit 1.3.2** and run `Collect-HD2-Update.cmd`; the Windows x64 collector needs no separate Python installation. Read the Chinese summary and repair handoff selected by `diagnostics/latest.json`. It gathers available on-disk identities, deployment resources, relevant existing logs and data files. It does not launch the game, read running processes, deploy or upload; automatic repair after every update is not guaranteed.
+## Credits and licence
 
-Complete source is already extracted under `Source/HD2-Projectile-Collision-Filter/`.
-
-| Task | Entry |
-|---|---|
-| Install, switch, disable or roll back | [Player guide](docs/SELECTABLE.md) |
-| Collect once after an update | [Offline update tool](docs/UPDATE_TOOL.md) |
-| Develop, triage, port and hand over | [AGENTS.md](AGENTS.md) → [Agent runbook](docs/AGENT_GUIDE.md) → [Build and porting](docs/PORTING.md) |
-| Audit FileDiver, sidearm and shotgun reference data | [Pinned sources, replay commands and update handoff (Chinese)](docs/FILEDIVER_HANDOFF.md) |
-| Validate and publish | [Verification](docs/VERIFICATION.md) · [Publishing](docs/PUBLISH.md) |
-| Copy both AyakaMods pages, titles, BBCode and covers | [Publishing kit](docs/PAGE-PUBLISHING.md) |
-
-The repository is now **HD2-Projectile-Collision-Filter**; historical versions retain their original names. Detailed maintenance guides are primarily Chinese; configuration, homepages and release copy are bilingual. Community mod, unaffiliated with Arrowhead Game Studios. OpenAI tools assisted development and documentation. [Sources](docs/THIRD_PARTY.md) · [License notice](LICENSE-NOTICE.md)
+[HellForge](https://github.com/SkyeShade/HellForge) (SkyeShade) provides the mod SDK. [Mod Options Menu](https://github.com/CowboyBingus/ModOptionsMenu) and [Bingus Shared Loader](https://github.com/CowboyBingus/BingusSharedLoader) (CowboyBingus) are external dependencies; this repository neither contains nor redistributes them. See [LICENSE-NOTICE.md](LICENSE-NOTICE.md).

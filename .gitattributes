@@ -8,10 +8,17 @@
 *.zip binary
 *.exe binary
 # These three files are embedded verbatim in the already-tested 0.2.1 ZIP.
-mods/p11_self_hit_dataonly/README-zh-TW.md -text
-mods/p11_self_hit_dataonly/VALIDATION.md -text
-mods/p11_self_hit_dataonly/profile.json -text
+archive/v0.3-bsl-arsenal/mods/p11_self_hit_dataonly/README-zh-TW.md -text
+archive/v0.3-bsl-arsenal/mods/p11_self_hit_dataonly/VALIDATION.md -text
+archive/v0.3-bsl-arsenal/mods/p11_self_hit_dataonly/profile.json -text
 
 # Candidate docs are also exact ZIP inputs.
-mods/weapon_self_hit_candidate/README-zh-TW.md -text
-mods/weapon_self_hit_candidate/VALIDATION.md -text
+archive/v0.3-bsl-arsenal/mods/weapon_self_hit_candidate/README-zh-TW.md -text
+archive/v0.3-bsl-arsenal/mods/weapon_self_hit_candidate/VALIDATION.md -text
+
+# HellForge v1: game patch archives and their companion files are binary.
+*.patch_0 binary
+*.patch_0.gpu_resources binary
+*.patch_0.stream binary
+*.png binary
+*.dll binary
